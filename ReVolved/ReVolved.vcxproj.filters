@@ -140,6 +140,9 @@
     <ClInclude Include="GameCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BloodParticle.h">
+      <Filter>Header Files\Particles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\VS\Revolved\Revolved\mapFormat.txt">

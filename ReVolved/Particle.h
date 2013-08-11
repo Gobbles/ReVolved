@@ -2,8 +2,7 @@
 #define PARTICLE_H
 
 #include <SFML\Graphics.hpp>
-class Character;
-class ParticleManager;
+
 class Particle
 {
 public:
@@ -13,19 +12,19 @@ public:
 	int flag;
 	bool Exists;
 	bool Background;
-	bool additive;
+	bool Additive;
 
 	//functions
 	Particle();
 	~Particle();
-	virtual void Update(float gameTime, std::shared_ptr<ParticleManager> pMan, std::shared_ptr<Character> _character)
+	virtual void Update(float gameTime)
 	{
 		location += trajectory * gameTime;
 		frame -= gameTime;
 		if(frame < 0.0f) KillMe();
 	}
 	virtual void KillMe() { Exists = false; }
-	virtual void Draw(sf::RenderWindow window, sf::Sprite spritesTex){ }
+	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite){}
 private:
 
 protected:

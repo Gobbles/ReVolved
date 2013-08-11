@@ -18,6 +18,8 @@ Game::Game()
 		return;
 	}
 
+
+
 	window->setIcon(64,64,AppIcon.getPixelsPtr());
 
 	LoadingTex = std::make_shared<sf::Texture>(sf::Texture());

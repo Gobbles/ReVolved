@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="BloodParticle.h" />
     <ClInclude Include="BodyParts.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharDef.h" />

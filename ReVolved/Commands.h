@@ -17,26 +17,30 @@ enum KeyPress
 
 const double PI = 3.14159265;
 
-float RadToDeg(float Rad);
 
-float GetRandomFloat(float fMin, float fMax)
+static float RadToDeg(float Rad)
 {
-    return (float)rand() * (fMax - fMin) + fMin;
+	return Rad / PI * 180;
 }
 
-double GetRandomDouble(double dMin, double dMax)
+static float GetRandomFloat(float fMin, float fMax)
 {
-    return rand() * (dMax - dMin) + dMin;
+	return (float)rand() * (fMax - fMin) + fMin;
 }
 
-Vector2 GetRandomVector2(float xMin, float xMax, float yMin, float yMax)
+static double GetRandomDouble(double dMin, double dMax)
 {
-    return sf::Vector2f(GetRandomFloat(xMin, xMax), GetRandomFloat(yMin, yMax));
+	return rand() * (dMax - dMin) + dMin;
 }
 
-int GetRandomInt(int iMin, int iMax)
+static sf::Vector2f GetRandomVector2(float xMin, float xMax, float yMin, float yMax)
 {
-    return rand() % (iMax - iMin) + iMin + 1;
+	return sf::Vector2f(GetRandomFloat(xMin, xMax), GetRandomFloat(yMin, yMax));
+}
+
+static int GetRandomInt(int iMin, int iMax)
+{
+	return rand() % (iMax - iMin) + iMin + 1;
 }
 
 #endif
