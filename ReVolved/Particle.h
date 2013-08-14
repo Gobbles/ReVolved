@@ -17,12 +17,7 @@ public:
 
 	//functions
 	Particle();
-	virtual void Update(float gameTime)
-	{
-		location += trajectory * gameTime;
-		frame -= gameTime;
-		if(frame < 0.0f) KillMe();
-	}
+	virtual void Update(float gameTime);
 	virtual void KillMe() { Exists = false; }
 	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite){}
 private:
