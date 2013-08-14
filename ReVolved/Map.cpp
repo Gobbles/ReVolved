@@ -148,7 +148,7 @@ bool Map::CheckParticleCol(sf::Vector2f loc)
 	}
 	return false;
 }
-void Map::Update(/*std::shared_ptr<ParticleManager> pMan*/)
+void Map::Update(std::shared_ptr<ParticleManager> pMan)
 {
 	for(int i = 0; i < 64; i++)
 	{
@@ -166,8 +166,15 @@ void Map::Update(/*std::shared_ptr<ParticleManager> pMan*/)
                     mapSeg[1, i].Location * 2f + new Vector2(20f, 20f),
                     Rand.GetRandomVector2(-30.0f, 30.0f, -250.0f, -200.0f),
                     Rand.GetRandomFloat(0.25f, 0.75f),
-                    Rand.GetRandomInt(0, 4)), true);
-				*/
+                    Rand.GetRandomInt(0, 4)), true);*/
+				sf::Vector2f loc = mapSeg[1][i]->Location ;
+				loc.x += 20.f;
+				loc.y += 20.f;
+				sf::Vector2f traj = GetRandomVector2(-30.f, 30.f, -250.f, -200.f);
+				int icon = GetRandomFloat(0, 4);
+				pMan->AddParticle(std::make_shared<Fire>(loc, traj,
+					GetRandomFloat(0.25f, 0.75f),
+					icon), true);
 			}
 		}
 	}

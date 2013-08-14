@@ -87,6 +87,7 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharDef.cpp" />
     <ClCompile Include="Commands.cpp" />
+    <ClCompile Include="FireParticle.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharDef.h" />
     <ClInclude Include="Commands.h" />
+    <ClInclude Include="FireParticle.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />

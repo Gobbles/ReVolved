@@ -18,8 +18,6 @@ Game::Game()
 		return;
 	}
 
-
-
 	window->setIcon(64,64,AppIcon.getPixelsPtr());
 
 	LoadingTex = std::make_shared<sf::Texture>(sf::Texture());
@@ -47,7 +45,16 @@ Game::Game()
 	mapBackSprite = std::make_shared<sf::Sprite>();
 	mapBackSprite->setTexture(*mapBackTex);
 	mapBackSprite->setPosition(0,0);
+
+	if(!particleTex.loadFromFile("Art/Particles/particles.png"))
+	{
+		return;
+	}
+	particleSpr = std::make_shared<sf::Sprite>();
+	particleSpr->setTexture(particleTex);
 	Loaded = false;
+
+	pManager = std::make_shared<ParticleManager>(ParticleManager());
 
 	CharLoadThread = std::shared_ptr<sf::Thread>(new sf::Thread(&Game::LoadCharacter, this));
 	CharLoadThread->launch();
@@ -164,8 +171,8 @@ void Game::Update(float time_passed)
 	{
 		DoInput();
 		character->Update(time_passed);
-		groundMap->Update();
-
+		groundMap->Update(pManager);
+		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
 		pos.y -= 200;
@@ -189,8 +196,10 @@ void Game::Draw()
 	}
 	else
 	{
-		groundMap->Draw(window,mapsTex,mapBackTex,0,3);
+		groundMap->Draw(window, mapsTex, mapBackTex,0,3);
+		pManager->DrawParticle(window, particleSpr, true);
 		character->Draw(window);
+		pManager->DrawParticle(window, particleSpr, false);
 	}
 
 	//drawing code goes here

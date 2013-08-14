@@ -53,7 +53,14 @@ private:
 	std::shared_ptr<sf::Sprite> LoadingSprite;
 	sf::Image AppIcon;
 
+	//particle Image
+	sf::Texture particleTex;
+	std::shared_ptr<sf::Sprite> particleSpr;
+
 	bool Loaded;
+
+	//Particle Engine
+	std::shared_ptr<ParticleManager> pManager;
 
 	//constants
 	static const int gravity = 900;
