@@ -216,6 +216,7 @@ void Game::Draw()
 		pManager->DrawParticle(window, particleSpr, true);
 		character->Draw(window);
 		pManager->DrawParticle(window, particleSpr, false);
+		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);
 	}
 	window->draw(fpsText);
 	//drawing code goes here
