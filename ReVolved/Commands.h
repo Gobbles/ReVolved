@@ -1,7 +1,10 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
+#pragma once
+
 #include <SFML\System\Vector2.hpp>
+#include <stdlib.h>
 #include <random>
 enum KeyPress
 {
@@ -17,7 +20,6 @@ enum KeyPress
 
 const double PI = 3.14159265;
 
-
 static float RadToDeg(float Rad)
 {
 	return Rad / PI * 180;
@@ -25,7 +27,8 @@ static float RadToDeg(float Rad)
 
 static float GetRandomFloat(float fMin, float fMax)
 {
-	return (float)rand() * (fMax - fMin) + fMin;
+	float i = rand() / float(RAND_MAX);
+	return i * (fMax - fMin) + fMin;
 }
 
 static double GetRandomDouble(double dMin, double dMax)
@@ -41,6 +44,34 @@ static sf::Vector2f GetRandomVector2(float xMin, float xMax, float yMin, float y
 static int GetRandomInt(int iMin, int iMax)
 {
 	return rand() % (iMax - iMin) + iMin + 1;
+}
+
+static float GetAngle(sf::Vector2f v1, sf::Vector2f v2)
+{
+	sf::Vector2f d = sf::Vector2f(v2.x - v1.x, v2.y - v1.y);
+    if (d.x == 0.0f)
+    {
+        if (d.y < 0.0f)
+            return PI * 0.5f;
+        else if (d.y > 0.0f)
+            return PI * 1.5f;
+    }
+    if (d.y == 0.0f)
+    {
+        if (d.x < 0.0f)
+            return 0.0f;
+        else if (d.x > 0.0f)
+            return PI;
+    }
+
+    float a = (float)atan(abs(d.y) / abs(d.x));
+
+    if ((d.x < 0.0f) || (d.y > 0.0f)) a = PI - a;
+    if ((d.x < 0.0f) || (d.y < 0.0f)) a = PI + a;
+    if ((d.x > 0.0f) || (d.y < 0.0f))
+        a = PI * 2.0f - a;
+    if (a < 0) a = a + PI * 2.0f;
+    return a;
 }
 
 #endif

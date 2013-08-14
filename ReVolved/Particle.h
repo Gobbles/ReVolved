@@ -10,13 +10,13 @@ public:
 	sf::Vector2f location;
 	sf::Vector2f trajectory;
 	int flag;
+	int owner;
 	bool Exists;
 	bool Background;
 	bool Additive;
 
 	//functions
 	Particle();
-	~Particle();
 	virtual void Update(float gameTime)
 	{
 		location += trajectory * gameTime;

@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="BloodParticle.cpp" />
     <ClCompile Include="BodyParts.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharDef.cpp" />
