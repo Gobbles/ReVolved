@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <sstream>
 #include "Character.h"
 #include "Map.h"
 #include "GameCamera.h"
@@ -57,6 +58,13 @@ private:
 	sf::Texture particleTex;
 	std::shared_ptr<sf::Sprite> particleSpr;
 
+	//FPS
+	float fps;
+	std::string fpsStr;
+	sf::Text fpsText;
+	sf::Font fpsFont;
+
+	//content loaded
 	bool Loaded;
 
 	//Particle Engine

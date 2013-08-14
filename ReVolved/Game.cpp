@@ -52,6 +52,11 @@ Game::Game()
 	}
 	particleSpr = std::make_shared<sf::Sprite>();
 	particleSpr->setTexture(particleTex);
+
+	if(!fpsFont.loadFromFile("Font/comic.ttf"))
+	{
+		return;
+	}
 	Loaded = false;
 
 	pManager = std::make_shared<ParticleManager>(ParticleManager());
@@ -81,6 +86,8 @@ void Game::Run()
 {
 	sf::Clock clock;
 	sf::Event event;
+	float lastTime = 0;
+	fpsText.setFont(fpsFont);
 
 	while (window->isOpen())
     {
@@ -89,9 +96,18 @@ void Game::Run()
 			CheckInput(event);
         }
 
-		sf::Time elapsed = clock.restart();
+		float elapsed = clock.restart().asSeconds();
 
-		Logic((float)elapsed.asSeconds());
+		//fps code
+		fps = 1.f / elapsed;
+		std::stringstream ss (std::stringstream::in | std::stringstream::out);
+		ss << fps;
+		fpsStr = ss.str();
+		fpsText.setString(fpsStr);
+		fpsText.setColor(sf::Color::Red);
+		lastTime = elapsed;
+
+		Logic(elapsed);
 	}
 }
 
@@ -201,7 +217,7 @@ void Game::Draw()
 		character->Draw(window);
 		pManager->DrawParticle(window, particleSpr, false);
 	}
-
+	window->draw(fpsText);
 	//drawing code goes here
 	//window->draw(//sprite goes in here");
     window->display();
