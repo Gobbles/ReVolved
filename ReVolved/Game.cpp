@@ -91,9 +91,14 @@ void Game::Run()
 
 	while (window->isOpen())
     {
+		//reset our input except for the up/down/left/right keys
+		for(int i = 4; i < KEY_COUNT; i++)
+		{
+			keysPressed[i] = false;
+		}
         while (window->pollEvent(event))
         {
-			CheckInput(event);
+			CheckEvents(event);
         }
 
 		float elapsed = clock.restart().asSeconds();
@@ -111,7 +116,7 @@ void Game::Run()
 	}
 }
 
-void Game::CheckInput(sf::Event &event)
+void Game::CheckEvents(sf::Event &event)
 {
 	//check for our Input Events
 	switch(event.type)
@@ -141,7 +146,6 @@ void Game::CheckInput(sf::Event &event)
 				}
 				case sf::Keyboard::S:
 				{
-					MainCamera->GameView().move(0,-100);
 					keysPressed[KEY_DOWN] = true;
 					break;
 				}
@@ -163,6 +167,33 @@ void Game::CheckInput(sf::Event &event)
 			}
 			break;
 		}
+		case sf::Event::KeyReleased:
+		{
+			switch(event.key.code)
+			{
+				case sf::Keyboard::A:
+				{
+					keysPressed[KEY_LEFT] = false;
+					break;
+				}
+				case sf::Keyboard::D:
+				{
+					keysPressed[KEY_RIGHT] = false;
+					break;
+				}
+				case sf::Keyboard::W:
+				{
+					keysPressed[KEY_UP] = false;
+					break;
+				}
+				case sf::Keyboard::S:
+				{
+					keysPressed[KEY_DOWN] = false;
+					break;
+				}
+			}
+			break;
+		}
 	}
 }
 
@@ -173,12 +204,8 @@ void Game::Logic(float time_passed)
 }
 
 void Game::DoInput()
-{	
+{
 	character->Input(keysPressed);
-	for(int i = 0; i < KEY_COUNT; i++)
-	{
-		keysPressed[i] = false;
-	}
 }
 
 void Game::Update(float time_passed)

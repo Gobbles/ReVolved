@@ -80,7 +80,7 @@ private:
 	void Logic(float time_passed);
 	void Update(float time_passed);
 	void DoInput();
-	void CheckInput(sf::Event &event);
+	void CheckEvents(sf::Event &event);
 	void Draw();
 
 };
