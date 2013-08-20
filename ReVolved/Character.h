@@ -32,13 +32,10 @@ public:
 	Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId);
 
 	void Update(float time_passed);
-	void Draw(std::shared_ptr<sf::RenderWindow> window);
-	void BodypartsInit();
 	void Input(bool keysPressed[]);
 	void SetSlide(float dinstance);
 	void SetNewJump(float jump);
-	void SetBodyPart(std::shared_ptr<BodyParts> newBodyPart, int bodyPartIndex);
-	void SetMap(std::shared_ptr<Map> newMap);
+	
 	virtual void DoScript(int animIdx, int KeyFrameIdx);
 };
 

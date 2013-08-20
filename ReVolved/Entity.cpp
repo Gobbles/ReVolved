@@ -211,6 +211,143 @@ void Entity::Update(float time_passed)
 	#pragma endregion
 }
 
+//Draw the character
+void Entity::Draw(std::shared_ptr<sf::RenderWindow> window)
+{
+	sf::IntRect sRect;
+
+	int frameIdx = charDef->animations[Anim]->keyFrames[AnimFrame]->FrameRef;
+	std::shared_ptr<Frame> frame = charDef->frames[frameIdx];
+
+	for (int i = 0; i < frame->parts.size(); i++)
+	{
+		std::shared_ptr<Part> part = frame->parts[i];
+		if (part->Index > -1 && part->Index < 1000)
+		{
+			//this controls our rectangle for our body part sheets                         
+
+			float rotation = part->Rotation;
+
+			sf::Vector2f location;
+			location.x = part->Location->x * Scale + Location->x;// - GameCamera::scroll.x;
+			location.y = part->Location->y * Scale + Location->y;// - GameCamera::scroll.y;
+
+			sf::Vector2f scaling;
+			scaling.x = part->Scaling->x * Scale;
+			scaling.y = part->Scaling->y * Scale;
+
+			if (Face == Left)
+			{
+				rotation = -rotation;
+				location.x -= part->Location->x * Scale * 2.0f;
+			}
+
+			//this is where we select which texture to apply to the specific part index.
+			//this will control which texture to apply to which part of the body
+
+			int currentIndex = 0;
+			switch (part->Index)
+			{
+				case 0: currentIndex = 0; break; //Head
+				case 64: currentIndex = 1; break;   //UpperTorso
+				case 65: currentIndex = 2; break;  //LowerTorso
+				case 66: currentIndex = 3; break;   //UpperRunTorso
+				case 67: currentIndex = 4; break;   //LowerRunTorso
+				case 128: currentIndex = 7; break;  //UpperLeg
+				case 129: currentIndex = 8; break;  //LowerLeg
+				case 130: currentIndex = 11; break;  //UpperBackLeg
+				case 131: currentIndex = 12; break;  //LowerBackLeg
+				case 192: currentIndex = 5; break;  //UpperArm
+				case 193: currentIndex = 6; break;  //LowerArm
+				case 194: currentIndex = 9; break;  //UpperBackArm
+				case 195: currentIndex = 10; break;  //LowerBackArm
+			}
+			bool flip = false;
+
+			if (Face == Left) flip = true;
+
+			std::shared_ptr<sf::Texture> tmp;
+
+			sRect = CharacterBodyParts[currentIndex]->sRect;
+			tmp = CharacterBodyParts[currentIndex]->bodyPartTexture;
+                                      
+			std::shared_ptr<sf::Sprite> sprite(new sf::Sprite(*tmp,sRect));
+			sprite->setOrigin(sf::Vector2f((float)sRect.width / 2.f, 32.0f));
+			sprite->setPosition(location);
+			sprite->setColor(sf::Color::White);
+
+			if(flip)
+			{
+				int height = sRect.height;
+				int width = sRect.width;
+				int left = sRect.left;
+				int top = sRect.top;
+				sprite->setTextureRect(sf::IntRect(left + width, top, -width, height));
+				//sRect = sf::IntRect(0,height,width,-height);
+			}
+			
+			sprite->setRotation(RadToDeg(rotation));
+			
+			sprite->setScale(scaling);
+
+			window->draw(*sprite);
+		}
+	}
+}
+
+//initialise the Bodyparts list
+void Entity::BodypartsInit()
+{
+	for(int i = 0; i < 13; i++)
+		CharacterBodyParts.push_back(NULL);
+	std::shared_ptr<BodyParts> tmpPart;
+	//Head
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 0, 128, 128), SkellyTex, Head));
+	SetBodyPart(tmpPart, 0);
+	
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 128, 128, 128), SkellyTex, UpperTorso));
+    SetBodyPart(tmpPart, 1);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 128, 128, 128), SkellyTex, LowerTorso));
+	SetBodyPart(tmpPart, 2);
+	
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 128, 128, 128), SkellyTex, UpperRunTorso));
+    SetBodyPart(tmpPart, 3);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 128, 128, 128), SkellyTex, LowerRunTorso));
+	SetBodyPart(tmpPart, 4);
+	
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 256, 128, 128), SkellyTex, FrontUpperArm));
+    SetBodyPart(tmpPart, 5);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 256, 128, 128), SkellyTex, FrontLowerArm));
+	SetBodyPart(tmpPart, 6);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 384, 128, 128), SkellyTex, FrontUpperLeg));
+	SetBodyPart(tmpPart, 7);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 384, 128, 128), SkellyTex, FrontLowerLeg));
+	SetBodyPart(tmpPart, 8);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 256, 128, 128), SkellyTex, RearUpperArm));
+	SetBodyPart(tmpPart, 9);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 256, 128, 128), SkellyTex, RearLowerArm));
+	SetBodyPart(tmpPart, 10);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 384, 128, 128), SkellyTex, RearUpperLeg));
+	SetBodyPart(tmpPart, 11);
+    
+	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 384, 128, 128), SkellyTex, RearLowerLeg));
+	SetBodyPart(tmpPart, 12);
+}
+
+//SetBodyPart
+void Entity::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart, int bodyPartIndex)
+{
+    CharacterBodyParts[bodyPartIndex] = newBodyPart;
+}
+
 //Fall off an an attached ledge
 void Entity::FallOff()
 {
@@ -301,4 +438,9 @@ void Entity::SetNewAnim(std::string newAnim)
             break;
         }
     }
+}
+
+void::Entity::SetMap(std::shared_ptr<Map> newMap)
+{
+	currentMap = newMap;
 }

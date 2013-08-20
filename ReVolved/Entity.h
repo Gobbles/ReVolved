@@ -89,8 +89,12 @@ public:
 	//public functions
 	Entity(){}
 	virtual void Update(float time_passed);
+	virtual void Draw(std::shared_ptr<sf::RenderWindow> window);
+	virtual void BodypartsInit();
+	virtual void SetBodyPart(std::shared_ptr<BodyParts> newBodyPart, int bodyPartIndex);
 	virtual void SetNewAnim(std::string newAnim);
 	virtual void DoScript(int animIdx, int KeyFrameIdx){}
+	virtual void SetMap(std::shared_ptr<Map> newMap);
 };
 
 #endif
