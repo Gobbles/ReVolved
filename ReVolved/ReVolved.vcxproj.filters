@@ -31,11 +31,11 @@
     <Filter Include="Source Files\Particles">
       <UniqueIdentifier>{0f74aea3-3157-4171-9a40-72e9b790726c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\MapClassses">
-      <UniqueIdentifier>{5f0a6397-86b6-4b68-9b6d-b009a23f0e63}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\MapClasses">
+    <Filter Include="Source Files\WorldMap">
       <UniqueIdentifier>{a4e73b56-14ef-4fe0-b891-0914853d38c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\WorldMap">
+      <UniqueIdentifier>{5f0a6397-86b6-4b68-9b6d-b009a23f0e63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,12 +78,6 @@
     <ClCompile Include="Commands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Source Files\MapClasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Ledge.cpp">
-      <Filter>Source Files\MapClasses</Filter>
-    </ClCompile>
     <ClCompile Include="GameCamera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -92,6 +86,15 @@
     </ClCompile>
     <ClCompile Include="FireParticle.cpp">
       <Filter>Source Files\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Ledge.cpp">
+      <Filter>Source Files\PlatformerMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Source Files\PlatformerMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,15 +137,6 @@
     <ClInclude Include="Commands.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Map.h">
-      <Filter>Header Files\MapClassses</Filter>
-    </ClInclude>
-    <ClInclude Include="Ledge.h">
-      <Filter>Header Files\MapClassses</Filter>
-    </ClInclude>
-    <ClInclude Include="MapSegment.h">
-      <Filter>Header Files\MapClassses</Filter>
-    </ClInclude>
     <ClInclude Include="GameCamera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -151,6 +145,18 @@
     </ClInclude>
     <ClInclude Include="FireParticle.h">
       <Filter>Header Files\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Ledge.h">
+      <Filter>Header Files\PlatformerMap</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSegment.h">
+      <Filter>Header Files\PlatformerMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Header Files\PlatformerMap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

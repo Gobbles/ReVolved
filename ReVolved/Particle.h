@@ -19,7 +19,7 @@ public:
 	Particle();
 	virtual void Update(float gameTime);
 	virtual void KillMe() { Exists = false; }
-	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite){}
+	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite) = 0;
 private:
 
 protected:

@@ -8,7 +8,7 @@ class Fire : public Particle
 {
 public:
 	Fire(sf::Vector2f loc, sf::Vector2f traj, float _size, int icon);
-	void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite);
+	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite);
 private:
 };
 
