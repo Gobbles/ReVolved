@@ -169,22 +169,16 @@ void Character::Input(bool keysPressed[])
     keyUp = false;
     keyDown = false;
 	
-	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-	if(keysPressed[KEY_LEFT] == true)
-		keyLeft = true;
+	keyLeft =keysPressed[KEY_LEFT];
 
-	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-	if(keysPressed[KEY_RIGHT] == true)
-		keyRight = true;
+	  keyRight = keysPressed[KEY_RIGHT];
 
-	if(keysPressed[KEY_ATTACK] == true &&
-		prevKeyState[KEY_ATTACK] == false)
+	if(keysPressed[KEY_ATTACK] == true && prevKeyState[KEY_ATTACK] == false)
 	{
 		keyAttack = true;
 	}
 
-	if(keysPressed[KEY_JUMP] == true &&
-		prevKeyState[KEY_JUMP] == false)
+	if(keysPressed[KEY_JUMP] == true && prevKeyState[KEY_JUMP] == false)
 	{
 		keyJump = true;
 	}

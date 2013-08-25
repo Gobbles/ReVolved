@@ -1,8 +1,6 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#pragma once
-
 #include <SFML\System\Vector2.hpp>
 #include <stdlib.h>
 #include <random>

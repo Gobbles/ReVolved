@@ -5,6 +5,7 @@ Game::Game()
 	screenSize = sf::Vector2f(1024,768);
 	window = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.03a", sf::Style::Close));
 	window->setFramerateLimit(60);
+	window->setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
 	window->setView(MainCamera->GameView());
 

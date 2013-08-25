@@ -38,9 +38,8 @@ void Map::Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Tex
 	{
 
 		std::shared_ptr<sf::Sprite> backSprite(new sf::Sprite(*mapsBackTex));
-		sf::Vector2f targ = sf::Vector2f(1280/2,720/2);
+		sf::Vector2f targ = sf::Vector2f(window->getView().getCenter() - window->getView().getSize() / 2.f);
 		backSprite->setPosition(targ);
-		backSprite->setOrigin(640,360);
 
 		window->draw(*backSprite);
 	}
