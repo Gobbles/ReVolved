@@ -37,6 +37,18 @@
     <Filter Include="Header Files\WorldMap">
       <UniqueIdentifier>{5f0a6397-86b6-4b68-9b6d-b009a23f0e63}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Base Entities">
+      <UniqueIdentifier>{766e73f9-b6a7-440f-b44d-220ab413426e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Base Entities">
+      <UniqueIdentifier>{65802e19-991a-406c-b9be-744a56fd4539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Enemy">
+      <UniqueIdentifier>{85f98bc1-337e-4743-95c5-3d276111cf0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Enemy">
+      <UniqueIdentifier>{ee1b17c8-28c0-4092-903b-7c50e9ea1deb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -46,27 +58,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="CharDef.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyFrame.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Frame.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Part.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptLine.cpp">
-      <Filter>Source Files\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="BodyParts.cpp">
       <Filter>Source Files\Character</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
@@ -94,7 +85,31 @@
       <Filter>Source Files\PlatformerMap</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Character</Filter>
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="BodyParts.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="CharDef.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyFrame.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Part.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptLine.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,30 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="CharDef.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyFrame.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Part.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptLine.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptEnums.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="BodyParts.h">
       <Filter>Header Files\Character</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
@@ -146,9 +137,6 @@
     <ClInclude Include="FireParticle.h">
       <Filter>Header Files\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Ledge.h">
       <Filter>Header Files\PlatformerMap</Filter>
     </ClInclude>
@@ -157,6 +145,36 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Header Files\PlatformerMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="BodyParts.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="CharDef.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyFrame.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Part.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptEnums.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptLine.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

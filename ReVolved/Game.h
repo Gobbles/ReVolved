@@ -77,10 +77,10 @@ private:
 	void LoadCharacter();
 
 	//functions
-	void Logic(float time_passed);
 	void Update(float time_passed);
 	void DoInput();
 	void CheckEvents(sf::Event &event);
 	void Draw();
+	void ProcessEvents();
 
 };

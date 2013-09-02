@@ -3,29 +3,29 @@
 //======================================
 //Constructor
 //Setup for the character
-Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId)
+Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan)
 {
 	//define the animation constants
-	ANIMATION_IDLE			= "idle";
-    ANIMATION_RUN			= "run";
-    ANIMATION_JUMP			= "jump";
-    ANIMATION_FLY			= "fly";
-    ANIMATION_ATTACK		= "attack";
+	ANIMATION_IDLE					= "idle";
+    ANIMATION_RUN					= "run";
+    ANIMATION_JUMP					= "jump";
+    ANIMATION_FLY					= "fly";
+    ANIMATION_ATTACK				= "attack";
     ANIMATION_SECODNARY		= "secondary";
-    ANIMATION_JHIT			= "jhit";
-    ANIMATION_JMID			= "jmid";
-    ANIMATION_JFALL			= "jfall";
-    ANIMATION_HITLAND		= "hitland";
+    ANIMATION_JHIT					= "jhit";
+    ANIMATION_JMID					= "jmid";
+    ANIMATION_JFALL					= "jfall";
+    ANIMATION_HITLAND			= "hitland";
 
 	keyLeft = keyRight = keyUp = keyDown = keyJump = keyAttack = keySecondary = false;
 
 	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
 	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
 
-	for(int i = 0; i < KEY_COUNT; i++)
-	{
-		prevKeyState[i] = false;
-	}
+	jumpHandled = false;
+	AttackHandled = false;
+
+
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -38,15 +38,19 @@ Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, i
 	Id = newId;
 	colMove = 0.0f;
 	ledgeAttach = -1;
+	jumpHeight = 750.f;
 
-	SetNewAnim(ANIMATION_ATTACK);
+	SetNewAnim(ANIMATION_FLY);
 	State = Air;
-	//tmp textures
+
 	SkellyTex = std::make_shared<sf::Texture>(sf::Texture());
 	if(!SkellyTex->loadFromFile("Art/Character/Skeleton.png"))
 	{
 		return;
 	}
+
+	//particle Manager
+	pManager = pMan;
 }
 
 //================================================
@@ -126,6 +130,11 @@ void Character::Update(float time_passed)
         if (keyUp) PressedKey = SecUp;
         if (keyDown) PressedKey = SecDown;
     }
+	if(keyJump)
+	{
+		if(State == Grounded)
+			SetNewJump(jumpHeight);
+	}
     if (PressedKey != Nokey)
     {
         if (GoToGoal[(int)PressedKey] > -1)
@@ -152,9 +161,8 @@ void Character::Update(float time_passed)
         }
     }
 #pragma endregion
-            
-    DoScript(Anim, AnimFrame);
-    //CheckTrig(pMan);
+ 
+    CheckTrig(pManager);
 }
 
 //Check our input and see if it affects our character
@@ -171,21 +179,18 @@ void Character::Input(bool keysPressed[])
 	
 	keyLeft =keysPressed[KEY_LEFT];
 
-	  keyRight = keysPressed[KEY_RIGHT];
+	keyRight = keysPressed[KEY_RIGHT];
 
-	if(keysPressed[KEY_ATTACK] == true && prevKeyState[KEY_ATTACK] == false)
+	if(keysPressed[KEY_ATTACK] == true)
 	{
 		keyAttack = true;
+		keysPressed[KEY_ATTACK] = false;
 	}
 
-	if(keysPressed[KEY_JUMP] == true && prevKeyState[KEY_JUMP] == false)
+	if(keysPressed[KEY_JUMP] == true)
 	{
-		keyJump = true;
-	}
-
-	for(int i = 0; i < KEY_COUNT; i++)
-	{
-		prevKeyState[i] = keysPressed[i];
+ 		keyJump = true;
+		keysPressed[KEY_JUMP] = false;
 	}
 }
 

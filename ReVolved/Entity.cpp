@@ -11,7 +11,6 @@ void Entity::Update(float time_passed)
 	if (frame > (float)keyFrame->Duration)
 	{
 		int pframe = AnimFrame;
-		DoScript(Anim, AnimFrame);
 
 		frame -= (float)keyFrame->Duration;
 		if(AnimFrame == pframe)
@@ -24,6 +23,8 @@ void Entity::Update(float time_passed)
 
 		if (keyFrame->FrameRef < 0)
 			AnimFrame = 0;
+
+		DoScript(Anim, AnimFrame);
 	}
 	#pragma endregion
 	#pragma region Update Location By Trajectory
@@ -153,62 +154,6 @@ void Entity::Update(float time_passed)
 		#pragma endregion
 	}
 	#pragma endregion
-	#pragma region Animate
-    if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
-    {
-        /*if (keyLeft)
-        {
-            SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = -500.0f;
-            Face = Left;
-        }
-        else if (keyRight)
-        {
-            SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = 500.0f;
-            Face = Right;
-        }
-        else
-        {
-            SetNewAnim(ANIMATION_IDLE);
-        }
-        if(keyAttack)
-        {
-            SetNewAnim(ANIMATION_ATTACK);
-        }
-        if (keySecondary)
-        {
-            SetNewAnim(ANIMATION_SECODNARY);
-        }
-        if (keyJump)
-        {
-            SetNewAnim(ANIMATION_JUMP);
-        }*/
-    }
-    if (animName == ANIMATION_JUMP || animName == ANIMATION_FLY)
-    {
-        /*if (keyLeft)
-        {
-            Face = Left;
-			if (Trajectory->x > -500.0f);
-				Trajectory->x -= 200.0f * time_passed;
-        }
-        if (keyRight)
-        {
-            Face = Right;
-			if (Trajectory->x < 500.0f);
-				Trajectory->x += 200.0f * time_passed;
-        }
-        if (keyAttack)
-        {
-            SetNewAnim(ANIMATION_ATTACK);
-        }
-        if (keySecondary)
-        {
-            SetNewAnim(ANIMATION_SECODNARY);
-        }*/
-    }
-	#pragma endregion
 }
 
 //Draw the character
@@ -283,7 +228,6 @@ void Entity::Draw(std::shared_ptr<sf::RenderWindow> window)
 				int left = sRect.left;
 				int top = sRect.top;
 				sprite->setTextureRect(sf::IntRect(left + width, top, -width, height));
-				//sRect = sf::IntRect(0,height,width,-height);
 			}
 			
 			sprite->setRotation(RadToDeg(rotation));
@@ -303,49 +247,49 @@ void Entity::BodypartsInit()
 	std::shared_ptr<BodyParts> tmpPart;
 	//Head
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 0, 128, 128), SkellyTex, Head));
-	SetBodyPart(tmpPart, 0);
+	SetBodyPart(tmpPart);
 	
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 128, 128, 128), SkellyTex, UpperTorso));
-    SetBodyPart(tmpPart, 1);
+    SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 128, 128, 128), SkellyTex, LowerTorso));
-	SetBodyPart(tmpPart, 2);
+	SetBodyPart(tmpPart);
 	
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 128, 128, 128), SkellyTex, UpperRunTorso));
-    SetBodyPart(tmpPart, 3);
+    SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 128, 128, 128), SkellyTex, LowerRunTorso));
-	SetBodyPart(tmpPart, 4);
+	SetBodyPart(tmpPart);
 	
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 256, 128, 128), SkellyTex, FrontUpperArm));
-    SetBodyPart(tmpPart, 5);
+    SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 256, 128, 128), SkellyTex, FrontLowerArm));
-	SetBodyPart(tmpPart, 6);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 384, 128, 128), SkellyTex, FrontUpperLeg));
-	SetBodyPart(tmpPart, 7);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 384, 128, 128), SkellyTex, FrontLowerLeg));
-	SetBodyPart(tmpPart, 8);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 256, 128, 128), SkellyTex, RearUpperArm));
-	SetBodyPart(tmpPart, 9);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 256, 128, 128), SkellyTex, RearLowerArm));
-	SetBodyPart(tmpPart, 10);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 384, 128, 128), SkellyTex, RearUpperLeg));
-	SetBodyPart(tmpPart, 11);
+	SetBodyPart(tmpPart);
     
 	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 384, 128, 128), SkellyTex, RearLowerLeg));
-	SetBodyPart(tmpPart, 12);
+	SetBodyPart(tmpPart);
 }
 
 //SetBodyPart
-void Entity::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart, int bodyPartIndex)
+void Entity::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart)
 {
-    CharacterBodyParts[bodyPartIndex] = newBodyPart;
+    CharacterBodyParts[newBodyPart->bpType] = newBodyPart;
 }
 
 //Fall off an an attached ledge
@@ -395,8 +339,9 @@ void Entity::CheckTrig(std::shared_ptr<ParticleManager> pMan)
         if (part->Index >= 1000)
         {
             std::shared_ptr<sf::Vector2f> location;
-			location->x = part->Location->x * Scale + Location->x;
-			location->y = part->Location->y * Scale + Location->y;
+			location = part->Location;
+			location->x *=  Scale + Location->x;
+			location->y *=  Scale + Location->y;
             if (Face == Left)
             {
 				location->x -= part->Location->x * Scale * 2.0f;

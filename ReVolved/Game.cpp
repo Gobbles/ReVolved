@@ -3,8 +3,8 @@
 Game::Game()
 {
 	screenSize = sf::Vector2f(1024,768);
-	window = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.03a", sf::Style::Close));
-	window->setFramerateLimit(60);
+	window = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.04a", sf::Style::Close));
+	//window->setFramerateLimit(60);
 	window->setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
 	window->setView(MainCamera->GameView());
@@ -76,7 +76,7 @@ void Game::LoadCharacter()
 	groundMap->Read();
 
 	charDef = std::make_shared<CharDef>(CharDef("skeleton"));
-	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0));
+	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0, pManager));
 	character->BodypartsInit();
 	character->SetMap(groundMap);
 	sf::Context context;
@@ -86,8 +86,9 @@ void Game::LoadCharacter()
 void Game::Run()
 {
 	sf::Clock clock;
-	sf::Event event;
-	float lastTime = 0;
+	sf::Time timeSinceLastUpdate = sf::Time::Zero;
+	static const sf::Time timePerFrame = sf::seconds(1.f / 60.f);
+
 	fpsText.setFont(fpsFont);
 
 	while (window->isOpen())
@@ -95,28 +96,36 @@ void Game::Run()
 		//reset our input except for the up/down/left/right keys
 		for(int i = 4; i < KEY_COUNT; i++)
 		{
-			keysPressed[i] = false;
+			//keysPressed[i] = false;
 		}
-        while (window->pollEvent(event))
-        {
-			CheckEvents(event);
-        }
+		//ProcessEvents();
+		timeSinceLastUpdate += clock.restart();
+		
+		while(timeSinceLastUpdate > timePerFrame)
+		{
+			//fps code
+			fps = 1.f / timeSinceLastUpdate.asSeconds();
+			std::stringstream ss (std::stringstream::in | std::stringstream::out);
+			ss << fps;
+			fpsStr = ss.str();
+			fpsText.setString(fpsStr);
+			fpsText.setColor(sf::Color::Red);
 
-		float elapsed = clock.restart().asSeconds();
-
-		//fps code
-		fps = 1.f / elapsed;
-		std::stringstream ss (std::stringstream::in | std::stringstream::out);
-		ss << fps;
-		fpsStr = ss.str();
-		fpsText.setString(fpsStr);
-		fpsText.setColor(sf::Color::Red);
-		lastTime = elapsed;
-
-		Logic(elapsed);
+			timeSinceLastUpdate -= timePerFrame;
+			ProcessEvents();
+			Update(timePerFrame.asSeconds());
+		}
+		Draw();
 	}
 }
-
+void Game::ProcessEvents()
+{
+	sf::Event event;
+	while (window->pollEvent(event))
+    {
+		CheckEvents(event);
+    }
+}
 void Game::CheckEvents(sf::Event &event)
 {
 	//check for our Input Events
@@ -198,12 +207,6 @@ void Game::CheckEvents(sf::Event &event)
 	}
 }
 
-void Game::Logic(float time_passed)
-{
-	Update(time_passed);
-	Draw();
-}
-
 void Game::DoInput()
 {
 	character->Input(keysPressed);
@@ -219,7 +222,7 @@ void Game::Update(float time_passed)
 		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
-		pos.y -= 200;
+
 		if(pos.x - 512 < 0)
 			pos.x = 512;
 		if(pos.y - 384 < 0)

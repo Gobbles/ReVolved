@@ -7,7 +7,6 @@ Animations::Animations()
 	for(int i = 0; i < size; i++)
 	{
 		keyFrames.push_back(std::make_shared<KeyFrame>());
-
 	}
 }
 
