@@ -22,12 +22,10 @@ enum PressedKeys
 class Character : public Entity
 {
 private:
-	bool jumpHandled;
-	bool AttackHandled;
+
 public:	
 	PressedKeys PressedKey;
 	bool keyLeft, keyRight, keyUp, keyDown, keyJump, keyAttack, keySecondary;
-	bool prevKeyState[KEY_COUNT];
 
 	//public function prototypes
 	Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan);

@@ -22,11 +22,6 @@ Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, i
 	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
 	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
 
-	jumpHandled = false;
-	AttackHandled = false;
-
-
-
 	for(int i = 0; i < 8; i++)
 	{
 		GoToGoal.push_back(-1);
@@ -147,11 +142,6 @@ void Character::Update(float time_passed)
                 Face = Right;
 
             PressedKey = Nokey;
-
-			if(keyLeft)
-				Face = Left;
-			if(keyRight)
-				Face = Right;
 
 			for (int i = 0; i < GoToGoal.size(); i++)
                 GoToGoal[i] = -1;
