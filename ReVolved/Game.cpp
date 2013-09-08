@@ -79,6 +79,12 @@ void Game::LoadCharacter()
 	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0, pManager));
 	character->BodypartsInit();
 	character->SetMap(groundMap);
+    enemy = std::make_shared<Enemy>(Enemy(sf::Vector2f(800.f, 100.f), charDef, 1, pManager));
+    enemy->BodypartsInit();
+    enemy->SetMap(groundMap);
+    enemy2 = std::make_shared<Enemy>(Enemy(sf::Vector2f(900.f, 100.f), charDef, 1, pManager));
+    enemy2->BodypartsInit();
+    enemy2->SetMap(groundMap);
 	sf::Context context;
 	Loaded = true;
 }
@@ -218,7 +224,9 @@ void Game::Update(float time_passed)
 	{
 		DoInput();
 		character->Update(time_passed);
-		groundMap->Update(pManager);
+        enemy->Update(time_passed);
+        enemy2->Update(time_passed);
+		//groundMap->Update(pManager);
 		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
@@ -245,6 +253,8 @@ void Game::Draw()
 	{
 		groundMap->Draw(window, mapsTex, mapBackTex,0,3);
 		pManager->DrawParticle(window, particleSpr, true);
+        enemy->Draw(window);
+        enemy2->Draw(window);
 		character->Draw(window);
 		pManager->DrawParticle(window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);

@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <sstream>
 #include "Character.h"
+#include "Enemy.h"
 #include "Map.h"
 #include "GameCamera.h"
 #include "Commands.h"
@@ -42,6 +43,9 @@ private:
 	//character Information
 	std::shared_ptr<Character> character;
 	std::shared_ptr<CharDef> charDef;
+
+    std::shared_ptr<Enemy> enemy;
+    std::shared_ptr<Enemy> enemy2;
 
 	//map information
 	std::shared_ptr<Map> groundMap;

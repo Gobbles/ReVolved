@@ -16,7 +16,7 @@ enum KeyPress
 	KEY_COUNT
 };
 
-const double PI = 3.14159265;
+const float PI = 3.14159265;
 
 static float RadToDeg(float Rad)
 {

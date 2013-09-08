@@ -49,6 +49,12 @@
     <Filter Include="Source Files\Enemy">
       <UniqueIdentifier>{ee1b17c8-28c0-4092-903b-7c50e9ea1deb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BaseAI">
+      <UniqueIdentifier>{bbee0c1a-8421-44d9-939d-223d0bf42980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseAI">
+      <UniqueIdentifier>{1c8c663b-b785-4d2f-8a5f-59a3d0e66be4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -175,6 +181,15 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseAIEntity.h">
+      <Filter>Header Files\BaseAI</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\BaseAI</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Header Files\BaseAI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

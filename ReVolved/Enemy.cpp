@@ -1,18 +1,20 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan)
+Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : BaseAIEntity(newId)
 {
 	//define the animation constants
-	ANIMATION_IDLE					= "idle";
-    ANIMATION_RUN					= "run";
-    ANIMATION_JUMP					= "jump";
-    ANIMATION_FLY					= "fly";
-    ANIMATION_ATTACK				= "attack";
-    ANIMATION_SECODNARY		= "secondary";
-    ANIMATION_JHIT					= "jhit";
-    ANIMATION_JMID					= "jmid";
-    ANIMATION_JFALL					= "jfall";
-    ANIMATION_HITLAND			= "hitland";
+	ANIMATION_IDLE                  = "idle";
+    ANIMATION_RUN                  = "run";
+    ANIMATION_JUMP                 = "jump";
+    ANIMATION_FLY                    = "fly";
+    ANIMATION_ATTACK	            = "attack";
+    ANIMATION_SECODNARY     = "secondary";
+    ANIMATION_JHIT                   = "jhit";
+    ANIMATION_JMID                  = "jmid";
+    ANIMATION_JFALL	                = "jfall";
+    ANIMATION_HITLAND            = "hitland";
+
+    mStateMachine = std::make_shared<StateMachine<Enemy> >(this);
 
 	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
 	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
@@ -41,7 +43,8 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
 void Enemy::Update(float time_passed)
 {
 	Entity::Update(time_passed);
-	/*#pragma region Animate
+	mStateMachine->Update();
+    /*#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
     {
         if (keyLeft)
