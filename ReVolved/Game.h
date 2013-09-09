@@ -44,8 +44,8 @@ private:
 	std::shared_ptr<Character> character;
 	std::shared_ptr<CharDef> charDef;
 
-    std::shared_ptr<Enemy> enemy;
-    std::shared_ptr<Enemy> enemy2;
+    Enemy* enemy;
+    //std::shared_ptr<Enemy> enemy2;
 
 	//map information
 	std::shared_ptr<Map> groundMap;

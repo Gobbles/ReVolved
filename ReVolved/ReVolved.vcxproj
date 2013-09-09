@@ -88,6 +88,7 @@
     <ClCompile Include="CharDef.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyStatesOwned.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FireParticle.cpp" />
     <ClCompile Include="Frame.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="CharDef.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyOwnedStates.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FireParticle.h" />
     <ClInclude Include="Frame.h" />

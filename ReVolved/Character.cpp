@@ -190,7 +190,7 @@ void Character::SetSlide(float distance)
 	Trajectory->x = (float)Face * 2.0f * distance - distance;
 }
 
-//
+//Make the character jump
 void Character::SetNewJump(float jump)
 {
 	Trajectory->y = -jump;

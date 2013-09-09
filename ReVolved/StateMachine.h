@@ -2,7 +2,7 @@
 #define STATEMACHINE_H
 
 #include "State.h"
-//#include <cassert>
+#include <cassert>
 
 template <class entity_type>
 class StateMachine
@@ -21,12 +21,12 @@ private:
 
 public:
     StateMachine(entity_type* owner):mOwner(owner),
-                                                            mCurrentState(NULL),
-                                                            mPreviousState(NULL),
-                                                            mGlobalState(NULL)
+                                                           mCurrentState(NULL),
+                                                           mPreviousState(NULL),
+                                                           mGlobalState(NULL)
     {}
 
-    //virtual ~StateMachine() {}
+    virtual ~StateMachine() {}
 
     void SetCurrentState(State<entity_type>* s) {mCurrentState = s;}
     void SetGlobalState(State<entity_type>* s) {mGlobalState = s;}
@@ -43,7 +43,7 @@ public:
 
     void ChangeState(State<entity_type>* pNewState)
     {
-        //assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
+        assert(pNewState && "<StateMachine::ChangeState>: trying to change to a null state");
 
         //Store our current State as our previous state
         mPreviousState = mCurrentState;

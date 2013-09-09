@@ -87,7 +87,7 @@ void Entity::Update(float time_passed)
 					float tfY;
 					if( s > -1 && ts > -1)
 					{
-						tfY = currentMap->GetLedgeYLoc(i, s, pLoc->x);
+						tfY = currentMap->GetLedgeYLoc(i, ts, pLoc->x);
 						fY = currentMap->GetLedgeYLoc(i, s, Location->x);
 						if(pLoc->y <= tfY && Location->y >= fY)
 						{

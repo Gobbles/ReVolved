@@ -55,6 +55,18 @@
     <Filter Include="Source Files\BaseAI">
       <UniqueIdentifier>{1c8c663b-b785-4d2f-8a5f-59a3d0e66be4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\BaseAI\States">
+      <UniqueIdentifier>{dc83a854-128f-4989-a955-0cd6a160e58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\BaseAI\States\EnemyStates">
+      <UniqueIdentifier>{215ab46c-895f-478a-9ead-3ac4795224d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseAI\States">
+      <UniqueIdentifier>{be136ac7-c468-4a10-82b5-c4845557df1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\BaseAI\States\EnemyStates">
+      <UniqueIdentifier>{74817023-390a-443e-a266-537bdc174652}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyStatesOwned.cpp">
+      <Filter>Source Files\BaseAI\States\EnemyStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -185,11 +200,14 @@
     <ClInclude Include="BaseAIEntity.h">
       <Filter>Header Files\BaseAI</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Header Files\BaseAI</Filter>
-    </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\BaseAI</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\BaseAI\States</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyOwnedStates.h">
+      <Filter>Header Files\BaseAI\States\EnemyStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

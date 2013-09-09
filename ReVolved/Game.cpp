@@ -4,7 +4,7 @@ Game::Game()
 {
 	screenSize = sf::Vector2f(1024,768);
 	window = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.04a", sf::Style::Close));
-	//window->setFramerateLimit(60);
+
 	window->setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
 	window->setView(MainCamera->GameView());
@@ -68,23 +68,24 @@ Game::Game()
 
 Game::~Game()
 {
+    delete enemy;
 }
 
 void Game::LoadCharacter()
 {
 	groundMap = std::make_shared<Map>(MainCamera);
 	groundMap->Read();
-
+    
 	charDef = std::make_shared<CharDef>(CharDef("skeleton"));
 	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0, pManager));
 	character->BodypartsInit();
 	character->SetMap(groundMap);
-    enemy = std::make_shared<Enemy>(Enemy(sf::Vector2f(800.f, 100.f), charDef, 1, pManager));
+    enemy = new Enemy(sf::Vector2f(800.f, 100.f), charDef, 1, pManager);
     enemy->BodypartsInit();
     enemy->SetMap(groundMap);
-    enemy2 = std::make_shared<Enemy>(Enemy(sf::Vector2f(900.f, 100.f), charDef, 1, pManager));
+    /*enemy2 = std::make_shared<Enemy>(Enemy(sf::Vector2f(900.f, 100.f), charDef, 2, pManager));
     enemy2->BodypartsInit();
-    enemy2->SetMap(groundMap);
+    enemy2->SetMap(groundMap);*/
 	sf::Context context;
 	Loaded = true;
 }
@@ -106,17 +107,17 @@ void Game::Run()
 		}
 		//ProcessEvents();
 		timeSinceLastUpdate += clock.restart();
+
+        //fps code
+		fps = 1.f / timeSinceLastUpdate.asSeconds();
+		std::stringstream ss (std::stringstream::in | std::stringstream::out);
+		ss << fps;
+		fpsStr = ss.str();
+		fpsText.setString(fpsStr);
+		fpsText.setColor(sf::Color::Red);
 		
 		while(timeSinceLastUpdate > timePerFrame)
 		{
-			//fps code
-			fps = 1.f / timeSinceLastUpdate.asSeconds();
-			std::stringstream ss (std::stringstream::in | std::stringstream::out);
-			ss << fps;
-			fpsStr = ss.str();
-			fpsText.setString(fpsStr);
-			fpsText.setColor(sf::Color::Red);
-
 			timeSinceLastUpdate -= timePerFrame;
 			ProcessEvents();
 			Update(timePerFrame.asSeconds());
@@ -225,8 +226,8 @@ void Game::Update(float time_passed)
 		DoInput();
 		character->Update(time_passed);
         enemy->Update(time_passed);
-        enemy2->Update(time_passed);
-		//groundMap->Update(pManager);
+        //enemy2->Update(time_passed);
+		groundMap->Update(pManager);
 		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
@@ -254,7 +255,7 @@ void Game::Draw()
 		groundMap->Draw(window, mapsTex, mapBackTex,0,3);
 		pManager->DrawParticle(window, particleSpr, true);
         enemy->Draw(window);
-        enemy2->Draw(window);
+        //enemy2->Draw(window);
 		character->Draw(window);
 		pManager->DrawParticle(window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);

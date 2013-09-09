@@ -14,7 +14,7 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
     ANIMATION_JFALL	                = "jfall";
     ANIMATION_HITLAND            = "hitland";
 
-    mStateMachine = std::make_shared<StateMachine<Enemy> >(this);
+    mStateMachine = new StateMachine<Enemy>(this);
 
 	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
 	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
@@ -38,8 +38,14 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
 
 	//particle Manager
 	pManager = pMan;
-}
 
+    //this must be last because we need everything else initlized in the class first
+    mStateMachine->SetCurrentState(EnemyAttack::Instance());
+}
+Enemy::~Enemy()
+{
+    delete mStateMachine;
+}
 void Enemy::Update(float time_passed)
 {
 	Entity::Update(time_passed);
@@ -145,7 +151,114 @@ void Enemy::Update(float time_passed)
             DoScript(Anim, AnimFrame);
         }
     }
-#pragma endregion
+#pragma endregion*/
  
-    CheckTrig(pManager);*/
+    CheckTrig(pManager);
+}
+
+void Enemy::SetNewJump(float jump)
+{
+    SetNewAnim(ANIMATION_JUMP);
+	Trajectory->y = -jump;
+	State = Air;
+	ledgeAttach = -1;
+}
+
+int Enemy::GetWorldState()
+{
+    return State;
+}
+
+void Enemy::DoScript(int animIdx, int KeyFrameIdx)
+{
+	std::shared_ptr<Animations> animations = charDef->animations[animIdx];
+	std::shared_ptr<KeyFrame> keyFrame = animations->keyFrames[KeyFrameIdx];
+
+	bool done = false;
+
+	for(int i = 0; i < keyFrame->scripts.size(); i++)
+	{
+		if(done)
+			break;
+		else
+		{
+			std::shared_ptr<ScriptLine> line = keyFrame->scripts[i];
+			if(line != NULL)
+			{
+				switch(line->command)
+				{
+					case SetAnim:
+						SetNewAnim(line->sParam);
+						break;
+					case Goto:
+						AnimFrame = line->iParam;
+						done = true;
+						break;
+					case IfUpGoto:
+						/*if(keyUp)
+						{
+							AnimFrame = line->iParam;
+							done = true;
+						}*/
+						break;
+					case IfDownGoto:
+						/*if(keyDown)
+						{
+							AnimFrame = line->iParam;
+							done = true;
+						}*/
+						break;
+					case Float:
+						floating = true;
+						break;
+					case UnFloat:
+						floating = false;
+						break;
+					case Slide:
+						//SetSlide(line->iParam);
+						break;
+					case Backup:
+						//SetSlide(-line->iParam);
+						break;
+					case SetJump:
+						SetNewJump(line->iParam);
+						break;
+					case JoyMove:
+						/*if(keyLeft)
+							Trajectory->x = -speed;
+						else if(keyRight)
+							Trajectory->x = speed;*/
+						break;
+					case ClearKeys:
+						//PressedKey = Nokey;
+						break;
+					case SetUpperGoto:
+						//GoToGoal[Upper] = line->iParam;
+						break;
+					case SetLowerGoto:
+						//GoToGoal[Lower] = line->iParam;
+						break;
+					case SetAtkGoto:
+						//GoToGoal[Attack] = line->iParam;
+						break;
+					case SetAnyGoto:
+                        //GoToGoal[Upper] = line->iParam;
+                        //GoToGoal[Lower] = line->iParam;
+                        //GoToGoal[Attack] = line->iParam;
+                        break;
+                    case SetSecondaryGoto:
+                        //GoToGoal[Secondary] = line->iParam;
+                        //GoToGoal[SecUp] = line->iParam;
+                        //GoToGoal[SecDown] = line->iParam;
+						break;
+					case SetSecUpGoto:
+                        //GoToGoal[SecUp] = line->iParam;
+                        break;
+                    case SetSecDownGoto:
+						//GoToGoal[SecDown] = line->iParam;
+						break;
+				}
+			}
+		}
+	}
 }
