@@ -1,6 +1,10 @@
-#include "Entity.h"
+#include "SideScrollEnt.h"
 
-void Entity::Update(float time_passed)
+SideScrollEnt::SideScrollEnt(int id) : Entity(id)
+{
+}
+
+void SideScrollEnt::Update(float time_passed)
 {
 	#pragma region Update Animation
 	std::shared_ptr<Animations> animation = charDef->animations[Anim];
@@ -157,7 +161,7 @@ void Entity::Update(float time_passed)
 }
 
 //Draw the character
-void Entity::Draw(std::shared_ptr<sf::RenderWindow> window)
+void SideScrollEnt::Draw(std::shared_ptr<sf::RenderWindow> window)
 {
 	sf::IntRect sRect;
 
@@ -240,7 +244,7 @@ void Entity::Draw(std::shared_ptr<sf::RenderWindow> window)
 }
 
 //initialise the Bodyparts list
-void Entity::BodypartsInit()
+void SideScrollEnt::BodypartsInit()
 {
 	for(int i = 0; i < 13; i++)
 		CharacterBodyParts.push_back(NULL);
@@ -287,13 +291,13 @@ void Entity::BodypartsInit()
 }
 
 //SetBodyPart
-void Entity::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart)
+void SideScrollEnt::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart)
 {
     CharacterBodyParts[newBodyPart->bpType] = newBodyPart;
 }
 
 //Fall off an an attached ledge
-void Entity::FallOff()
+void SideScrollEnt::FallOff()
 {
 	State = Air;
     SetNewAnim(ANIMATION_FLY);
@@ -301,7 +305,7 @@ void Entity::FallOff()
 }
 
 //land on a ledge
-void Entity::Land()
+void SideScrollEnt::Land()
 {
 	State = Grounded;
 	if(animName == ANIMATION_JHIT || animName == ANIMATION_JMID || animName == ANIMATION_JFALL)
@@ -314,7 +318,7 @@ void Entity::Land()
     }
 }
 
-void Entity::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> pLoc)
+void SideScrollEnt::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> pLoc)
 {
 	if(Trajectory->x + colMove > 0.0f)
 		if(map->CheckCol(sf::Vector2f(Location->x + 25.f, Location->y - 30.f)))
@@ -326,7 +330,7 @@ void Entity::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> p
 }
 
 //check any triggers we may have activated
-void Entity::CheckTrig(std::shared_ptr<ParticleManager> pMan)
+void SideScrollEnt::CheckTrig(std::shared_ptr<ParticleManager> pMan)
 {
 	int frameIndex = charDef->animations[Anim]->keyFrames[AnimFrame]->FrameRef;
 
@@ -354,13 +358,13 @@ void Entity::CheckTrig(std::shared_ptr<ParticleManager> pMan)
     }
 }
 
-void Entity::FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc, std::shared_ptr<ParticleManager> pMan)
+void SideScrollEnt::FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc, std::shared_ptr<ParticleManager> pMan)
 {
 
 }
 
 //Set the current character animation
-void Entity::SetNewAnim(std::string newAnim)
+void SideScrollEnt::SetNewAnim(std::string newAnim)
 {
 	if(animName == newAnim)
 		return;
@@ -385,7 +389,7 @@ void Entity::SetNewAnim(std::string newAnim)
     }
 }
 
-void::Entity::SetMap(std::shared_ptr<Map> newMap)
+void SideScrollEnt::SetMap(std::shared_ptr<Map> newMap)
 {
 	currentMap = newMap;
 }

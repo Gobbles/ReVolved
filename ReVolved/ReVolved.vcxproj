@@ -102,10 +102,10 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="ScriptLine.cpp" />
+    <ClCompile Include="SideScrollEnt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
-    <ClInclude Include="BaseAIEntity.h" />
     <ClInclude Include="BloodParticle.h" />
     <ClInclude Include="BodyParts.h" />
     <ClInclude Include="Character.h" />
@@ -127,8 +127,10 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="ScriptEnums.h" />
     <ClInclude Include="ScriptLine.h" />
+    <ClInclude Include="SideScrollEnt.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="TopDownEnt.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\VS\Revolved\Revolved\mapFormat.txt" />

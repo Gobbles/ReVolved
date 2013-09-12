@@ -3,7 +3,7 @@
 //======================================
 //Constructor
 //Setup for the character
-Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan)
+Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : SideScrollEnt(newId)
 {
 	//define the animation constants
 	ANIMATION_IDLE					= "idle";
@@ -30,7 +30,6 @@ Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, i
 	Face = Right;
 	Scale = 0.6f;
 	charDef = newCharDef;
-	Id = newId;
 	colMove = 0.0f;
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
@@ -53,7 +52,7 @@ Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, i
 //Update the character
 void Character::Update(float time_passed)
 {
-	Entity::Update(time_passed);
+	SideScrollEnt::Update(time_passed);
 	#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
     {

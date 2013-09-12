@@ -105,32 +105,35 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files\Base Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Animations.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="BodyParts.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="CharDef.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Frame.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyFrame.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Part.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptLine.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="EnemyStatesOwned.cpp">
       <Filter>Source Files\BaseAI\States\EnemyStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Animations.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="BodyParts.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharDef.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyFrame.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Part.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptLine.cpp">
+      <Filter>Source Files\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="SideScrollEnt.cpp">
+      <Filter>Source Files\Base Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,35 +173,8 @@
     <ClInclude Include="Entity.h">
       <Filter>Header Files\Base Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Animations.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="BodyParts.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="CharDef.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Frame.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyFrame.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Part.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptEnums.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptLine.h">
-      <Filter>Header Files\Base Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Header Files\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="BaseAIEntity.h">
-      <Filter>Header Files\BaseAI</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>Header Files\BaseAI</Filter>
@@ -208,6 +184,36 @@
     </ClInclude>
     <ClInclude Include="EnemyOwnedStates.h">
       <Filter>Header Files\BaseAI\States\EnemyStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Animations.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="BodyParts.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharDef.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyFrame.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Part.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptEnums.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptLine.h">
+      <Filter>Header Files\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="TopDownEnt.h">
+      <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="SideScrollEnt.h">
+      <Filter>Header Files\Base Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

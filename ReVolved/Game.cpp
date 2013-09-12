@@ -228,7 +228,7 @@ void Game::Update(float time_passed)
         enemy->Update(time_passed);
         //enemy2->Update(time_passed);
 		groundMap->Update(pManager);
-		pManager->UpdateParticles(time_passed);
+		//pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
 

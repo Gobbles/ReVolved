@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML\Window\Keyboard.hpp>
 #include "ParticleManager.h"
-#include "Entity.h"
+#include "SideScrollEnt.h"
 
 //enum for controlling the keypresses
 enum PressedKeys
@@ -19,7 +19,7 @@ enum PressedKeys
 };
 
 //main character class, this is our hero.
-class Character : public Entity
+class Character : public SideScrollEnt
 {
 private:
 

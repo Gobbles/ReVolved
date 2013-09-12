@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : BaseAIEntity(newId)
+Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : SideScrollEnt(newId)
 {
 	//define the animation constants
 	ANIMATION_IDLE                  = "idle";
@@ -22,7 +22,6 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
 	Face = Right;
 	Scale = 0.6f;
 	charDef = newCharDef;
-	Id = newId;
 	colMove = 0.0f;
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
@@ -48,7 +47,7 @@ Enemy::~Enemy()
 }
 void Enemy::Update(float time_passed)
 {
-	Entity::Update(time_passed);
+	SideScrollEnt::Update(time_passed);
 	mStateMachine->Update();
     /*#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)

@@ -2,7 +2,7 @@
 
 ParticleManager::ParticleManager()
 {
-	particles = std::vector<std::shared_ptr<Particle> >(1024);
+	particles = std::vector<std::shared_ptr<Particle> >(256);
 }
 
 void ParticleManager::AddParticle(std::shared_ptr<Particle> newParticle)

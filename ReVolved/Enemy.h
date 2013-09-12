@@ -1,12 +1,11 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
-#include "Entity.h"
-#include "BaseAIEntity.h"
+#include "SideScrollEnt.h"
 #include "StateMachine.h"
 #include "EnemyOwnedStates.h"
 
-class Enemy : public Entity, public BaseAIEntity
+class Enemy : public SideScrollEnt//, public BaseAIEntity
 {
 private:
     StateMachine<Enemy>* mStateMachine;
