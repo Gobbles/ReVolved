@@ -171,9 +171,13 @@ void Map::Update(ParticleManager& pMan)
 				loc.y += 20.f;
 				sf::Vector2f traj = GetRandomVector2(-30.f, 30.f, -250.f, -200.f);
 				int icon = GetRandomFloat(0, 4);
-				pMan.AddParticle(std::make_shared<Fire>(loc, traj,
-					GetRandomFloat(0.25f, 0.75f),
-					icon), true);
+                for(int i = 0; i < 10; i ++)
+                {
+                    loc.x += i * 20;
+				    pMan.AddParticle(std::make_shared<Fire>(loc, traj,
+					    GetRandomFloat(0.25f, 0.75f),
+					    icon), true);
+                }
 			}
 		}
 	}

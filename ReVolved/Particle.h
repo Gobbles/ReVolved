@@ -1,7 +1,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\RenderTexture.hpp>
 #include <SFML\Graphics\Sprite.hpp>
 
 class Particle
@@ -20,7 +20,7 @@ public:
 	Particle();
 	virtual void Update(float gameTime);
 	virtual void KillMe() { Exists = false; }
-	virtual void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite) = 0;
+	virtual void Draw(sf::RenderTexture& texture, std::shared_ptr<sf::Sprite> sprite) = 0;
 private:
 
 protected:
