@@ -222,7 +222,7 @@ void Game::Update(float time_passed)
 		groundMap->Update(*pManager);
 		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
-		sf::Vector2f pos = *character->Location;
+		sf::Vector2f pos = character->Location;
 
 		if(pos.x - 512 < 0)
 			pos.x = 512;

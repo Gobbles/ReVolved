@@ -19,8 +19,8 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 
 	keyLeft = keyRight = keyUp = keyDown = keyJump = keyAttack = keySecondary = false;
 
-	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
-	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
+	Location = sf::Vector2f(newLoc);
+	Trajectory = sf::Vector2f();
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -55,13 +55,13 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
         if (keyLeft)
         {
             SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = -500.0f;
+			Trajectory.x = -500.0f;
             Face = Left;
         }
         else if (keyRight)
         {
             SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = 500.0f;
+			Trajectory.x = 500.0f;
             Face = Right;
         }
         else
@@ -86,14 +86,14 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
         if (keyLeft)
         {
             Face = Left;
-			if (Trajectory->x > -500.0f);
-				Trajectory->x -= 200.0f * time_passed;
+			if (Trajectory.x > -500.0f);
+				Trajectory.x -= 200.0f * time_passed;
         }
         if (keyRight)
         {
             Face = Right;
-			if (Trajectory->x < 500.0f);
-				Trajectory->x += 200.0f * time_passed;
+			if (Trajectory.x < 500.0f);
+				Trajectory.x += 200.0f * time_passed;
         }
         if (keyAttack)
         {
@@ -182,13 +182,13 @@ void Character::Input(bool keysPressed[])
 //slides the character in a direction
 void Character::SetSlide(float distance)
 {
-	Trajectory->x = (float)Face * 2.0f * distance - distance;
+	Trajectory.x = (float)Face * 2.0f * distance - distance;
 }
 
 //Make the character jump
 void Character::SetNewJump(float jump)
 {
-	Trajectory->y = -jump;
+	Trajectory.y = -jump;
 	State = Air;
 	ledgeAttach = -1;
 }
@@ -249,9 +249,9 @@ void Character::DoScript(int animIdx, int KeyFrameIdx)
 						break;
 					case JoyMove:
 						if(keyLeft)
-							Trajectory->x = -speed;
+							Trajectory.x = -speed;
 						else if(keyRight)
-							Trajectory->x = speed;
+							Trajectory.x = speed;
 						break;
 					case ClearKeys:
 						PressedKey = Nokey;

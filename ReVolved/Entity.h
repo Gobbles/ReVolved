@@ -16,8 +16,8 @@ private:
 	
 public:
 	//public members
-	std::shared_ptr<sf::Vector2f> Location;
-	std::shared_ptr<sf::Vector2f> Trajectory;
+	sf::Vector2f Location;
+	sf::Vector2f Trajectory;
 
 	//public functions
 	Entity(int id)

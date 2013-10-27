@@ -24,6 +24,8 @@ enum CharDir
 
 class SideScrollEnt : public Entity
  {
+ private:
+     sf::Vector2f pLoc;
  protected:
      //protected members
 	CharDef& charDef;

@@ -33,81 +33,81 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 	}
 	#pragma endregion
 	#pragma region Update Location By Trajectory
-	std::shared_ptr<sf::Vector2f> pLoc(new sf::Vector2f(Location->x, Location->y));
+	pLoc = Location;//sf::Vector2f(Location->x, Location->y));
 
 	if (State == Grounded)
 	{
-		if (Trajectory->x > 0.0f)
+		if (Trajectory.x > 0.0f)
 		{
-			Trajectory->x -= 2000.0f * time_passed;
-			if (Trajectory->x < 0.0f) Trajectory->x = 0.0f;
+			Trajectory.x -= 2000.0f * time_passed;
+			if (Trajectory.x < 0.0f) Trajectory.x = 0.0f;
 		}
 
-		if (Trajectory->x < 0.0f)
+		if (Trajectory.x < 0.0f)
 		{
-			Trajectory->x += 2000.0f * time_passed;
-			if (Trajectory->x > 0.0f) Trajectory->x = 0.0f;
+			Trajectory.x += 2000.0f * time_passed;
+			if (Trajectory.x > 0.0f) Trajectory.x = 0.0f;
 		}
 	}
 	else if (State == Air)
 	{
-		if (Trajectory->x > 0.0f)
+		if (Trajectory.x > 0.0f)
 		{
-			Trajectory->x -= 250.0f * time_passed;
-			if (Trajectory->x < 0.0f) Trajectory->x = 0.0f;
+			Trajectory.x -= 250.0f * time_passed;
+			if (Trajectory.x < 0.0f) Trajectory.x = 0.0f;
 		}
 
-		if (Trajectory->x < 0.0f)
+		if (Trajectory.x < 0.0f)
 		{
-			Trajectory->x += 250.0f * time_passed;
-			if (Trajectory->x > 0.0f) Trajectory->x = 0.0f;
+			Trajectory.x += 250.0f * time_passed;
+			if (Trajectory.x > 0.0f) Trajectory.x = 0.0f;
 		}
 	}
 
-	Location->x += Trajectory->x * time_passed;
-	Location->x += colMove * time_passed;
+	Location.x += Trajectory.x * time_passed;
+	Location.x += colMove * time_passed;
 
 	if (State == Air)
 	{
-		Location->y += Trajectory->y * time_passed;
-		Trajectory->y += time_passed * 1500.0f;
+		Location.y += Trajectory.y * time_passed;
+		Trajectory.y += time_passed * 1500.0f;
 	}
 	#pragma endregion
 	#pragma region Collision Detection
 	if(State == Air)
 	{
 		#pragma region Air State
-		CheckXCol(currentMap, *pLoc);
+		CheckXCol(currentMap, pLoc);
 
 		#pragma region Land on Ledge
-		if (Trajectory->y > 0.0f)
+		if (Trajectory.y > 0.0f)
 		{
 			for(int i = 0; i < 16; i++)
 			{
 				if(currentMap.GetLedgeTotalNodes(i) > 1)
 				{
-					int ts = currentMap.GetLedgeSec(i, pLoc->x);
-					int s = currentMap.GetLedgeSec(i, Location->x);
+					int ts = currentMap.GetLedgeSec(i, pLoc.x);
+					int s = currentMap.GetLedgeSec(i, Location.x);
 					float fY;
 					float tfY;
 					if( s > -1 && ts > -1)
 					{
-						tfY = currentMap.GetLedgeYLoc(i, ts, pLoc->x);
-						fY = currentMap.GetLedgeYLoc(i, s, Location->x);
-						if(pLoc->y <= tfY && Location->y >= fY)
+						tfY = currentMap.GetLedgeYLoc(i, ts, pLoc.x);
+						fY = currentMap.GetLedgeYLoc(i, s, Location.x);
+						if(pLoc.y <= tfY && Location.y >= fY)
 						{
-							if(Trajectory->y > 0.0f)
+							if(Trajectory.y > 0.0f)
 							{
-								Location->y = fY;
+								Location.y = fY;
 								ledgeAttach = i;
 								Land();
 							}
 						}
 						else
 						{
-							if(currentMap.GetLedgeFlags(i) == 1 && Location->y >= fY)
+							if(currentMap.GetLedgeFlags(i) == 1 && Location.y >= fY)
 							{
-								Location->y = fY;
+								Location.y = fY;
 								ledgeAttach = i;
 								Land();
 							}
@@ -120,11 +120,11 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 		#pragma region Land on Col
 		if(State == Air)
 		{
-			if(Trajectory->y > 0.0f)
+			if(Trajectory.y > 0.0f)
 			{
-				if( currentMap.CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
+				if( currentMap.CheckCol(sf::Vector2f(Location.x, Location.y + 15.0f)))
 				{
-					pLoc->y = (float)((int)((Location->y + 15.0f) / 64.0f) * 64.0f);
+					pLoc.y = (float)((int)((Location.y + 15.0f) / 64.0f) * 64.0f);
 					Land();
 				}
 			}
@@ -138,24 +138,24 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 		#pragma region Grounded State
 		if (ledgeAttach > -1)
 		{
-			if(currentMap.GetLedgeSec(ledgeAttach, Location->x) == -1)
+			if(currentMap.GetLedgeSec(ledgeAttach, Location.x) == -1)
 			{
 				FallOff();
 			}
 			else
 			{
-				Location->y = currentMap.GetLedgeYLoc(ledgeAttach, currentMap.GetLedgeSec(ledgeAttach, Location->x), Location->x);
+				Location.y = currentMap.GetLedgeYLoc(ledgeAttach, currentMap.GetLedgeSec(ledgeAttach, Location.x), Location.x);
 			}
 		}
 		else
 		{
-			if(!currentMap.CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
+			if(!currentMap.CheckCol(sf::Vector2f(Location.x, Location.y + 15.0f)))
 			{
 				FallOff();
 			}
 		}
 
-		CheckXCol(currentMap, *pLoc);
+		CheckXCol(currentMap, pLoc);
 		#pragma endregion
 	}
 	#pragma endregion
@@ -177,8 +177,8 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 			float rotation = part->Rotation;
 
 			sf::Vector2f location;
-			location.x = part->Location->x * Scale + Location->x;// - GameCamera::scroll.x;
-			location.y = part->Location->y * Scale + Location->y;// - GameCamera::scroll.y;
+			location.x = part->Location->x * Scale + Location.x;// - GameCamera::scroll.x;
+			location.y = part->Location->y * Scale + Location.y;// - GameCamera::scroll.y;
 
 			sf::Vector2f scaling;
 			scaling.x = part->Scaling->x * Scale;
@@ -297,7 +297,7 @@ void SideScrollEnt::FallOff()
 {
 	State = Air;
     SetNewAnim(ANIMATION_FLY);
-	Trajectory->y = 0.0f;
+	Trajectory.y = 0.0f;
 }
 
 //land on a ledge
@@ -316,13 +316,13 @@ void SideScrollEnt::Land()
 
 void SideScrollEnt::CheckXCol(Map& map, sf::Vector2f& pLoc)
 {
-	if(Trajectory->x + colMove > 0.0f)
-		if(map.CheckCol(sf::Vector2f(Location->x + 25.f, Location->y - 30.f)))
-			Location->x = pLoc.x;
+	if(Trajectory.x + colMove > 0.0f)
+		if(map.CheckCol(sf::Vector2f(Location.x + 25.f, Location.y - 30.f)))
+			Location.x = pLoc.x;
 
-	if(Trajectory->x + colMove < 0.0f)
-		if(map.CheckCol(sf::Vector2f(Location->x - 25.f, Location->y - 30.f)))
-			Location->x = pLoc.x;
+	if(Trajectory.x + colMove < 0.0f)
+		if(map.CheckCol(sf::Vector2f(Location.x - 25.f, Location.y - 30.f)))
+			Location.x = pLoc.x;
 }
 
 //check any triggers we may have activated
@@ -340,8 +340,8 @@ void SideScrollEnt::CheckTrig(ParticleManager& pMan)
         {
             std::shared_ptr<sf::Vector2f> location;
 			location = part->Location;
-			location->x *=  Scale + Location->x;
-			location->y *=  Scale + Location->y;
+			location->x *=  Scale + Location.x;
+			location->y *=  Scale + Location.y;
             if (Face == Left)
             {
 				location->x -= part->Location->x * Scale * 2.0f;
