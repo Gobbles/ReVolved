@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : SideScrollEnt(newId)
+Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId) : SideScrollEnt(newId)
 {
 	//define the animation constants
 	ANIMATION_IDLE                  = "idle";
@@ -35,9 +35,6 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
 		return;
 	}
 
-	//particle Manager
-	pManager = pMan;
-
     //this must be last because we need everything else initlized in the class first
     mStateMachine->SetCurrentState(EnemyAttack::Instance());
 }
@@ -45,7 +42,7 @@ Enemy::~Enemy()
 {
     delete mStateMachine;
 }
-void Enemy::Update(float time_passed)
+void Enemy::Update(float time_passed, ParticleManager& pMan)
 {
 	SideScrollEnt::Update(time_passed);
 	mStateMachine->Update();
@@ -152,7 +149,7 @@ void Enemy::Update(float time_passed)
     }
 #pragma endregion*/
  
-    CheckTrig(pManager);
+    CheckTrig(pMan);
 }
 
 void Enemy::SetNewJump(float jump)

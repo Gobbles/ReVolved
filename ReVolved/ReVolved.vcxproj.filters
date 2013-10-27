@@ -102,9 +102,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Source Files\PlatformerMap</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\Base Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files\Enemy</Filter>
     </ClCompile>

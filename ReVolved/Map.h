@@ -29,7 +29,7 @@ public:
 	float GetLedgeYLoc(int layer, int i, float x);
 	bool CheckCol(sf::Vector2f loc);
 	bool CheckParticleCol(sf::Vector2f loc);
-	void Update(std::shared_ptr<ParticleManager> pMan);
+	void Update(ParticleManager& pMan);
 
 	void Read();
 

@@ -44,8 +44,7 @@ private:
 	std::shared_ptr<Character> character;
 	std::shared_ptr<CharDef> charDef;
 
-    Enemy* enemy;
-    //std::shared_ptr<Enemy> enemy2;
+    std::unique_ptr<Enemy> enemy;
 
 	//map information
 	std::shared_ptr<Map> groundMap;
@@ -72,7 +71,7 @@ private:
 	bool Loaded;
 
 	//Particle Engine
-	std::shared_ptr<ParticleManager> pManager;
+	std::unique_ptr<ParticleManager> pManager;
 
 	//constants
 	static const int gravity = 900;

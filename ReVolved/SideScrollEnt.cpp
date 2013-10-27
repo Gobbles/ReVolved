@@ -330,7 +330,7 @@ void SideScrollEnt::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vect
 }
 
 //check any triggers we may have activated
-void SideScrollEnt::CheckTrig(std::shared_ptr<ParticleManager> pMan)
+void SideScrollEnt::CheckTrig(ParticleManager& pMan)
 {
 	int frameIndex = charDef->animations[Anim]->keyFrames[AnimFrame]->FrameRef;
 
@@ -352,13 +352,13 @@ void SideScrollEnt::CheckTrig(std::shared_ptr<ParticleManager> pMan)
             }
             if(fire)
 			{
-                FireTrig(part->Index - 1000, location, pMan);
+                FireTrig(part->Index - 1000, location);
 			}
         }
     }
 }
 
-void SideScrollEnt::FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc, std::shared_ptr<ParticleManager> pMan)
+void SideScrollEnt::FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc)
 {
 
 }

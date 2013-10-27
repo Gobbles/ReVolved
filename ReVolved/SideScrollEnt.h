@@ -30,7 +30,6 @@ class SideScrollEnt : public Entity
 	CharDir Face;
 	CharState State;
 	
-	std::shared_ptr<ParticleManager> pManager;
 	std::vector<std::shared_ptr<BodyParts> > CharacterBodyParts;
 
 	//int array for the key press combo system
@@ -57,8 +56,8 @@ class SideScrollEnt : public Entity
 	virtual void FallOff();
 	virtual void Land();
 	virtual void CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> pLoc);
-	virtual void CheckTrig(std::shared_ptr<ParticleManager> pMan);
-	virtual void FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc, std::shared_ptr<ParticleManager> pMan);
+	virtual void CheckTrig(ParticleManager& pMan);
+	virtual void FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc);
 
  public:
      //animation constants

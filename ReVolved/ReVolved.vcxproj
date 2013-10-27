@@ -89,7 +89,6 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyStatesOwned.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FireParticle.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />

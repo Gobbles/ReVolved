@@ -28,9 +28,9 @@ public:
 	bool keyLeft, keyRight, keyUp, keyDown, keyJump, keyAttack, keySecondary;
 
 	//public function prototypes
-	Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan);
+	Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId);
 
-	void Update(float time_passed);
+	void Update(float time_passed, ParticleManager& pManager);
 	void Input(bool keysPressed[]);
 	void SetSlide(float dinstance);
 	void SetNewJump(float jump);

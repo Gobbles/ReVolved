@@ -3,7 +3,7 @@
 //======================================
 //Constructor
 //Setup for the character
-Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId, std::shared_ptr<ParticleManager> pMan) : SideScrollEnt(newId)
+Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId) : SideScrollEnt(newId)
 {
 	//define the animation constants
 	ANIMATION_IDLE					= "idle";
@@ -42,15 +42,12 @@ Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, i
 	{
 		return;
 	}
-
-	//particle Manager
-	pManager = pMan;
 }
 
 //================================================
 //Public functions
 //Update the character
-void Character::Update(float time_passed)
+void Character::Update(float time_passed, ParticleManager& pManager)
 {
 	SideScrollEnt::Update(time_passed);
 	#pragma region Animate

@@ -1,7 +1,8 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include <SFML\Graphics.hpp>
+#include <SFML\Graphics\RenderWindow.hpp>
+#include <SFML\Graphics\Sprite.hpp>
 
 class Particle
 {

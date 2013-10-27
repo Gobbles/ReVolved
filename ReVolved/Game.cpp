@@ -60,7 +60,7 @@ Game::Game()
 	}
 	Loaded = false;
 
-	pManager = std::make_shared<ParticleManager>(ParticleManager());
+	pManager = std::unique_ptr<ParticleManager>(new ParticleManager());
 
 	CharLoadThread = std::shared_ptr<sf::Thread>(new sf::Thread(&Game::LoadCharacter, this));
 	CharLoadThread->launch();
@@ -68,7 +68,6 @@ Game::Game()
 
 Game::~Game()
 {
-    delete enemy;
 }
 
 void Game::LoadCharacter()
@@ -77,15 +76,13 @@ void Game::LoadCharacter()
 	groundMap->Read();
     
 	charDef = std::make_shared<CharDef>(CharDef("skeleton"));
-	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0, pManager));
+	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0));
 	character->BodypartsInit();
 	character->SetMap(groundMap);
-    enemy = new Enemy(sf::Vector2f(800.f, 100.f), charDef, 1, pManager);
+    enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), charDef, 1));
     enemy->BodypartsInit();
     enemy->SetMap(groundMap);
-    /*enemy2 = std::make_shared<Enemy>(Enemy(sf::Vector2f(900.f, 100.f), charDef, 2, pManager));
-    enemy2->BodypartsInit();
-    enemy2->SetMap(groundMap);*/
+
 	sf::Context context;
 	Loaded = true;
 }
@@ -100,11 +97,6 @@ void Game::Run()
 
 	while (window->isOpen())
     {
-		//reset our input except for the up/down/left/right keys
-		for(int i = 4; i < KEY_COUNT; i++)
-		{
-			//keysPressed[i] = false;
-		}
 		//ProcessEvents();
 		timeSinceLastUpdate += clock.restart();
 
@@ -224,11 +216,11 @@ void Game::Update(float time_passed)
 	if(Loaded)
 	{
 		DoInput();
-		character->Update(time_passed);
-        enemy->Update(time_passed);
+		character->Update(time_passed, *pManager);
+        enemy->Update(time_passed, *pManager);
         //enemy2->Update(time_passed);
-		groundMap->Update(pManager);
-		//pManager->UpdateParticles(time_passed);
+		groundMap->Update(*pManager);
+		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
 		sf::Vector2f pos = *character->Location;
 
