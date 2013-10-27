@@ -101,12 +101,12 @@ void Game::Run()
 		timeSinceLastUpdate += clock.restart();
 
         //fps code
-		/*fps = 1.f / timeSinceLastUpdate.asSeconds();
+		fps = 1.f / timeSinceLastUpdate.asSeconds();
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
 		ss << fps;
 		fpsStr = ss.str();
 		fpsText.setString(fpsStr);
-		fpsText.setColor(sf::Color::Red);*/
+		fpsText.setColor(sf::Color::Red);
 		
 		while(timeSinceLastUpdate > timePerFrame)
 		{
