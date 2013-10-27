@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId) : SideScrollEnt(newId)
+Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEnt(newId, newCharDef)
 {
 	//define the animation constants
 	ANIMATION_IDLE                  = "idle";
@@ -21,7 +21,6 @@ Enemy::Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId
 
 	Face = Right;
 	Scale = 0.6f;
-	charDef = newCharDef;
 	colMove = 0.0f;
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
@@ -167,7 +166,7 @@ int Enemy::GetWorldState()
 
 void Enemy::DoScript(int animIdx, int KeyFrameIdx)
 {
-	std::shared_ptr<Animations> animations = charDef->animations[animIdx];
+	std::shared_ptr<Animations> animations = charDef.animations[animIdx];
 	std::shared_ptr<KeyFrame> keyFrame = animations->keyFrames[KeyFrameIdx];
 
 	bool done = false;

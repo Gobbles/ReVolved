@@ -11,7 +11,7 @@ private:
     StateMachine<Enemy>* mStateMachine;
 public:
 	//public function prototypes
-	Enemy(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId);
+	Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId);
     ~Enemy();
 	void Update(float time_passed, ParticleManager& pMan);
     void SetNewJump(float jump);

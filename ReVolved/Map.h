@@ -21,7 +21,7 @@ public:
 	Map(std::shared_ptr<GameCamera> camera);
 	const static int LAYER_BACK = 0;
 
-	void Draw(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Texture> mapsTex,
+	void Draw(sf::RenderWindow& window, std::shared_ptr<sf::Texture> mapsTex,
 			std::shared_ptr<sf::Texture> mapsBackTex, int startLayer, int endLayer);
 	int GetLedgeSec(int layer, float x);
 	int GetLedgeTotalNodes(int layer);

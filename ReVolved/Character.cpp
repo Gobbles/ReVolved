@@ -3,7 +3,7 @@
 //======================================
 //Constructor
 //Setup for the character
-Character::Character(sf::Vector2f newLoc, std::shared_ptr<CharDef> newCharDef, int newId) : SideScrollEnt(newId)
+Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEnt(newId, newCharDef)
 {
 	//define the animation constants
 	ANIMATION_IDLE					= "idle";
@@ -196,7 +196,7 @@ void Character::SetNewJump(float jump)
 
 void Character::DoScript(int animIdx, int KeyFrameIdx)
 {
-	std::shared_ptr<Animations> animations = charDef->animations[animIdx];
+	std::shared_ptr<Animations> animations = charDef.animations[animIdx];
 	std::shared_ptr<KeyFrame> keyFrame = animations->keyFrames[KeyFrameIdx];
 
 	bool done = false;

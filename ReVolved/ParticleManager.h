@@ -18,7 +18,7 @@ public:
 	void AddParticle(std::shared_ptr<Particle> newParticle);
 	void AddParticle(std::shared_ptr<Particle> newParticle, bool background);
 	void UpdateParticles(float frameTime);
-	void DrawParticle(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite, bool background);
+	void DrawParticle(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite, bool background);
 	void MakeShot(sf::Vector2f loc, sf::Vector2f traj, int face, int owner);
 	void MakeShotFlash(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeShotDust(sf::Vector2f loc, sf::Vector2f traj);

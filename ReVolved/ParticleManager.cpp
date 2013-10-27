@@ -41,17 +41,17 @@ void ParticleManager::UpdateParticles(float frameTime)
         }
     }
 }
-void ParticleManager::DrawParticle(std::shared_ptr<sf::RenderWindow> window, std::shared_ptr<sf::Sprite> sprite, bool background)
+void ParticleManager::DrawParticle(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite, bool background)
 {
     particleTexture.clear(sf::Color(0,0,0,0));
-	for(int i = 0; i < particles.size(); i++)
+	/*for(int i = 0; i < particles.size(); i++)
 	{
 		if (particles[i] != NULL)
         {
 			if (!particles[i]->Additive && particles[i]->Background == background)
                 particles[i]->Draw(particleTexture, sprite);
         }
-	}
+	}*/
 	for(int i = 0; i < particles.size(); i++)
 	{
 		if (particles[i] != NULL)
@@ -64,7 +64,7 @@ void ParticleManager::DrawParticle(std::shared_ptr<sf::RenderWindow> window, std
     particleTexture.display();
 
     sf::Sprite particleSprite(particleTexture.getTexture());
-    window->draw(particleSprite);
+    window.draw(particleSprite);
 }
 void ParticleManager::MakeShot(sf::Vector2f loc, sf::Vector2f traj, int face, int owner)
 {

@@ -3,7 +3,7 @@
 Game::Game()
 {
 	screenSize = sf::Vector2f(1024,768);
-	window = std::shared_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.04a", sf::Style::Close));
+	window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.04a", sf::Style::Close));
 
 	window->setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
@@ -75,11 +75,11 @@ void Game::LoadCharacter()
 	groundMap = std::make_shared<Map>(MainCamera);
 	groundMap->Read();
     
-	charDef = std::make_shared<CharDef>(CharDef("skeleton"));
-	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), charDef, 0));
+	charDef = std::unique_ptr<CharDef>(new CharDef("skeleton"));
+	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), *charDef, 0));
 	character->BodypartsInit();
 	character->SetMap(groundMap);
-    enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), charDef, 1));
+    enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
     enemy->BodypartsInit();
     enemy->SetMap(groundMap);
 
@@ -244,12 +244,12 @@ void Game::Draw()
 	}
 	else
 	{
-		groundMap->Draw(window, mapsTex, mapBackTex,0,3);
-		pManager->DrawParticle(window, particleSpr, true);
-        enemy->Draw(window);
+		groundMap->Draw(*window, mapsTex, mapBackTex,0,3);
+		pManager->DrawParticle(*window, particleSpr, true);
+        enemy->Draw(*window);
         //enemy2->Draw(window);
-		character->Draw(window);
-		pManager->DrawParticle(window, particleSpr, false);
+		character->Draw(*window);
+		pManager->DrawParticle(*window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);
 	}
 	window->draw(fpsText);

@@ -26,7 +26,7 @@ class SideScrollEnt : public Entity
  {
  protected:
      //protected members
-	std::shared_ptr<CharDef> charDef;
+	CharDef& charDef;
 	CharDir Face;
 	CharState State;
 	
@@ -85,11 +85,11 @@ class SideScrollEnt : public Entity
     static const int TRIG_KICK = 9;
 
     //ctor
-    SideScrollEnt(int id);
+    SideScrollEnt(int id, CharDef& newCharDef);
      
     //virtuals
 	virtual void Update(float time_passed);
-	virtual void Draw(std::shared_ptr<sf::RenderWindow> window);
+	virtual void Draw(sf::RenderWindow& window);
 	virtual void BodypartsInit();
 	virtual void SetBodyPart(std::shared_ptr<BodyParts> newBodyPart);
 	virtual void SetNewAnim(std::string newAnim);

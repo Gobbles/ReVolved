@@ -1,13 +1,13 @@
 #include "SideScrollEnt.h"
 
-SideScrollEnt::SideScrollEnt(int id) : Entity(id)
+SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(newCharDef)
 {
 }
 
 void SideScrollEnt::Update(float time_passed)
 {
 	#pragma region Update Animation
-	std::shared_ptr<Animations> animation = charDef->animations[Anim];
+	std::shared_ptr<Animations> animation = charDef.animations[Anim];
     std::shared_ptr<KeyFrame> keyFrame = animation->keyFrames[AnimFrame];
 
 	frame += time_passed * 40.f;
@@ -161,12 +161,10 @@ void SideScrollEnt::Update(float time_passed)
 }
 
 //Draw the character
-void SideScrollEnt::Draw(std::shared_ptr<sf::RenderWindow> window)
+void SideScrollEnt::Draw(sf::RenderWindow& window)
 {
-	sf::IntRect sRect;
-
-	int frameIdx = charDef->animations[Anim]->keyFrames[AnimFrame]->FrameRef;
-	std::shared_ptr<Frame> frame = charDef->frames[frameIdx];
+	int frameIdx = charDef.animations[Anim]->keyFrames[AnimFrame]->FrameRef;
+	std::shared_ptr<Frame> frame = charDef.frames[frameIdx];
 
 	for (int i = 0; i < frame->parts.size(); i++)
 	{
@@ -217,7 +215,7 @@ void SideScrollEnt::Draw(std::shared_ptr<sf::RenderWindow> window)
 
 			std::shared_ptr<sf::Texture> tmp;
 
-			sRect = CharacterBodyParts[currentIndex]->sRect;
+			sf::IntRect& sRect = CharacterBodyParts[currentIndex]->sRect;
 			tmp = CharacterBodyParts[currentIndex]->bodyPartTexture;
                                       
 			std::shared_ptr<sf::Sprite> sprite(new sf::Sprite(*tmp,sRect));
@@ -238,7 +236,7 @@ void SideScrollEnt::Draw(std::shared_ptr<sf::RenderWindow> window)
 			
 			sprite->setScale(scaling);
 
-			window->draw(*sprite);
+			window.draw(*sprite);
 		}
 	}
 }
@@ -332,9 +330,9 @@ void SideScrollEnt::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vect
 //check any triggers we may have activated
 void SideScrollEnt::CheckTrig(ParticleManager& pMan)
 {
-	int frameIndex = charDef->animations[Anim]->keyFrames[AnimFrame]->FrameRef;
+	int frameIndex = charDef.animations[Anim]->keyFrames[AnimFrame]->FrameRef;
 
-    std::shared_ptr<Frame> frame = charDef->frames[frameIndex];
+    std::shared_ptr<Frame> frame = charDef.frames[frameIndex];
 
 	for (int i = 0; i < frame->parts.size(); i++)
     {
@@ -369,9 +367,9 @@ void SideScrollEnt::SetNewAnim(std::string newAnim)
 	if(animName == newAnim)
 		return;
 
-	for (int i = 0; i < charDef->animations.size(); i++)
+	for (int i = 0; i < charDef.animations.size(); i++)
     {
-		if (charDef->animations[i]->name == newAnim)
+		if (charDef.animations[i]->name == newAnim)
         {
             Anim = i;
             AnimFrame = 0;

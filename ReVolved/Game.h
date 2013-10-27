@@ -24,7 +24,7 @@ public:
 	void SetScreenSize(sf::Vector2f value) { screenSize = value; }
 
 private:
-	std::shared_ptr<sf::RenderWindow> window;
+	std::unique_ptr<sf::RenderWindow> window;
 
 	//Loading Thread
 	std::shared_ptr<sf::Thread> CharLoadThread;
@@ -42,7 +42,7 @@ private:
 
 	//character Information
 	std::shared_ptr<Character> character;
-	std::shared_ptr<CharDef> charDef;
+	std::unique_ptr<CharDef> charDef;
 
     std::unique_ptr<Enemy> enemy;
 
