@@ -28,8 +28,7 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 	SetNewAnim(ANIMATION_FLY);
 	State = Air;
 
-	SkellyTex = std::make_shared<sf::Texture>(sf::Texture());
-	if(!SkellyTex->loadFromFile("Art/Character/Skeleton.png"))
+	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
 	{
 		return;
 	}
@@ -41,9 +40,9 @@ Enemy::~Enemy()
 {
     delete mStateMachine;
 }
-void Enemy::Update(float time_passed, ParticleManager& pMan)
+void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
 {
-	SideScrollEnt::Update(time_passed);
+	SideScrollEnt::Update(time_passed, currentMap);
 	mStateMachine->Update();
     /*#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)

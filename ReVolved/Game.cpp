@@ -3,7 +3,7 @@
 Game::Game()
 {
 	screenSize = sf::Vector2f(1024,768);
-	window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(screenSize.x, screenSize.y), "Re:Volved ver 0.0.04a", sf::Style::Close));
+	window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(static_cast<int>(screenSize.x), static_cast<int>(screenSize.y)), "Re:Volved ver 0.0.04a", sf::Style::Close));
 
 	window->setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
@@ -76,12 +76,12 @@ void Game::LoadCharacter()
 	groundMap->Read();
     
 	charDef = std::unique_ptr<CharDef>(new CharDef("skeleton"));
+
 	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), *charDef, 0));
 	character->BodypartsInit();
-	character->SetMap(groundMap);
+
     enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
     enemy->BodypartsInit();
-    enemy->SetMap(groundMap);
 
 	sf::Context context;
 	Loaded = true;
@@ -216,8 +216,8 @@ void Game::Update(float time_passed)
 	if(Loaded)
 	{
 		DoInput();
-		character->Update(time_passed, *pManager);
-        enemy->Update(time_passed, *pManager);
+		character->Update(time_passed, *pManager, *groundMap);
+        enemy->Update(time_passed, *pManager, *groundMap);
         //enemy2->Update(time_passed);
 		groundMap->Update(*pManager);
 		pManager->UpdateParticles(time_passed);

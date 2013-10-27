@@ -2,9 +2,10 @@
 
 SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(newCharDef)
 {
+    CharacterBodyParts = std::vector<BodyParts>(BodyPartTypeCount);
 }
 
-void SideScrollEnt::Update(float time_passed)
+void SideScrollEnt::Update(float time_passed, Map& currentMap)
 {
 	#pragma region Update Animation
 	std::shared_ptr<Animations> animation = charDef.animations[Anim];
@@ -76,23 +77,23 @@ void SideScrollEnt::Update(float time_passed)
 	if(State == Air)
 	{
 		#pragma region Air State
-		CheckXCol(currentMap, pLoc);
+		CheckXCol(currentMap, *pLoc);
 
 		#pragma region Land on Ledge
 		if (Trajectory->y > 0.0f)
 		{
 			for(int i = 0; i < 16; i++)
 			{
-				if(currentMap->GetLedgeTotalNodes(i) > 1)
+				if(currentMap.GetLedgeTotalNodes(i) > 1)
 				{
-					int ts = currentMap->GetLedgeSec(i, pLoc->x);
-					int s = currentMap->GetLedgeSec(i, Location->x);
+					int ts = currentMap.GetLedgeSec(i, pLoc->x);
+					int s = currentMap.GetLedgeSec(i, Location->x);
 					float fY;
 					float tfY;
 					if( s > -1 && ts > -1)
 					{
-						tfY = currentMap->GetLedgeYLoc(i, ts, pLoc->x);
-						fY = currentMap->GetLedgeYLoc(i, s, Location->x);
+						tfY = currentMap.GetLedgeYLoc(i, ts, pLoc->x);
+						fY = currentMap.GetLedgeYLoc(i, s, Location->x);
 						if(pLoc->y <= tfY && Location->y >= fY)
 						{
 							if(Trajectory->y > 0.0f)
@@ -104,7 +105,7 @@ void SideScrollEnt::Update(float time_passed)
 						}
 						else
 						{
-							if(currentMap->GetLedgeFlags(i) == 1 && Location->y >= fY)
+							if(currentMap.GetLedgeFlags(i) == 1 && Location->y >= fY)
 							{
 								Location->y = fY;
 								ledgeAttach = i;
@@ -121,7 +122,7 @@ void SideScrollEnt::Update(float time_passed)
 		{
 			if(Trajectory->y > 0.0f)
 			{
-				if( currentMap->CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
+				if( currentMap.CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
 				{
 					pLoc->y = (float)((int)((Location->y + 15.0f) / 64.0f) * 64.0f);
 					Land();
@@ -137,24 +138,24 @@ void SideScrollEnt::Update(float time_passed)
 		#pragma region Grounded State
 		if (ledgeAttach > -1)
 		{
-			if(currentMap->GetLedgeSec(ledgeAttach, Location->x) == -1)
+			if(currentMap.GetLedgeSec(ledgeAttach, Location->x) == -1)
 			{
 				FallOff();
 			}
 			else
 			{
-				Location->y = currentMap->GetLedgeYLoc(ledgeAttach, currentMap->GetLedgeSec(ledgeAttach, Location->x), Location->x);
+				Location->y = currentMap.GetLedgeYLoc(ledgeAttach, currentMap.GetLedgeSec(ledgeAttach, Location->x), Location->x);
 			}
 		}
 		else
 		{
-			if(!currentMap->CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
+			if(!currentMap.CheckCol(sf::Vector2f(Location->x, Location->y + 15.0f)))
 			{
 				FallOff();
 			}
 		}
 
-		CheckXCol(currentMap, pLoc);
+		CheckXCol(currentMap, *pLoc);
 		#pragma endregion
 	}
 	#pragma endregion
@@ -213,12 +214,10 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 
 			if (Face == Left) flip = true;
 
-			std::shared_ptr<sf::Texture> tmp;
-
-			sf::IntRect& sRect = CharacterBodyParts[currentIndex]->sRect;
-			tmp = CharacterBodyParts[currentIndex]->bodyPartTexture;
+			sf::IntRect& sRect = CharacterBodyParts[currentIndex].sRect;
+			sf::Texture& tmp = CharacterBodyParts[currentIndex].bodyPartTexture;
                                       
-			std::shared_ptr<sf::Sprite> sprite(new sf::Sprite(*tmp,sRect));
+			std::shared_ptr<sf::Sprite> sprite(new sf::Sprite(tmp,sRect));
 			sprite->setOrigin(sf::Vector2f((float)sRect.width / 2.f, 32.0f));
 			sprite->setPosition(location);
 			sprite->setColor(sf::Color::White);
@@ -244,54 +243,53 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 //initialise the Bodyparts list
 void SideScrollEnt::BodypartsInit()
 {
-	for(int i = 0; i < 13; i++)
-		CharacterBodyParts.push_back(NULL);
-	std::shared_ptr<BodyParts> tmpPart;
+    //create the initial body parts spots, these will be filled with the various parts to attach
+
 	//Head
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 0, 128, 128), SkellyTex, Head));
-	SetBodyPart(tmpPart);
+	SetBodyPart(BodyParts(sf::IntRect(0, 0, 128, 128), SkellyTex, Head));
 	
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 128, 128, 128), SkellyTex, UpperTorso));
-    SetBodyPart(tmpPart);
+    //Upper Torso
+	 SetBodyPart(BodyParts(sf::IntRect(0, 128, 128, 128), SkellyTex, UpperTorso));
     
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 128, 128, 128), SkellyTex, LowerTorso));
-	SetBodyPart(tmpPart);
+     //Lower Torso
+	SetBodyPart(BodyParts(sf::IntRect(128, 128, 128, 128), SkellyTex, LowerTorso));
 	
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 128, 128, 128), SkellyTex, UpperRunTorso));
-    SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 128, 128, 128), SkellyTex, LowerRunTorso));
-	SetBodyPart(tmpPart);
-	
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 256, 128, 128), SkellyTex, FrontUpperArm));
-    SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 256, 128, 128), SkellyTex, FrontLowerArm));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(0, 384, 128, 128), SkellyTex, FrontUpperLeg));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(128, 384, 128, 128), SkellyTex, FrontLowerLeg));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 256, 128, 128), SkellyTex, RearUpperArm));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 256, 128, 128), SkellyTex, RearLowerArm));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(256, 384, 128, 128), SkellyTex, RearUpperLeg));
-	SetBodyPart(tmpPart);
-    
-	tmpPart = std::make_shared<BodyParts>(BodyParts(sf::IntRect(384, 384, 128, 128), SkellyTex, RearLowerLeg));
-	SetBodyPart(tmpPart);
+    //Upper Side Torso
+	SetBodyPart(BodyParts(sf::IntRect(256, 128, 128, 128), SkellyTex, UpperRunTorso));
+
+    //Lower Side Torso
+	SetBodyPart(BodyParts(sf::IntRect(384, 128, 128, 128), SkellyTex, LowerRunTorso));
+
+	//Front Upper Arm
+	SetBodyPart(BodyParts(sf::IntRect(0, 256, 128, 128), SkellyTex, FrontUpperArm));
+
+    //Front Lower Arm    
+	SetBodyPart(BodyParts(sf::IntRect(128, 256, 128, 128), SkellyTex, FrontLowerArm));
+
+    //Front Upper Leg
+	SetBodyPart(BodyParts(sf::IntRect(0, 384, 128, 128), SkellyTex, FrontUpperLeg));
+
+    //Front Lower Leg
+	SetBodyPart(BodyParts(sf::IntRect(128, 384, 128, 128), SkellyTex, FrontLowerLeg));
+
+    //Rear Upper Arm
+	SetBodyPart(BodyParts(sf::IntRect(256, 256, 128, 128), SkellyTex, RearUpperArm));
+
+    //Rear Lower Arm
+	SetBodyPart(BodyParts(sf::IntRect(384, 256, 128, 128), SkellyTex, RearLowerArm));
+
+    //Rear Upper Leg
+	SetBodyPart(BodyParts(sf::IntRect(256, 384, 128, 128), SkellyTex, RearUpperLeg));
+
+    //Rear Lower Leg
+	SetBodyPart(BodyParts(sf::IntRect(384, 384, 128, 128), SkellyTex, RearLowerLeg));
+
 }
 
 //SetBodyPart
-void SideScrollEnt::SetBodyPart(std::shared_ptr<BodyParts> newBodyPart)
+void SideScrollEnt::SetBodyPart(BodyParts newBodyPart)
 {
-    CharacterBodyParts[newBodyPart->bpType] = newBodyPart;
+    CharacterBodyParts[newBodyPart.bpType] = newBodyPart;
 }
 
 //Fall off an an attached ledge
@@ -316,15 +314,15 @@ void SideScrollEnt::Land()
     }
 }
 
-void SideScrollEnt::CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> pLoc)
+void SideScrollEnt::CheckXCol(Map& map, sf::Vector2f& pLoc)
 {
 	if(Trajectory->x + colMove > 0.0f)
-		if(map->CheckCol(sf::Vector2f(Location->x + 25.f, Location->y - 30.f)))
-			Location->x = pLoc->x;
+		if(map.CheckCol(sf::Vector2f(Location->x + 25.f, Location->y - 30.f)))
+			Location->x = pLoc.x;
 
 	if(Trajectory->x + colMove < 0.0f)
-		if(map->CheckCol(sf::Vector2f(Location->x - 25.f, Location->y - 30.f)))
-			Location->x = pLoc->x;
+		if(map.CheckCol(sf::Vector2f(Location->x - 25.f, Location->y - 30.f)))
+			Location->x = pLoc.x;
 }
 
 //check any triggers we may have activated
@@ -385,9 +383,4 @@ void SideScrollEnt::SetNewAnim(std::string newAnim)
             break;
         }
     }
-}
-
-void SideScrollEnt::SetMap(std::shared_ptr<Map> newMap)
-{
-	currentMap = newMap;
 }

@@ -30,7 +30,7 @@ class SideScrollEnt : public Entity
 	CharDir Face;
 	CharState State;
 	
-	std::vector<std::shared_ptr<BodyParts> > CharacterBodyParts;
+	std::vector<BodyParts> CharacterBodyParts;
 
 	//int array for the key press combo system
 	std::vector<int> GoToGoal;
@@ -49,13 +49,12 @@ class SideScrollEnt : public Entity
 
 	std::string animName;	
 	int ledgeAttach;
-	std::shared_ptr<sf::Texture> SkellyTex;
-	std::shared_ptr<Map> currentMap;
+	sf::Texture SkellyTex;
 
 	//protected virtual functions
 	virtual void FallOff();
 	virtual void Land();
-	virtual void CheckXCol(std::shared_ptr<Map> map, std::shared_ptr<sf::Vector2f> pLoc);
+	virtual void CheckXCol(Map& map, sf::Vector2f& pLoc);
 	virtual void CheckTrig(ParticleManager& pMan);
 	virtual void FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc);
 
@@ -88,13 +87,12 @@ class SideScrollEnt : public Entity
     SideScrollEnt(int id, CharDef& newCharDef);
      
     //virtuals
-	virtual void Update(float time_passed);
+	virtual void Update(float time_passed, Map& currentMap);
 	virtual void Draw(sf::RenderWindow& window);
 	virtual void BodypartsInit();
-	virtual void SetBodyPart(std::shared_ptr<BodyParts> newBodyPart);
+	virtual void SetBodyPart(BodyParts newBodyPart);
 	virtual void SetNewAnim(std::string newAnim);
 	virtual void DoScript(int animIdx, int KeyFrameIdx){}
-	virtual void SetMap(std::shared_ptr<Map> newMap);
  };
 
 #endif

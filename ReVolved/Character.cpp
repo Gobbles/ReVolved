@@ -37,8 +37,7 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 	SetNewAnim(ANIMATION_FLY);
 	State = Air;
 
-	SkellyTex = std::make_shared<sf::Texture>(sf::Texture());
-	if(!SkellyTex->loadFromFile("Art/Character/Skeleton.png"))
+	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
 	{
 		return;
 	}
@@ -47,9 +46,9 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 //================================================
 //Public functions
 //Update the character
-void Character::Update(float time_passed, ParticleManager& pManager)
+void Character::Update(float time_passed, ParticleManager& pManager, Map& currentMap)
 {
-	SideScrollEnt::Update(time_passed);
+	SideScrollEnt::Update(time_passed, currentMap);
 	#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
     {

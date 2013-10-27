@@ -30,7 +30,7 @@ public:
 	//public function prototypes
 	Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId);
 
-	void Update(float time_passed, ParticleManager& pManager);
+	void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
 	void Input(bool keysPressed[]);
 	void SetSlide(float dinstance);
 	void SetNewJump(float jump);

@@ -16,17 +16,19 @@ enum BodyPartTypes
     RearLowerArm,
     RearUpperLeg,
     RearLowerLeg,
-    Back,
+    //Back, not yet implemented
     BodyPartTypeCount
 };
 
 class BodyParts
 {
 public:
-	std::shared_ptr<std::string> animation;
+	std::string animation;
 	sf::IntRect sRect;
-	std::shared_ptr<sf::Texture> bodyPartTexture;
+	sf::Texture bodyPartTexture;
 	BodyPartTypes bpType;
 
-	BodyParts(sf::IntRect source, std::shared_ptr<sf::Texture> tex, BodyPartTypes type);
+	BodyParts(sf::IntRect& source, sf::Texture& tex, BodyPartTypes type);
+    BodyParts();
+    ~BodyParts();
 };

@@ -16,9 +16,9 @@ enum KeyPress
 	KEY_COUNT
 };
 
-const float PI = 3.14159265;
+const double PI = 3.14159265;
 
-static float RadToDeg(float Rad)
+static double RadToDeg(float Rad)
 {
 	return Rad / PI * 180;
 }
@@ -44,7 +44,7 @@ static int GetRandomInt(int iMin, int iMax)
 	return rand() % (iMax - iMin) + iMin + 1;
 }
 
-static float GetAngle(sf::Vector2f v1, sf::Vector2f v2)
+static double GetAngle(sf::Vector2f v1, sf::Vector2f v2)
 {
 	sf::Vector2f d = sf::Vector2f(v2.x - v1.x, v2.y - v1.y);
     if (d.x == 0.0f)
@@ -62,7 +62,7 @@ static float GetAngle(sf::Vector2f v1, sf::Vector2f v2)
             return PI;
     }
 
-    float a = (float)atan(abs(d.y) / abs(d.x));
+    double a = (double)atan(abs(d.y) / abs(d.x));
 
     if ((d.x < 0.0f) || (d.y > 0.0f)) a = PI - a;
     if ((d.x < 0.0f) || (d.y < 0.0f)) a = PI + a;
