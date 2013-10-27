@@ -101,12 +101,12 @@ void Game::Run()
 		timeSinceLastUpdate += clock.restart();
 
         //fps code
-		fps = 1.f / timeSinceLastUpdate.asSeconds();
+		/*fps = 1.f / timeSinceLastUpdate.asSeconds();
 		std::stringstream ss (std::stringstream::in | std::stringstream::out);
 		ss << fps;
 		fpsStr = ss.str();
 		fpsText.setString(fpsStr);
-		fpsText.setColor(sf::Color::Red);
+		fpsText.setColor(sf::Color::Red);*/
 		
 		while(timeSinceLastUpdate > timePerFrame)
 		{
@@ -218,11 +218,11 @@ void Game::Update(float time_passed)
 		DoInput();
 		character->Update(time_passed, *pManager, *groundMap);
         enemy->Update(time_passed, *pManager, *groundMap);
-        //enemy2->Update(time_passed);
+
 		groundMap->Update(*pManager);
 		pManager->UpdateParticles(time_passed);
 		sf::View view = window->getView();
-		sf::Vector2f pos = character->Location;
+		sf::Vector2f pos = *character->Location;
 
 		if(pos.x - 512 < 0)
 			pos.x = 512;
@@ -247,7 +247,7 @@ void Game::Draw()
 		groundMap->Draw(*window, mapsTex, mapBackTex,0,3);
 		pManager->DrawParticle(*window, particleSpr, true);
         enemy->Draw(*window);
-        //enemy2->Draw(window);
+  //      //enemy2->Draw(window);
 		character->Draw(*window);
 		pManager->DrawParticle(*window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);

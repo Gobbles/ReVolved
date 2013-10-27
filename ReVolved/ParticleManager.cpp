@@ -2,10 +2,7 @@
 
 ParticleManager::ParticleManager()
 {
-	particles = std::vector<std::shared_ptr<Particle> >(1024);
-
-    particleTexture.create(1024,768);
-
+	particles = std::vector<std::shared_ptr<Particle> >(512);
 }
 
 ParticleManager::~ParticleManager()
@@ -43,28 +40,23 @@ void ParticleManager::UpdateParticles(float frameTime)
 }
 void ParticleManager::DrawParticle(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite, bool background)
 {
-    particleTexture.clear(sf::Color(0,0,0,0));
-	/*for(int i = 0; i < particles.size(); i++)
+    //particleTexture.clear();
+	for(int i = 0; i < particles.size(); i++)
 	{
 		if (particles[i] != NULL)
         {
 			if (!particles[i]->Additive && particles[i]->Background == background)
-                particles[i]->Draw(particleTexture, sprite);
+                particles[i]->Draw(window, sprite);
         }
-	}*/
+	}
 	for(int i = 0; i < particles.size(); i++)
 	{
 		if (particles[i] != NULL)
         {
 			if (particles[i]->Additive && particles[i]->Background == background)
-                particles[i]->Draw(particleTexture, sprite);
+                particles[i]->Draw(window, sprite);
         }
 	}
-    //display the final texture
-    particleTexture.display();
-
-    sf::Sprite particleSprite(particleTexture.getTexture());
-    window.draw(particleSprite);
 }
 void ParticleManager::MakeShot(sf::Vector2f loc, sf::Vector2f traj, int face, int owner)
 {

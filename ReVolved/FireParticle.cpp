@@ -11,7 +11,7 @@ Fire::Fire(sf::Vector2f loc, sf::Vector2f traj, float _size, int icon)
 	Additive = true;
 }
 
-void Fire::Draw(sf::RenderTexture& texture, std::shared_ptr<sf::Sprite> sprite)
+void Fire::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
 {
 	if(frame > 0.5f) 
 		return;
@@ -58,5 +58,5 @@ void Fire::Draw(sf::RenderTexture& texture, std::shared_ptr<sf::Sprite> sprite)
 	sprite->setOrigin(32.f, 32.f);
 	sprite->setScale(sf::Vector2f(tsize,tsize));
 
-	texture.draw(*sprite);
+	window.draw(*sprite);
 }

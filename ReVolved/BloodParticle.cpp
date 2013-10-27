@@ -28,7 +28,7 @@ void Blood::Update(float frame_time)
 	Particle::Update(frame_time);
 }
 
-void Blood::Draw(sf::RenderTexture& texture, std::shared_ptr<sf::Sprite> sprite)
+void Blood::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
 {
 	sf::IntRect sRect(flag * 64, 0, 64, 64);
 	float frameAlpha;
@@ -47,5 +47,5 @@ void Blood::Draw(sf::RenderTexture& texture, std::shared_ptr<sf::Sprite> sprite)
 	sprite->setOrigin(32.f, 32.f);
 	sprite->setScale(size * 2.f, size * 0.5f);
 
-	texture.draw(*sprite);
+	window.draw(*sprite);
 }

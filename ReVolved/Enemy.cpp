@@ -16,8 +16,8 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 
     mStateMachine = new StateMachine<Enemy>(this);
 
-	Location = sf::Vector2f(newLoc);
-	Trajectory = sf::Vector2f();
+	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
+	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
 
 	Face = Right;
 	Scale = 0.6f;
@@ -153,7 +153,7 @@ void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
 void Enemy::SetNewJump(float jump)
 {
     SetNewAnim(ANIMATION_JUMP);
-	Trajectory.y = -jump;
+	Trajectory->y = -jump;
 	State = Air;
 	ledgeAttach = -1;
 }

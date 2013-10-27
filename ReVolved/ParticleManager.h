@@ -12,6 +12,7 @@ class ParticleManager
 public:
 	std::vector<std::shared_ptr<Particle> > particles;
 	std::shared_ptr<sf::RenderWindow> Window;
+    
 
 	ParticleManager();
     ~ParticleManager();
@@ -24,9 +25,6 @@ public:
 	void MakeShotDust(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeBulletBlood(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeBloodSplash(sf::Vector2f loc, sf::Vector2f traj);
-
-private:
-    sf::RenderTexture particleTexture;
 };
 
 #endif
