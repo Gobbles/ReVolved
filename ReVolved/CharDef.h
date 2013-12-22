@@ -8,8 +8,8 @@ class CharDef
 {
 public:
 	//members
-	std::vector<std::shared_ptr<Animations> > animations;
-	std::vector<std::shared_ptr<Frame> > frames;
+	std::vector<Animations> animations;
+	std::vector<Frame> frames;
 
 	std::string Path;
 	int headIndex;

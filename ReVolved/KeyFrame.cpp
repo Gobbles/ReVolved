@@ -8,7 +8,7 @@ KeyFrame::KeyFrame()
 	//scripts = std::vector<std::shared_ptr<ScriptLine> >(4, NULL);
 	for(int i = 0; i < size; i++)
 	{
-		scripts.push_back(std::make_shared<ScriptLine>(""));
+		scripts.push_back(ScriptLine(""));
 	}
 }
 

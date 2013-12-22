@@ -10,12 +10,12 @@ CharDef::CharDef(std::string path)
 	
 	for(int i = 0; i < animSize; i++)
 	{
-		animations.push_back(std::make_shared<Animations>());
+		animations.push_back(Animations());
 	}
 	
 	for(int i = 0; i < frameSize; i++)
 	{
-		frames.push_back(std::make_shared<Frame>());
+		frames.push_back(Frame());
 	}
 
 	Path = path;
@@ -24,8 +24,7 @@ CharDef::CharDef(std::string path)
 
 //Destructor
 CharDef::~CharDef()
-{
-	
+{	
 }
 
 //read the character definition for our character
@@ -51,58 +50,58 @@ void CharDef::Read()
 		
 		for(int i = 0; i < animations.size(); i++)
 		{
-			std::getline(myFile, animations[i]->name);
+			std::getline(myFile, animations[i].name);
 
-			for(int j = 0; j < animations[i]->keyFrames.size(); j++)
+			for(int j = 0; j < animations[i].keyFrames.size(); j++)
 			{
-				std::shared_ptr<KeyFrame> keyframe = animations[i]->keyFrames[j];
+				KeyFrame& keyframe = animations[i].keyFrames[j];
 
 				std::getline(myFile, tmp);
-				keyframe->FrameRef = atof(tmp.c_str());
+				keyframe.FrameRef = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				keyframe->Duration = atof(tmp.c_str());
+				keyframe.Duration = atof(tmp.c_str());
 
-				std::vector<std::shared_ptr<ScriptLine> > script = keyframe->scripts;
+				std::vector<ScriptLine> script = keyframe.scripts;
 				for(int s = 0; s < script.size(); s++)
 				{
 					std::string line;
 
 					std::getline(myFile, line);
 
-					animations[i]->keyFrames[j]->scripts[s] = std::make_shared<ScriptLine>(line);
+					animations[i].keyFrames[j].scripts[s] = ScriptLine(line);
 				}
 			}
 		}
 			
 		for(int i = 0; i < frames.size(); i++)
 		{
-			std::getline(myFile, frames[i]->name);
+			std::getline(myFile, frames[i].name);
 
-			for(int j = 0; j < frames[i]->parts.size(); j++)
+			for(int j = 0; j < frames[i].parts.size(); j++)
 			{
-				std::shared_ptr<Part> p = frames[i]->parts[j];
+				Part& p = frames[i].parts[j];
 
 				std::getline(myFile, tmp);
-				p->Index = atof(tmp.c_str());
+				p.Index = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Location->x = atof(tmp.c_str());
+				p.Location.x = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Location->y = atof(tmp.c_str());
+				p.Location.y = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Rotation = atof(tmp.c_str());
+				p.Rotation = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Scaling->x = atof(tmp.c_str());
+				p.Scaling.x = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Scaling->y = atof(tmp.c_str());
+				p.Scaling.y = atof(tmp.c_str());
 
 				std::getline(myFile, tmp);
-				p->Flip = atof(tmp.c_str());
+				p.Flip = atof(tmp.c_str());
 			}
 		}
 

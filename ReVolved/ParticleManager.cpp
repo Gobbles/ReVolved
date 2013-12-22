@@ -12,6 +12,7 @@ void ParticleManager::AddParticle(std::shared_ptr<Particle> newParticle)
 {
 	AddParticle(newParticle, false);
 }
+
 void ParticleManager::AddParticle(std::shared_ptr<Particle> newParticle, bool background)
 {
 	for(int i = 0; i < particles.size(); i++)

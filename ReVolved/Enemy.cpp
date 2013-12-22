@@ -16,8 +16,8 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 
     mStateMachine = new StateMachine<Enemy>(this);
 
-	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
-	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
+	Location = sf::Vector2f(newLoc);
+	Trajectory = sf::Vector2f();
 
 	Face = Right;
 	Scale = 0.6f;
@@ -25,7 +25,7 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
 
-	SetNewAnim(ANIMATION_FLY);
+	SetNewAnim(ANIMATION_IDLE);
 	State = Air;
 
 	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
@@ -153,7 +153,7 @@ void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
 void Enemy::SetNewJump(float jump)
 {
     SetNewAnim(ANIMATION_JUMP);
-	Trajectory->y = -jump;
+	Trajectory.y = -jump;
 	State = Air;
 	ledgeAttach = -1;
 }
@@ -165,77 +165,78 @@ int Enemy::GetWorldState()
 
 void Enemy::DoScript(int animIdx, int KeyFrameIdx)
 {
-	std::shared_ptr<Animations> animations = charDef.animations[animIdx];
-	std::shared_ptr<KeyFrame> keyFrame = animations->keyFrames[KeyFrameIdx];
+	Animations& animations = charDef.animations[animIdx];
+	KeyFrame& keyFrame = animations.keyFrames[KeyFrameIdx];
 
 	bool done = false;
 
-	for(int i = 0; i < keyFrame->scripts.size(); i++)
+	for(int i = 0; i < keyFrame.scripts.size(); i++)
 	{
 		if(done)
 			break;
 		else
 		{
-			std::shared_ptr<ScriptLine> line = keyFrame->scripts[i];
-			if(line != NULL)
-			{
-				switch(line->command)
-				{
-					case SetAnim:
-						SetNewAnim(line->sParam);
-						break;
-					case Goto:
-						AnimFrame = line->iParam;
-						done = true;
-						break;
-					case IfUpGoto:
-						/*if(keyUp)
-						{
-							AnimFrame = line->iParam;
-							done = true;
-						}*/
-						break;
-					case IfDownGoto:
-						/*if(keyDown)
-						{
-							AnimFrame = line->iParam;
-							done = true;
-						}*/
-						break;
-					case Float:
-						floating = true;
-						break;
-					case UnFloat:
-						floating = false;
-						break;
-					case Slide:
-						//SetSlide(line->iParam);
-						break;
-					case Backup:
-						//SetSlide(-line->iParam);
-						break;
-					case SetJump:
-						SetNewJump(line->iParam);
-						break;
-					case JoyMove:
-						/*if(keyLeft)
-							Trajectory->x = -speed;
-						else if(keyRight)
-							Trajectory->x = speed;*/
-						break;
-					case ClearKeys:
-						//PressedKey = Nokey;
-						break;
-					case SetUpperGoto:
-						//GoToGoal[Upper] = line->iParam;
-						break;
-					case SetLowerGoto:
-						//GoToGoal[Lower] = line->iParam;
-						break;
-					case SetAtkGoto:
-						//GoToGoal[Attack] = line->iParam;
-						break;
-					case SetAnyGoto:
+			ScriptLine& line = keyFrame.scripts[i];
+            if(line.command >= 0)
+            {
+			    switch(line.command)
+			    {
+				    case SetAnim:
+                        if(line.sParam != "")
+					        SetNewAnim(line.sParam);
+					    break;
+				    case Goto:
+					    AnimFrame = line.iParam;
+					    done = true;
+					    break;
+				    case IfUpGoto:
+					    /*if(keyUp)
+					    {
+						    AnimFrame = line->iParam;
+						    done = true;
+					    }*/
+					    break;
+				    case IfDownGoto:
+					    /*if(keyDown)
+					    {
+						    AnimFrame = line->iParam;
+						    done = true;
+					    }*/
+					    break;
+				    case Float:
+					    floating = true;
+					    break;
+				    case UnFloat:
+					    floating = false;
+					    break;
+				    case Slide:
+					    //SetSlide(line->iParam);
+					    break;
+				    case Backup:
+					    //SetSlide(-line->iParam);
+					    break;
+				    case SetJump:
+					    SetNewJump(line.iParam);
+					    break;
+				    case JoyMove:
+					    /*if(keyLeft)
+						    Trajectory->x = -speed;
+					    else if(keyRight)
+						    Trajectory->x = speed;*/
+					    break;
+				    case ClearKeys:
+					    //PressedKey = Nokey;
+					    break;
+				    case SetUpperGoto:
+					    //GoToGoal[Upper] = line->iParam;
+					    break;
+				    case SetLowerGoto:
+					    //GoToGoal[Lower] = line->iParam;
+					    break;
+				    case SetAtkGoto:
+					    //GoToGoal[Attack] = line->iParam;
+					    break;
+				    case SetAnyGoto:
                         //GoToGoal[Upper] = line->iParam;
                         //GoToGoal[Lower] = line->iParam;
                         //GoToGoal[Attack] = line->iParam;
@@ -244,15 +245,15 @@ void Enemy::DoScript(int animIdx, int KeyFrameIdx)
                         //GoToGoal[Secondary] = line->iParam;
                         //GoToGoal[SecUp] = line->iParam;
                         //GoToGoal[SecDown] = line->iParam;
-						break;
-					case SetSecUpGoto:
+					    break;
+				    case SetSecUpGoto:
                         //GoToGoal[SecUp] = line->iParam;
                         break;
                     case SetSecDownGoto:
-						//GoToGoal[SecDown] = line->iParam;
-						break;
-				}
-			}
+					    //GoToGoal[SecDown] = line->iParam;
+					    break;
+                }
+            }
 		}
 	}
 }

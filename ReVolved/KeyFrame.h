@@ -8,7 +8,7 @@ public:
 	int Duration;
 	int size;
 
-	std::vector<std::shared_ptr<ScriptLine> > scripts;
+	std::vector<ScriptLine> scripts;
 
 	KeyFrame();
 	~KeyFrame();

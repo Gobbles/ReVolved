@@ -19,8 +19,8 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 
 	keyLeft = keyRight = keyUp = keyDown = keyJump = keyAttack = keySecondary = false;
 
-	Location = std::make_shared<sf::Vector2f>(sf::Vector2f(newLoc));
-	Trajectory = std::make_shared<sf::Vector2f>(sf::Vector2f());
+	Location = sf::Vector2f(newLoc);
+	Trajectory = sf::Vector2f();
 
 	for(int i = 0; i < 8; i++)
 	{
@@ -34,7 +34,7 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
 
-	SetNewAnim(ANIMATION_FLY);
+	SetNewAnim(ANIMATION_IDLE);
 	State = Air;
 
 	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
@@ -55,13 +55,13 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
         if (keyLeft)
         {
             SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = -500.0f;
+			Trajectory.x = -500.0f;
             Face = Left;
         }
         else if (keyRight)
         {
             SetNewAnim(ANIMATION_RUN);
-			Trajectory->x = 500.0f;
+			Trajectory.x = 500.0f;
             Face = Right;
         }
         else
@@ -86,14 +86,14 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
         if (keyLeft)
         {
             Face = Left;
-			if (Trajectory->x > -500.0f);
-				Trajectory->x -= 200.0f * time_passed;
+			if (Trajectory.x > -500.0f);
+				Trajectory.x -= 200.0f * time_passed;
         }
         if (keyRight)
         {
             Face = Right;
-			if (Trajectory->x < 500.0f);
-				Trajectory->x += 200.0f * time_passed;
+			if (Trajectory.x < 500.0f);
+				Trajectory.x += 200.0f * time_passed;
         }
         if (keyAttack)
         {
@@ -182,107 +182,108 @@ void Character::Input(bool keysPressed[])
 //slides the character in a direction
 void Character::SetSlide(float distance)
 {
-	Trajectory->x = (float)Face * 2.0f * distance - distance;
+	Trajectory.x = (float)Face * 2.0f * distance - distance;
 }
 
 //Make the character jump
 void Character::SetNewJump(float jump)
 {
-	Trajectory->y = -jump;
+	Trajectory.y = -jump;
 	State = Air;
 	ledgeAttach = -1;
 }
 
 void Character::DoScript(int animIdx, int KeyFrameIdx)
 {
-	std::shared_ptr<Animations> animations = charDef.animations[animIdx];
-	std::shared_ptr<KeyFrame> keyFrame = animations->keyFrames[KeyFrameIdx];
+	Animations& animations = charDef.animations[animIdx];
+	KeyFrame& keyFrame = animations.keyFrames[KeyFrameIdx];
 
 	bool done = false;
 
-	for(int i = 0; i < keyFrame->scripts.size(); i++)
+	for(int i = 0; i < keyFrame.scripts.size(); i++)
 	{
 		if(done)
 			break;
 		else
 		{
-			std::shared_ptr<ScriptLine> line = keyFrame->scripts[i];
-			if(line != NULL)
-			{
-				switch(line->command)
-				{
-					case SetAnim:
-						SetNewAnim(line->sParam);
-						break;
-					case Goto:
-						AnimFrame = line->iParam;
-						done = true;
-						break;
-					case IfUpGoto:
-						if(keyUp)
-						{
-							AnimFrame = line->iParam;
-							done = true;
-						}
-						break;
-					case IfDownGoto:
-						if(keyDown)
-						{
-							AnimFrame = line->iParam;
-							done = true;
-						}
-						break;
-					case Float:
-						floating = true;
-						break;
-					case UnFloat:
-						floating = false;
-						break;
-					case Slide:
-						SetSlide(line->iParam);
-						break;
-					case Backup:
-						SetSlide(-line->iParam);
-						break;
-					case SetJump:
-						SetNewJump(line->iParam);
-						break;
-					case JoyMove:
-						if(keyLeft)
-							Trajectory->x = -speed;
-						else if(keyRight)
-							Trajectory->x = speed;
-						break;
-					case ClearKeys:
-						PressedKey = Nokey;
-						break;
-					case SetUpperGoto:
-						GoToGoal[Upper] = line->iParam;
-						break;
-					case SetLowerGoto:
-						GoToGoal[Lower] = line->iParam;
-						break;
-					case SetAtkGoto:
-						GoToGoal[Attack] = line->iParam;
-						break;
-					case SetAnyGoto:
-                        GoToGoal[Upper] = line->iParam;
-                        GoToGoal[Lower] = line->iParam;
-                        GoToGoal[Attack] = line->iParam;
+			ScriptLine& line = keyFrame.scripts[i];
+			if(line.command >= 0)
+            {
+			    switch(line.command)
+			    {
+				    case SetAnim:
+                        if(line.sParam != "")
+					        SetNewAnim(line.sParam);
+					    break;
+				    case Goto:
+					    AnimFrame = line.iParam;
+					    done = true;
+					    break;
+				    case IfUpGoto:
+					    if(keyUp)
+					    {
+						    AnimFrame = line.iParam;
+						    done = true;
+					    }
+					    break;
+				    case IfDownGoto:
+					    if(keyDown)
+					    {
+						    AnimFrame = line.iParam;
+						    done = true;
+					    }
+					    break;
+				    case Float:
+					    floating = true;
+					    break;
+				    case UnFloat:
+					    floating = false;
+					    break;
+				    case Slide:
+					    SetSlide(line.iParam);
+					    break;
+				    case Backup:
+					    SetSlide(-line.iParam);
+					    break;
+				    case SetJump:
+					    SetNewJump(line.iParam);
+					    break;
+				    case JoyMove:
+					    if(keyLeft)
+						    Trajectory.x = -speed;
+					    else if(keyRight)
+						    Trajectory.x = speed;
+					    break;
+				    case ClearKeys:
+					    PressedKey = Nokey;
+					    break;
+				    case SetUpperGoto:
+					    GoToGoal[Upper] = line.iParam;
+					    break;
+				    case SetLowerGoto:
+					    GoToGoal[Lower] = line.iParam;
+					    break;
+				    case SetAtkGoto:
+					    GoToGoal[Attack] = line.iParam;
+					    break;
+				    case SetAnyGoto:
+                        GoToGoal[Upper] = line.iParam;
+                        GoToGoal[Lower] = line.iParam;
+                        GoToGoal[Attack] = line.iParam;
                         break;
                     case SetSecondaryGoto:
-                        GoToGoal[Secondary] = line->iParam;
-                        GoToGoal[SecUp] = line->iParam;
-                        GoToGoal[SecDown] = line->iParam;
-						break;
-					case SetSecUpGoto:
-                        GoToGoal[SecUp] = line->iParam;
+                        GoToGoal[Secondary] = line.iParam;
+                        GoToGoal[SecUp] = line.iParam;
+                        GoToGoal[SecDown] = line.iParam;
+					    break;
+				    case SetSecUpGoto:
+                        GoToGoal[SecUp] = line.iParam;
                         break;
                     case SetSecDownGoto:
-						GoToGoal[SecDown] = line->iParam;
-						break;
-				}
-			}
+					    GoToGoal[SecDown] = line.iParam;
+					    break;
+			    }
+            }
 		}
 	}
 }

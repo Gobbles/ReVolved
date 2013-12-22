@@ -56,7 +56,7 @@ class SideScrollEnt : public Entity
 	virtual void Land();
 	virtual void CheckXCol(Map& map, sf::Vector2f& pLoc);
 	virtual void CheckTrig(ParticleManager& pMan);
-	virtual void FireTrig(int trig, std::shared_ptr<sf::Vector2f> loc);
+	virtual void FireTrig(int trig, sf::Vector2f& loc);
 
  public:
      //animation constants

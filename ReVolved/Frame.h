@@ -4,7 +4,7 @@
 class Frame
 {
 public:
-	std::vector<std::shared_ptr<Part> > parts;
+	std::vector<Part> parts;
 	std::string name;
 	int size;
 

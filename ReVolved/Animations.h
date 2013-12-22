@@ -6,7 +6,7 @@ class Animations
 public:
 	//members
 	std::string name;
-	std::vector<std::shared_ptr<KeyFrame> > keyFrames;
+	std::vector<KeyFrame> keyFrames;
 	int size;
 
 	//Functions
