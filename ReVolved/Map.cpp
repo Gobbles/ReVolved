@@ -171,10 +171,7 @@ void Map::Update(ParticleManager& pMan)
 				loc.y += 20.f;
 				sf::Vector2f traj = GetRandomVector2(-30.f, 30.f, -250.f, -200.f);
 				int icon = GetRandomFloat(0, 4);
-
-				pMan.AddParticle(std::make_shared<Fire>(loc, traj,
-					GetRandomFloat(0.25f, 0.75f),
-					icon), true);
+				pMan.MakeFire(loc, traj, icon);
 			}
 		}
 	}
@@ -240,7 +237,7 @@ void Map::Read()
 				float x = atof(tmp.c_str());
 				std::getline(myFile, tmp);
 				float y = atof(tmp.c_str());
-				ledge[i]->Nodes.push_back(std::make_shared<sf::Vector2f>(x,y));
+				ledge[i]->Nodes.push_back(std::unique_ptr<sf::Vector2f>(new sf::Vector2f(x,y)));
 			}
 			std::getline(myFile, tmp);
 			ledge[i]->flags = atof(tmp.c_str());

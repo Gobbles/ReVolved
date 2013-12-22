@@ -11,7 +11,7 @@ Fire::Fire(sf::Vector2f loc, sf::Vector2f traj, float _size, int icon)
 	Additive = true;
 }
 
-void Fire::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
+void Fire::Draw(sf::RenderWindow& window, sf::Sprite& sprite)
 {
 	if(frame > 0.5f) 
 		return;
@@ -50,13 +50,13 @@ void Fire::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
 	else
 		rotation = RadToDeg((-frame * 11.0f + size * 20.0f));
 
-	sprite->setPosition(location);
-	sprite->setTextureRect(sRect);
+	sprite.setPosition(location);
+	sprite.setTextureRect(sRect);
 	sf::Color color(r, g, b, 255.f);
-	sprite->setColor(color);
-	sprite->setRotation(rotation);
-	sprite->setOrigin(32.f, 32.f);
-	sprite->setScale(sf::Vector2f(tsize,tsize));
+	sprite.setColor(color);
+	sprite.setRotation(rotation);
+	sprite.setOrigin(32.f, 32.f);
+	sprite.setScale(sf::Vector2f(tsize,tsize));
 
-	window.draw(*sprite);
+	window.draw(sprite);
 }

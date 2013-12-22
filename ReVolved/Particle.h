@@ -3,6 +3,7 @@
 
 #include <SFML\Graphics\RenderWindow.hpp>
 #include <SFML\Graphics\Sprite.hpp>
+#include <memory>
 
 class Particle
 {
@@ -20,7 +21,7 @@ public:
 	Particle();
 	virtual void Update(float gameTime);
 	virtual void KillMe() { Exists = false; }
-	virtual void Draw(sf::RenderWindow& texture, std::shared_ptr<sf::Sprite> sprite) = 0;
+	virtual void Draw(sf::RenderWindow& texture, sf::Sprite& sprite) = 0;
 private:
 
 protected:
@@ -28,7 +29,6 @@ protected:
 	float r, g, b, a;
 	float size;
 	float rotation;
-
 };
 
 #endif

@@ -28,7 +28,7 @@ void Blood::Update(float frame_time)
 	Particle::Update(frame_time);
 }
 
-void Blood::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
+void Blood::Draw(sf::RenderWindow& window, sf::Sprite& sprite)
 {
 	sf::IntRect sRect(flag * 64, 0, 64, 64);
 	float frameAlpha;
@@ -38,14 +38,14 @@ void Blood::Draw(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite)
 	else
 		frameAlpha = (frame / 0.9f);
 
-	sprite->setTextureRect(sRect);
-	sprite->setPosition(location);
+	sprite.setTextureRect(sRect);
+	sprite.setPosition(location);
 
 	sf::Color color(r ,g , b, a * frameAlpha);
-	sprite->setColor(color);
-	sprite->setRotation(rotation);
-	sprite->setOrigin(32.f, 32.f);
-	sprite->setScale(size * 2.f, size * 0.5f);
+	sprite.setColor(color);
+	sprite.setRotation(rotation);
+	sprite.setOrigin(32.f, 32.f);
+	sprite.setScale(size * 2.f, size * 0.5f);
 
-	window.draw(*sprite);
+	window.draw(sprite);
 }

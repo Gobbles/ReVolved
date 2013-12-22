@@ -2,61 +2,45 @@
 
 ParticleManager::ParticleManager()
 {
-	particles = std::vector<std::shared_ptr<Particle> >(512);
+	particles = std::vector<std::unique_ptr<Particle> >();
 }
 
 ParticleManager::~ParticleManager()
 {}
 
-void ParticleManager::AddParticle(std::shared_ptr<Particle> newParticle)
+void ParticleManager::AddParticle(Particle& newParticle)
 {
 	AddParticle(newParticle, false);
 }
 
-void ParticleManager::AddParticle(std::shared_ptr<Particle> newParticle, bool background)
+void ParticleManager::AddParticle(Particle& newParticle, bool background)
 {
-	for(int i = 0; i < particles.size(); i++)
-	{
-		if(particles[i] == NULL)
-		{
-			particles[i] = newParticle;
-			particles[i]->Background = background;
-			break;
-		}
-	}
+	//newParticle.Background = background;
+	//particles.push_back(newParticle);
 }
 void ParticleManager::UpdateParticles(float frameTime)
 {
-	for (int i = 0; i < particles.size(); i++)
+	for (int i = particles.size() - 1; i > 0; --i)
     {
-        if (particles[i] != NULL)
+		particles[i]->Update(frameTime);
+		if (!particles[i]->Exists)
         {
-			particles[i]->Update(frameTime);
-			if (!particles[i]->Exists)
-            {
-                particles[i] = NULL;
-            }
+			particles.erase(particles.begin() + i);
         }
     }
 }
-void ParticleManager::DrawParticle(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite, bool background)
+void ParticleManager::DrawParticle(sf::RenderWindow& window, sf::Sprite& sprite, bool background)
 {
     //particleTexture.clear();
 	for(int i = 0; i < particles.size(); i++)
 	{
-		if (particles[i] != NULL)
-        {
-			if (!particles[i]->Additive && particles[i]->Background == background)
-                particles[i]->Draw(window, sprite);
-        }
+		if (!particles[i]->Additive && particles[i]->Background == background)
+            particles[i]->Draw(window, sprite);
 	}
 	for(int i = 0; i < particles.size(); i++)
 	{
-		if (particles[i] != NULL)
-        {
-			if (particles[i]->Additive && particles[i]->Background == background)
-                particles[i]->Draw(window, sprite);
-        }
+		if (particles[i]->Additive && particles[i]->Background == background)
+            particles[i]->Draw(window, sprite);
 	}
 }
 void ParticleManager::MakeShot(sf::Vector2f loc, sf::Vector2f traj, int face, int owner)
@@ -118,4 +102,11 @@ void ParticleManager::MakeBulletBlood(sf::Vector2f loc, sf::Vector2f traj)
 }
 void ParticleManager::MakeBloodSplash(sf::Vector2f loc, sf::Vector2f traj)
 {
+}
+
+void ParticleManager::MakeFire(sf::Vector2f loc, sf::Vector2f traj, int icon)
+{
+	std::unique_ptr<Fire> fire = std::unique_ptr<Fire>(new Fire(loc, traj, GetRandomFloat(0.25f, 0.75f), icon));
+	fire->Background = true;
+	particles.push_back(std::move(fire));
 }

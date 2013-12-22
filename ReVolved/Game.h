@@ -59,7 +59,7 @@ private:
 
 	//particle Image
 	sf::Texture particleTex;
-	std::shared_ptr<sf::Sprite> particleSpr;
+	sf::Sprite particleSpr;
 
 	//FPS
 	float fps;

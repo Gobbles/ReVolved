@@ -51,8 +51,7 @@ Game::Game()
 	{
 		return;
 	}
-	particleSpr = std::make_shared<sf::Sprite>();
-	particleSpr->setTexture(particleTex);
+	particleSpr.setTexture(particleTex);
 
 	if(!fpsFont.loadFromFile("Font/comic.ttf"))
 	{
@@ -221,13 +220,15 @@ void Game::Update(float time_passed)
 
 		groundMap->Update(*pManager);
 		pManager->UpdateParticles(time_passed);
-		sf::View view = window->getView();
-		sf::Vector2f& pos = character->Location;
 
-		if(pos.x < 0)
-			pos.x = 0;
-		if(pos.y < 0)
-			pos.y = 0;
+        //we position the view around the character
+		sf::View view = window->getView();
+		sf::Vector2f pos = character->Location;
+
+		if(pos.x - 512 < 0)
+			pos.x = 512;
+		if(pos.y - 384 < 0)
+			pos.y = 384;
 
 		view.setCenter(pos);
 		window->setView(view);
@@ -247,7 +248,7 @@ void Game::Draw()
 		groundMap->Draw(*window, mapsTex, mapBackTex,0,3);
 		pManager->DrawParticle(*window, particleSpr, true);
         enemy->Draw(*window);
-  //      //enemy2->Draw(window);
+        //enemy2->Draw(window);
 		character->Draw(*window);
 		pManager->DrawParticle(*window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);

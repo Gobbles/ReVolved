@@ -10,21 +10,20 @@
 class ParticleManager
 {
 public:
-	std::vector<std::shared_ptr<Particle> > particles;
-	std::shared_ptr<sf::RenderWindow> Window;
+	std::vector<std::unique_ptr<Particle> > particles;
     
-
 	ParticleManager();
     ~ParticleManager();
-	void AddParticle(std::shared_ptr<Particle> newParticle);
-	void AddParticle(std::shared_ptr<Particle> newParticle, bool background);
+	void AddParticle(Particle& newParticle);
+	void AddParticle(Particle& newParticle, bool background);
 	void UpdateParticles(float frameTime);
-	void DrawParticle(sf::RenderWindow& window, std::shared_ptr<sf::Sprite> sprite, bool background);
+	void DrawParticle(sf::RenderWindow& window, sf::Sprite& sprite, bool background);
 	void MakeShot(sf::Vector2f loc, sf::Vector2f traj, int face, int owner);
 	void MakeShotFlash(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeShotDust(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeBulletBlood(sf::Vector2f loc, sf::Vector2f traj);
 	void MakeBloodSplash(sf::Vector2f loc, sf::Vector2f traj);
+	void MakeFire(sf::Vector2f loc, sf::Vector2f traj, int icon);
 };
 
 #endif

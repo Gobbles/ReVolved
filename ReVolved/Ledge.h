@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <SFML\System\Vector2.hpp>
+#include <memory>
 
 class Ledge
 {
@@ -12,7 +13,7 @@ private:
 public:
 	Ledge();
 
-	std::vector<std::shared_ptr<sf::Vector2f> > Nodes;
+	std::vector<std::unique_ptr<sf::Vector2f> > Nodes;
 
 	int totalNodes;
 	int flags;
