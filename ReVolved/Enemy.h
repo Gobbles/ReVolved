@@ -14,7 +14,6 @@ public:
 	Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId);
     ~Enemy();
 	void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
-    void SetNewJump(float jump);
     int GetWorldState();
     void DoScript(int animIdx, int KeyFrameIdx);
     StateMachine<Enemy>*  GetFSM()const {return mStateMachine;}

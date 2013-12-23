@@ -20,6 +20,7 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 	Trajectory = sf::Vector2f();
 
 	Face = Right;
+	team = TEAM_BAD_GUYS;
 	Scale = 0.6f;
 	colMove = 0.0f;
 	ledgeAttach = -1;
@@ -150,14 +151,6 @@ void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
     CheckTrig(pMan);
 }
 
-void Enemy::SetNewJump(float jump)
-{
-    SetNewAnim(ANIMATION_JUMP);
-	Trajectory.y = -jump;
-	State = Air;
-	ledgeAttach = -1;
-}
-
 int Enemy::GetWorldState()
 {
     return State;
@@ -210,10 +203,10 @@ void Enemy::DoScript(int animIdx, int KeyFrameIdx)
 					    floating = false;
 					    break;
 				    case Slide:
-					    //SetSlide(line->iParam);
+					    SetSlide(line.iParam);
 					    break;
 				    case Backup:
-					    //SetSlide(-line->iParam);
+					    SetSlide(-line.iParam);
 					    break;
 				    case SetJump:
 					    SetNewJump(line.iParam);

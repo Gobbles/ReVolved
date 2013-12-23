@@ -123,6 +123,7 @@
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="HitManager.h" />
     <ClInclude Include="KeyFrame.h" />
     <ClInclude Include="Ledge.h" />
     <ClInclude Include="Map.h" />

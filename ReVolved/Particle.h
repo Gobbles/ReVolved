@@ -4,6 +4,7 @@
 #include <SFML\Graphics\RenderWindow.hpp>
 #include <SFML\Graphics\Sprite.hpp>
 #include <memory>
+#include <string>
 
 class Particle
 {
@@ -16,6 +17,7 @@ public:
 	bool Exists;
 	bool Background;
 	bool Additive;
+	std::string type;
 
 	//functions
 	Particle();

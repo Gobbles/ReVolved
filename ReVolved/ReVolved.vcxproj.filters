@@ -67,6 +67,12 @@
     <Filter Include="Source Files\BaseAI\States\EnemyStates">
       <UniqueIdentifier>{74817023-390a-443e-a266-537bdc174652}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Collision">
+      <UniqueIdentifier>{44c0084e-8e9a-44a1-8d1b-cb17c04b57f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{1bac0462-4d66-4159-b540-37afc772e1f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -211,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="SideScrollEnt.h">
       <Filter>Header Files\Base Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="HitManager.h">
+      <Filter>Header Files\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

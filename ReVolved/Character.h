@@ -32,8 +32,6 @@ public:
 
 	void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
 	void Input(bool keysPressed[]);
-	void SetSlide(float dinstance);
-	void SetNewJump(float jump);
 	
 	virtual void DoScript(int animIdx, int KeyFrameIdx);
 };

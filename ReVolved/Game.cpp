@@ -215,6 +215,7 @@ void Game::Update(float time_passed)
 	if(Loaded)
 	{
 		DoInput();
+		TestCollision(time_passed);
 		character->Update(time_passed, *pManager, *groundMap);
         enemy->Update(time_passed, *pManager, *groundMap);
 
@@ -233,6 +234,29 @@ void Game::Update(float time_passed)
 		view.setCenter(pos);
 		window->setView(view);
 	}
+}
+
+void Game::TestCollision(float time_passed)
+{
+	if (character->Location.x > enemy->Location.x - 90.0f &&
+    character->Location.x < enemy->Location.x + 90.0f &&
+    character->Location.y > enemy->Location.y - 120.0f &&
+    character->Location.y < enemy->Location.y + 10.0f)
+    {
+		float dif = (float)fabs(character->Location.x - enemy->Location.x);
+        dif = 180.0f - dif;
+        //dif *= 2.0f;
+        if (character->Location.x < enemy->Location.x)
+        {
+			character->colMove = -dif;
+            enemy->colMove = dif;
+        }
+        else
+        {
+            character->colMove = dif;
+            enemy->colMove = -dif;
+        }
+    }
 }
 
 void Game::Draw()

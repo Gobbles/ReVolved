@@ -28,6 +28,7 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 	}
 
 	Face = Right;
+	team = TEAM_GOOD_GUYS;
 	Scale = 0.6f;
 	charDef = newCharDef;
 	colMove = 0.0f;
@@ -177,20 +178,6 @@ void Character::Input(bool keysPressed[])
  		keyJump = true;
 		keysPressed[KEY_JUMP] = false;
 	}
-}
-
-//slides the character in a direction
-void Character::SetSlide(float distance)
-{
-	Trajectory.x = (float)Face * 2.0f * distance - distance;
-}
-
-//Make the character jump
-void Character::SetNewJump(float jump)
-{
-	Trajectory.y = -jump;
-	State = Air;
-	ledgeAttach = -1;
 }
 
 void Character::DoScript(int animIdx, int KeyFrameIdx)

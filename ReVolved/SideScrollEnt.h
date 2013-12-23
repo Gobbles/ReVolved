@@ -22,14 +22,34 @@ enum CharDir
 	Right
 };
 
+//different types of hits possible by the character
+enum Triggers
+{
+	TRIG_SHOOT_ACROSS = 0,
+    TRIG_SHOOT_UP,
+	TRIG_SHOOT_DOWN,
+    TRIG_HIT_UP,
+    TRIG_HIT_DOWN,
+    TRIG_HIT_DIAG_UP,
+    TRIG_HIT_DIAG_DOWN,
+    TRIG_HIT_UPPERCUT,
+    TRIG_HIT_SMACKDOWN,
+    TRIG_KICK
+};
+
+enum Team
+{
+	TEAM_GOOD_GUYS = 0,
+	TEAM_BAD_GUYS,
+	TEAM_NEUTRAL
+};
+
 class SideScrollEnt : public Entity
  {
  protected:
      //protected members
 	CharDef& charDef;
-	CharDir Face;
-	CharState State;
-	
+
 	std::vector<BodyParts> CharacterBodyParts;
 
 	//int array for the key press combo system
@@ -38,7 +58,6 @@ class SideScrollEnt : public Entity
 	float Scale;
 	float speed;
 	float jumpHeight;
-	float colMove;
 	float frame;
 
 	int AnimFrame;
@@ -46,8 +65,7 @@ class SideScrollEnt : public Entity
 
 	bool floating;
 	bool fire;
-
-	std::string animName;	
+	
 	int ledgeAttach;
 	sf::Texture SkellyTex;
 
@@ -69,29 +87,30 @@ class SideScrollEnt : public Entity
     std::string ANIMATION_JHIT;
     std::string ANIMATION_JMID;
     std::string ANIMATION_JFALL;
-    std::string ANIMATION_HITLAND;
+    std::string ANIMATION_HITLAND;	
 
-	//different types of hits possible by the character
-	static const int TRIG_SHOOT_ACROSS = 0;
-    static const int TRIG_SHOOT_UP = 1;
-    static const int TRIG_SHOOT_DOWN = 2;
-    static const int TRIG_HIT_UP = 3;
-    static const int TRIG_HIT_DOWN = 4;
-    static const int TRIG_HIT_DIAG_UP = 5;
-    static const int TRIG_HIT_DIAG_DOWN = 6;
-    static const int TRIG_HIT_UPPERCUT = 7;
-    static const int TRIG_HIT_SMACKDOWN = 8;
-    static const int TRIG_KICK = 9;
+	//collision movement amount
+	float colMove;
+
+	CharDir Face;
+	CharState State;
+
+	Team team;
+
+	std::string animName;
 
     //ctor
     SideScrollEnt(int id, CharDef& newCharDef);
      
     //virtuals
 	virtual void Update(float time_passed, Map& currentMap);
+	virtual void SetNewJump(float jump);
+	virtual void SetSlide(float dinstance);
 	virtual void Draw(sf::RenderWindow& window);
 	virtual void BodypartsInit();
 	virtual void SetBodyPart(BodyParts newBodyPart);
 	virtual void SetNewAnim(std::string newAnim);
+	virtual bool InHitBounds(sf::Vector2f hitLoc);
 	virtual void DoScript(int animIdx, int KeyFrameIdx){}
  };
 

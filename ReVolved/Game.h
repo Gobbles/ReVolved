@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <sstream>
+#include <cmath>
 #include "Character.h"
 #include "Enemy.h"
 #include "Map.h"
@@ -85,5 +86,6 @@ private:
 	void CheckEvents(sf::Event &event);
 	void Draw();
 	void ProcessEvents();
+	void TestCollision(float time_passed);
 
 };

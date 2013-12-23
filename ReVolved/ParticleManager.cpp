@@ -108,5 +108,6 @@ void ParticleManager::MakeFire(sf::Vector2f loc, sf::Vector2f traj, int icon)
 {
 	std::unique_ptr<Fire> fire = std::unique_ptr<Fire>(new Fire(loc, traj, GetRandomFloat(0.25f, 0.75f), icon));
 	fire->Background = true;
+	fire->type = "fire";
 	particles.push_back(std::move(fire));
 }

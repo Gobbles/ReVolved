@@ -7,6 +7,17 @@ SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(
 
 void SideScrollEnt::Update(float time_passed, Map& currentMap)
 {
+	//update the collision movement
+	if (colMove > 0.0f)
+    {
+        colMove -= 400.0f * time_passed;
+        if (colMove < 0.0f) colMove = 0.0f;
+    }
+    else if (colMove < 0.0f)
+    {
+        colMove += 400.0f * time_passed;
+        if (colMove > 0.0f) colMove = 0.0f;
+    }
 	#pragma region Update Animation
 	Animations& animation = charDef.animations[Anim];
     KeyFrame keyFrame = animation.keyFrames[AnimFrame];
@@ -159,6 +170,30 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 		#pragma endregion
 	}
 	#pragma endregion
+}
+
+void SideScrollEnt::SetNewJump(float jump)
+{
+    //SetNewAnim(ANIMATION_JUMP);
+	Trajectory.y = -jump;
+	State = Air;
+	ledgeAttach = -1;
+}
+
+//slides the character in a direction
+void SideScrollEnt::SetSlide(float distance)
+{
+	Trajectory.x = (float)Face * 2.0f * distance - distance;
+}
+
+bool SideScrollEnt::InHitBounds(sf::Vector2f hitLoc)
+{
+    if (hitLoc.x > Location.x - 50.0f * Scale &&
+    hitLoc.x < Location.x + 50.0f * Scale &&
+    hitLoc.y > Location.y - 190.0f * Scale &&
+    hitLoc.y < Location.y + 10.0f * Scale)
+        return true;
+    return false;
 }
 
 //Draw the character

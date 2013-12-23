@@ -197,22 +197,22 @@ void Map::ReadSegmentDefinitions()
 			//grab all 4 rectangle positions and throw it into a IntRect
 			//X
 			std::getline(myFile, tmp);
-			tRect.left = atof(tmp.c_str());
+			tRect.left = atoi(tmp.c_str());
 			//Y
 			std::getline(myFile, tmp);
-			tRect.top = atof(tmp.c_str());
+			tRect.top = atoi(tmp.c_str());
 			//Width
 			std::getline(myFile, tmp);
-			tRect.width = atof(tmp.c_str());
+			tRect.width = atoi(tmp.c_str());
 			tRect.width -= tRect.left;
 			//Height
 			std::getline(myFile, tmp);
-			tRect.height = atof(tmp.c_str());
+			tRect.height = atoi(tmp.c_str());
 			tRect.height -= tRect.top;
 
 			int flags;
 			std::getline(myFile, tmp);
-			flags = atof(tmp.c_str());
+			flags = atoi(tmp.c_str());
 
 			segDef.push_back(std::make_shared<SegmentDefinition>(name, currentTex, tRect, flags));
 		}
