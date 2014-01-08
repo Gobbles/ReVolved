@@ -7,6 +7,8 @@
 #include "Commands.h"
 #include "ScriptEnums.h"
 #include "Map.h"
+#include "TextureHolder.h"
+#include <iostream>
 
 //enum for the states the entities can enter
 enum CharState
@@ -51,9 +53,13 @@ class SideScrollEnt : public Entity
 	CharDef& charDef;
 
 	std::vector<BodyParts> CharacterBodyParts;
+	std::vector<sf::Sprite> CharacterBodySprites;
 
 	//int array for the key press combo system
 	std::vector<int> GoToGoal;
+
+	//textures
+	TextureHolder textures;
 
 	float Scale;
 	float speed;
@@ -67,7 +73,6 @@ class SideScrollEnt : public Entity
 	bool fire;
 	
 	int ledgeAttach;
-	sf::Texture SkellyTex;
 
 	//protected virtual functions
 	virtual void FallOff();
@@ -108,7 +113,7 @@ class SideScrollEnt : public Entity
 	virtual void SetSlide(float dinstance);
 	virtual void Draw(sf::RenderWindow& window);
 	virtual void BodypartsInit();
-	virtual void SetBodyPart(BodyParts newBodyPart);
+	virtual void SetBodyPart(sf::IntRect rect, BodyPart::BodyPartTypes type);
 	virtual void SetNewAnim(std::string newAnim);
 	virtual bool InHitBounds(sf::Vector2f hitLoc);
 	virtual void DoScript(int animIdx, int KeyFrameIdx){}

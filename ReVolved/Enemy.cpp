@@ -4,15 +4,15 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 {
 	//define the animation constants
 	ANIMATION_IDLE                  = "idle";
-    ANIMATION_RUN                  = "run";
-    ANIMATION_JUMP                 = "jump";
-    ANIMATION_FLY                    = "fly";
+    ANIMATION_RUN					= "run";
+    ANIMATION_JUMP					= "jump";
+    ANIMATION_FLY                   = "fly";
     ANIMATION_ATTACK	            = "attack";
-    ANIMATION_SECODNARY     = "secondary";
-    ANIMATION_JHIT                   = "jhit";
+    ANIMATION_SECODNARY				= "secondary";
+    ANIMATION_JHIT                  = "jhit";
     ANIMATION_JMID                  = "jmid";
     ANIMATION_JFALL	                = "jfall";
-    ANIMATION_HITLAND            = "hitland";
+    ANIMATION_HITLAND				= "hitland";
 
     mStateMachine = new StateMachine<Enemy>(this);
 
@@ -28,11 +28,6 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 
 	SetNewAnim(ANIMATION_IDLE);
 	State = Air;
-
-	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
-	{
-		return;
-	}
 
     //this must be last because we need everything else initlized in the class first
     mStateMachine->SetCurrentState(EnemyAttack::Instance());

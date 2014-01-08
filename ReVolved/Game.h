@@ -2,6 +2,7 @@
 #include <SFML/Window.hpp>
 #include <sstream>
 #include <cmath>
+#include <iostream>
 #include "Character.h"
 #include "Enemy.h"
 #include "Map.h"
@@ -28,7 +29,7 @@ private:
 	std::unique_ptr<sf::RenderWindow> window;
 
 	//Loading Thread
-	std::shared_ptr<sf::Thread> CharLoadThread;
+	std::unique_ptr<sf::Thread> CharLoadThread;
 	
 	//static members
 	sf::Vector2f screenSize;
@@ -42,7 +43,7 @@ private:
 	bool keysPressed[KEY_COUNT];
 
 	//character Information
-	std::shared_ptr<Character> character;
+	std::unique_ptr<Character> character;
 	std::unique_ptr<CharDef> charDef;
 
     std::unique_ptr<Enemy> enemy;

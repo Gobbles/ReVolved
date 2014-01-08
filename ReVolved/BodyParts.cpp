@@ -3,9 +3,9 @@ BodyParts::BodyParts()
 {}
 BodyParts::~BodyParts()
 {}
-BodyParts::BodyParts(sf::IntRect& source, sf::Texture& tex, BodyPartTypes type)
+BodyParts::BodyParts(sf::IntRect& source, int texture, BodyPart::BodyPartTypes type)
 {
 	sRect = source;
-	bodyPartTexture = tex;
+	bodyPartTexture = texture;
 	bpType = type;
 }

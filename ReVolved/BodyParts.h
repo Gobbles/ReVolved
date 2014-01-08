@@ -1,34 +1,41 @@
+#ifndef BODYPART_H
+#define BODYPART_H
 #include <SFML/Graphics.hpp>
 #include <string>
 
-enum BodyPartTypes
+namespace BodyPart
 {
-	Head = 0,
-	UpperTorso,
-    LowerTorso,
-    UpperRunTorso,
-    LowerRunTorso,
-    FrontUpperArm,
-    FrontLowerArm,
-    FrontUpperLeg,
-    FrontLowerLeg,
-    RearUpperArm,
-    RearLowerArm,
-    RearUpperLeg,
-    RearLowerLeg,
-    //Back, not yet implemented
-    BodyPartTypeCount
-};
+	enum BodyPartTypes
+	{
+		Head = 0,
+		UpperTorso,
+		LowerTorso,
+		UpperRunTorso,
+		LowerRunTorso,
+		FrontUpperArm,
+		FrontLowerArm,
+		FrontUpperLeg,
+		FrontLowerLeg,
+		RearUpperArm,
+		RearLowerArm,
+		RearUpperLeg,
+		RearLowerLeg,
+		//Back, not yet implemented
+		BodyPartTypeCount
+	};
+}
 
 class BodyParts
 {
 public:
 	std::string animation;
 	sf::IntRect sRect;
-	sf::Texture bodyPartTexture;
-	BodyPartTypes bpType;
+	int bodyPartTexture;
+	BodyPart::BodyPartTypes bpType;
 
-	BodyParts(sf::IntRect& source, sf::Texture& tex, BodyPartTypes type);
+	BodyParts(sf::IntRect& source, int texture, BodyPart::BodyPartTypes type);
     BodyParts();
     ~BodyParts();
 };
+
+#endif

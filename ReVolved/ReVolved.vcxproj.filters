@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Collision">
       <UniqueIdentifier>{1bac0462-4d66-4159-b540-37afc772e1f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\TextureHolder">
+      <UniqueIdentifier>{09334782-0a18-4497-93b7-a047d2000e5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\TextureHolder">
+      <UniqueIdentifier>{d6824fc4-e565-4a77-b199-864d04ac321e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="SideScrollEnt.cpp">
       <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="HitParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureHolder.cpp">
+      <Filter>Source Files\TextureHolder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +232,12 @@
     </ClInclude>
     <ClInclude Include="HitManager.h">
       <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="HitParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureHolder.h">
+      <Filter>Header Files\TextureHolder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

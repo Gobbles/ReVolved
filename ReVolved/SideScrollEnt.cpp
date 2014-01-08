@@ -2,7 +2,13 @@
 
 SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(newCharDef)
 {
-    CharacterBodyParts = std::vector<BodyParts>(BodyPartTypeCount);
+	textures.Load(Textures::Skeleton, "Art/Character/Skeleton.png");
+    CharacterBodyParts = std::vector<BodyParts>(BodyPart::BodyPartTypeCount);
+	for(int i = 0; i < BodyPart::BodyPartTypeCount; i++)
+	{
+		CharacterBodyParts.push_back(BodyParts(sf::IntRect(0, 0, 0, 0), 0, static_cast<BodyPart::BodyPartTypes>(i)));
+		CharacterBodySprites.push_back(sf::Sprite());
+	}
 }
 
 void SideScrollEnt::Update(float time_passed, Map& currentMap)
@@ -250,13 +256,14 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 
 			if (Face == Left) flip = true;
 
-			sf::IntRect& sRect = CharacterBodyParts[currentIndex].sRect;
-			sf::Texture& tmp = CharacterBodyParts[currentIndex].bodyPartTexture;
-                                      
-			sf::Sprite sprite(tmp,sRect);
+			//sf::IntRect& sRect = CharacterBodyParts[currentIndex].sRect;
+			//sf::Texture& tmp = CharacterBodyParts[currentIndex].bodyPartTexture;
+
+			sf::Sprite sprite = CharacterBodySprites[currentIndex];
+			const sf::IntRect& sRect = sprite.getTextureRect();
 			sprite.setOrigin(sf::Vector2f((float)sRect.width / 2.f, 32.0f));
 			sprite.setPosition(location);
-			sprite.setColor(sf::Color::White);
+			sprite.setColor(sf::Color::Red);
 
 			if(flip)
 			{
@@ -282,50 +289,54 @@ void SideScrollEnt::BodypartsInit()
     //create the initial body parts spots, these will be filled with the various parts to attach
 
 	//Head
-	SetBodyPart(BodyParts(sf::IntRect(0, 0, 128, 128), SkellyTex, Head));
+	SetBodyPart(sf::IntRect(0, 0, 128, 128), BodyPart::Head);
 	
     //Upper Torso
-	 SetBodyPart(BodyParts(sf::IntRect(0, 128, 128, 128), SkellyTex, UpperTorso));
+	SetBodyPart(sf::IntRect(0, 128, 128, 128), BodyPart::UpperTorso);
     
-     //Lower Torso
-	SetBodyPart(BodyParts(sf::IntRect(128, 128, 128, 128), SkellyTex, LowerTorso));
+    //Lower Torso
+	SetBodyPart(sf::IntRect(128, 128, 128, 128), BodyPart::LowerTorso);
 	
     //Upper Side Torso
-	SetBodyPart(BodyParts(sf::IntRect(256, 128, 128, 128), SkellyTex, UpperRunTorso));
+	SetBodyPart(sf::IntRect(256, 128, 128, 128), BodyPart::UpperRunTorso);
 
     //Lower Side Torso
-	SetBodyPart(BodyParts(sf::IntRect(384, 128, 128, 128), SkellyTex, LowerRunTorso));
+	SetBodyPart(sf::IntRect(384, 128, 128, 128), BodyPart::LowerRunTorso);
 
 	//Front Upper Arm
-	SetBodyPart(BodyParts(sf::IntRect(0, 256, 128, 128), SkellyTex, FrontUpperArm));
+	SetBodyPart(sf::IntRect(0, 256, 128, 128), BodyPart::FrontUpperArm);
 
     //Front Lower Arm    
-	SetBodyPart(BodyParts(sf::IntRect(128, 256, 128, 128), SkellyTex, FrontLowerArm));
+	SetBodyPart(sf::IntRect(128, 256, 128, 128), BodyPart::FrontLowerArm);
 
     //Front Upper Leg
-	SetBodyPart(BodyParts(sf::IntRect(0, 384, 128, 128), SkellyTex, FrontUpperLeg));
+	SetBodyPart(sf::IntRect(0, 384, 128, 128), BodyPart::FrontUpperLeg);
 
     //Front Lower Leg
-	SetBodyPart(BodyParts(sf::IntRect(128, 384, 128, 128), SkellyTex, FrontLowerLeg));
+	SetBodyPart(sf::IntRect(128, 384, 128, 128), BodyPart::FrontLowerLeg);
 
     //Rear Upper Arm
-	SetBodyPart(BodyParts(sf::IntRect(256, 256, 128, 128), SkellyTex, RearUpperArm));
+	SetBodyPart(sf::IntRect(256, 256, 128, 128), BodyPart::RearUpperArm);
 
     //Rear Lower Arm
-	SetBodyPart(BodyParts(sf::IntRect(384, 256, 128, 128), SkellyTex, RearLowerArm));
+	SetBodyPart(sf::IntRect(384, 256, 128, 128), BodyPart::RearLowerArm);
 
     //Rear Upper Leg
-	SetBodyPart(BodyParts(sf::IntRect(256, 384, 128, 128), SkellyTex, RearUpperLeg));
+	SetBodyPart(sf::IntRect(256, 384, 128, 128), BodyPart::RearUpperLeg);
 
     //Rear Lower Leg
-	SetBodyPart(BodyParts(sf::IntRect(384, 384, 128, 128), SkellyTex, RearLowerLeg));
+	SetBodyPart(sf::IntRect(384, 384, 128, 128), BodyPart::RearLowerLeg);
 
 }
 
 //SetBodyPart
-void SideScrollEnt::SetBodyPart(BodyParts newBodyPart)
+void SideScrollEnt::SetBodyPart(sf::IntRect rect, BodyPart::BodyPartTypes type)
 {
-    CharacterBodyParts[newBodyPart.bpType] = newBodyPart;
+	std::cout << "BodyPart Loaded \n";
+	CharacterBodyParts[static_cast<BodyPart::BodyPartTypes>(type)].sRect = rect;
+	CharacterBodyParts[static_cast<BodyPart::BodyPartTypes>(type)].bpType = type;
+	CharacterBodySprites[static_cast<BodyPart::BodyPartTypes>(type)].setTexture(textures.Get(Textures::Skeleton));
+	CharacterBodySprites[static_cast<BodyPart::BodyPartTypes>(type)].setTextureRect(rect);
 }
 
 //Fall off an an attached ledge

@@ -11,11 +11,11 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
     ANIMATION_JUMP					= "jump";
     ANIMATION_FLY					= "fly";
     ANIMATION_ATTACK				= "attack";
-    ANIMATION_SECODNARY		= "secondary";
+    ANIMATION_SECODNARY				= "secondary";
     ANIMATION_JHIT					= "jhit";
     ANIMATION_JMID					= "jmid";
     ANIMATION_JFALL					= "jfall";
-    ANIMATION_HITLAND			= "hitland";
+    ANIMATION_HITLAND				= "hitland";
 
 	keyLeft = keyRight = keyUp = keyDown = keyJump = keyAttack = keySecondary = false;
 
@@ -37,11 +37,6 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 
 	SetNewAnim(ANIMATION_IDLE);
 	State = Air;
-
-	if(!SkellyTex.loadFromFile("Art/Character/Skeleton.png"))
-	{
-		return;
-	}
 }
 
 //================================================

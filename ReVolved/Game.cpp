@@ -61,7 +61,7 @@ Game::Game()
 
 	pManager = std::unique_ptr<ParticleManager>(new ParticleManager());
 
-	CharLoadThread = std::shared_ptr<sf::Thread>(new sf::Thread(&Game::LoadCharacter, this));
+	CharLoadThread = std::unique_ptr<sf::Thread>(new sf::Thread(&Game::LoadCharacter, this));
 	CharLoadThread->launch();
 }
 
@@ -71,17 +71,20 @@ Game::~Game()
 
 void Game::LoadCharacter()
 {
+	std::cout << "Start Loading\n";
 	groundMap = std::make_shared<Map>(MainCamera);
 	groundMap->Read();
-    
+    std::cout << "Map Read\n";
 	charDef = std::unique_ptr<CharDef>(new CharDef("skeleton"));
-
-	character = std::make_shared<Character>(Character(sf::Vector2f(500.f, 100.f), *charDef, 0));
+	std::cout << "CharDef Loaded\n";
+	character = std::unique_ptr<Character>(new Character(sf::Vector2f(500.f, 100.f), *charDef, 0));
+	std::cout << "Character Loaded\n";
 	character->BodypartsInit();
-
+	std::cout << "Character Bodyparts Loaded\n";
     enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
+	std::cout << "Enemy Loaded\n";
     enemy->BodypartsInit();
-
+	std::cout << "Enemy BodyParts Loaded\n";
 	sf::Context context;
 	Loaded = true;
 }

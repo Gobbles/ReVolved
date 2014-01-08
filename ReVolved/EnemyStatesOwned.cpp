@@ -17,7 +17,10 @@ void EnemyAttack::Enter(Enemy* enemy)
 void EnemyAttack::Execute(Enemy* enemy)
 {
     if(enemy->GetWorldState() == 0)
+	{
         enemy->SetNewJump(800);
+		enemy->SetNewAnim("jump");
+	}
 }
 
 void EnemyAttack::Exit(Enemy* enemy)

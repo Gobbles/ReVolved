@@ -60,10 +60,10 @@
       <AdditionalIncludeDirectories>D:\SFML-2.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>D:\SFML-2.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-system-s-d.lib;sfml-audio-s-d.lib;sfml-network-s-d.lib;sfml-window-s-d.lib;sfml-graphics-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -99,6 +99,7 @@
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="HitParticle.cpp" />
     <ClCompile Include="KeyFrame.cpp" />
     <ClCompile Include="Ledge.cpp" />
     <ClCompile Include="main.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="ScriptLine.cpp" />
     <ClCompile Include="SideScrollEnt.cpp" />
+    <ClCompile Include="TextureHolder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
@@ -124,6 +126,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="HitManager.h" />
+    <ClInclude Include="HitParticle.h" />
     <ClInclude Include="KeyFrame.h" />
     <ClInclude Include="Ledge.h" />
     <ClInclude Include="Map.h" />
@@ -136,6 +139,7 @@
     <ClInclude Include="SideScrollEnt.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="TextureHolder.h" />
     <ClInclude Include="TopDownEnt.h" />
   </ItemGroup>
   <ItemGroup>
