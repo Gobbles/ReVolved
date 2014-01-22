@@ -27,7 +27,7 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 	jumpHeight = 750.f;
 
 	SetNewAnim(ANIMATION_IDLE);
-	State = Air;
+	State = CharacterStates::Air;
 
     //this must be last because we need everything else initlized in the class first
     mStateMachine->SetCurrentState(EnemyAttack::Instance());

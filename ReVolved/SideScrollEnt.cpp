@@ -1,4 +1,5 @@
 #include "SideScrollEnt.h"
+#include "HitManager.h"
 
 SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(newCharDef)
 {
@@ -9,6 +10,9 @@ SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(
 		CharacterBodyParts.push_back(BodyParts(sf::IntRect(0, 0, 0, 0), 0, static_cast<BodyPart::BodyPartTypes>(i)));
 		CharacterBodySprites.push_back(sf::Sprite());
 	}
+	rectangle = sf::RectangleShape(sf::Vector2f(40,40));
+	rectangle.setPosition(Location.x, Location.y);
+	rectangle.setFillColor(sf::Color::Red);
 }
 
 void SideScrollEnt::Update(float time_passed, Map& currentMap)
@@ -52,7 +56,7 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 	#pragma region Update Location By Trajectory
 	sf::Vector2f pLoc(Location.x, Location.y);
 
-	if (State == Grounded)
+	if (State == CharacterStates::Grounded)
 	{
 		if (Trajectory.x > 0.0f)
 		{
@@ -66,7 +70,7 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 			if (Trajectory.x > 0.0f) Trajectory.x = 0.0f;
 		}
 	}
-	else if (State == Air)
+	else if (State == CharacterStates::Air)
 	{
 		if (Trajectory.x > 0.0f)
 		{
@@ -84,14 +88,14 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 	Location.x += Trajectory.x * time_passed;
 	Location.x += colMove * time_passed;
 
-	if (State == Air)
+	if (State == CharacterStates::Air)
 	{
 		Location.y += Trajectory.y * time_passed;
 		Trajectory.y += time_passed * 1500.0f;
 	}
 	#pragma endregion
 	#pragma region Collision Detection
-	if(State == Air)
+	if(State == CharacterStates::Air)
 	{
 		#pragma region Air State
 		CheckXCol(currentMap, pLoc);
@@ -135,7 +139,7 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 		}
 		#pragma endregion
 		#pragma region Land on Col
-		if(State == Air)
+		if(State == CharacterStates::Air)
 		{
 			if(Trajectory.y > 0.0f)
 			{
@@ -150,7 +154,7 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 
 		#pragma endregion
 	}
-	else if (State == Grounded)
+	else if (State == CharacterStates::Grounded)
 	{
 		#pragma region Grounded State
 		if (ledgeAttach > -1)
@@ -176,13 +180,14 @@ void SideScrollEnt::Update(float time_passed, Map& currentMap)
 		#pragma endregion
 	}
 	#pragma endregion
+	rectangle.setPosition(Location.x-25, Location.y-50);
 }
 
 void SideScrollEnt::SetNewJump(float jump)
 {
     //SetNewAnim(ANIMATION_JUMP);
-	Trajectory.y = -jump;
-	State = Air;
+	Trajectory.y = -jump/1.25;
+	State = CharacterStates::Air;
 	ledgeAttach = -1;
 }
 
@@ -263,7 +268,7 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 			const sf::IntRect& sRect = sprite.getTextureRect();
 			sprite.setOrigin(sf::Vector2f((float)sRect.width / 2.f, 32.0f));
 			sprite.setPosition(location);
-			sprite.setColor(sf::Color::Red);
+			sprite.setColor(sf::Color::White);
 
 			if(flip)
 			{
@@ -280,6 +285,7 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 
 			window.draw(sprite);
 		}
+		window.draw(rectangle);
 	}
 }
 
@@ -342,7 +348,7 @@ void SideScrollEnt::SetBodyPart(sf::IntRect rect, BodyPart::BodyPartTypes type)
 //Fall off an an attached ledge
 void SideScrollEnt::FallOff()
 {
-	State = Air;
+	State = CharacterStates::Air;
     SetNewAnim(ANIMATION_FLY);
 	Trajectory.y = 0.0f;
 }
@@ -350,7 +356,7 @@ void SideScrollEnt::FallOff()
 //land on a ledge
 void SideScrollEnt::Land()
 {
-	State = Grounded;
+	State = CharacterStates::Grounded;
 	if(animName == ANIMATION_JHIT || animName == ANIMATION_JMID || animName == ANIMATION_JFALL)
 	{
 		SetNewAnim(ANIMATION_HITLAND);
@@ -394,15 +400,40 @@ void SideScrollEnt::CheckTrig(ParticleManager& pMan)
             }
             if(fire)
 			{
-                FireTrig(part.Index - 1000, location);
+                FireTrig(part.Index - 1000, location, pMan);
 			}
         }
     }
 }
 
-void SideScrollEnt::FireTrig(int trig, sf::Vector2f& loc)
+void SideScrollEnt::FireTrig(int trig, sf::Vector2f& loc, ParticleManager& pMan)
 {
-
+	switch (trig)
+    {                    
+        case TRIG_SHOOT_ACROSS:
+            //pMan.MakeShot(loc, new Vector2(2000.0f, 0.0f), Face, Id);
+            //if (Team == TEAM_GOOD_GUYS && Id < 4)
+            //{
+                //QuakeManager.SetRumble(Id, 1, .3f);
+                //QuakeManager.SetRumble(Id, 0, .3f);
+           // }
+            break;
+        case TRIG_SHOOT_DOWN:
+            //pMan.MakeShot(loc, new Vector2(1400.0f, 1400.0f), Face, Id);
+            break;
+        case TRIG_SHOOT_UP:
+            //pMan.MakeShot(loc, new Vector2(1400.0f, -1400.0f), Face, Id);
+            break;
+        default:
+			std::cout << "Potential Hit\n";
+			HitParticle tmpParticle(loc, sf::Vector2f(
+                200.0f * (float)Face - 100.0f, 0.0f),
+                team, trig);
+			pMan.AddParticle(tmpParticle);
+			HitManager::CheckHit(tmpParticle, *this, pMan);
+            break;
+    }
+    fire = false;
 }
 
 //Set the current character animation

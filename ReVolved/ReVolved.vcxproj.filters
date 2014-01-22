@@ -79,6 +79,12 @@
     <Filter Include="Source Files\TextureHolder">
       <UniqueIdentifier>{d6824fc4-e565-4a77-b199-864d04ac321e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Managers">
+      <UniqueIdentifier>{fc0ff186-cc35-4f37-a41e-fa986ed883af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Managers">
+      <UniqueIdentifier>{b26539e0-782d-4cef-a11a-fcd00e6781a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -144,11 +150,20 @@
     <ClCompile Include="SideScrollEnt.cpp">
       <Filter>Source Files\Base Entities</Filter>
     </ClCompile>
-    <ClCompile Include="HitParticle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TextureHolder.cpp">
       <Filter>Source Files\TextureHolder</Filter>
+    </ClCompile>
+    <ClCompile Include="HitParticle.cpp">
+      <Filter>Source Files\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\Base Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Source Files\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,11 +248,17 @@
     <ClInclude Include="HitManager.h">
       <Filter>Header Files\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="HitParticle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="TextureHolder.h">
       <Filter>Header Files\TextureHolder</Filter>
+    </ClInclude>
+    <ClInclude Include="HitParticle.h">
+      <Filter>Header Files\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

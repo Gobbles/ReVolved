@@ -17,9 +17,10 @@ CharDef::CharDef(std::string path)
 	{
 		frames.push_back(Frame());
 	}
-
+	std::cout << "Start Read";
 	Path = path;
 	Read();
+	std::cout << "End Read";
 }
 
 //Destructor

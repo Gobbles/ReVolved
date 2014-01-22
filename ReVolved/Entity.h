@@ -1,7 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 #include <memory>
-#include <SFML\Graphics\Transform.hpp>
+#include "Map.h"
+#include <SFML/Graphics.hpp>
 
 class Entity
 {
@@ -18,12 +19,15 @@ public:
 	//public members
 	sf::Vector2f Location;
     sf::Vector2f Trajectory;
-
+	float colMove;
 	//public functions
 	Entity(int id)
     {
         SetId(id);
     }
+
+	virtual void Update(float time_passed, ParticleManager& pMan, Map& currentMap) = 0;
+	virtual void Draw(sf::RenderWindow& window) = 0;
 
     int ID()const { return mId; }
 };

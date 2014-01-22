@@ -61,6 +61,7 @@ Game::Game()
 
 	pManager = std::unique_ptr<ParticleManager>(new ParticleManager());
 
+	//LoadCharacter();
 	CharLoadThread = std::unique_ptr<sf::Thread>(new sf::Thread(&Game::LoadCharacter, this));
 	CharLoadThread->launch();
 }
@@ -71,21 +72,14 @@ Game::~Game()
 
 void Game::LoadCharacter()
 {
+	mEntityManager = std::unique_ptr<EntityManager>(new EntityManager());
 	std::cout << "Start Loading\n";
+
 	groundMap = std::make_shared<Map>(MainCamera);
 	groundMap->Read();
     std::cout << "Map Read\n";
-	charDef = std::unique_ptr<CharDef>(new CharDef("skeleton"));
-	std::cout << "CharDef Loaded\n";
-	character = std::unique_ptr<Character>(new Character(sf::Vector2f(500.f, 100.f), *charDef, 0));
-	std::cout << "Character Loaded\n";
-	character->BodypartsInit();
-	std::cout << "Character Bodyparts Loaded\n";
-    enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
-	std::cout << "Enemy Loaded\n";
-    enemy->BodypartsInit();
-	std::cout << "Enemy BodyParts Loaded\n";
-	sf::Context context;
+
+	//sf::Context context;
 	Loaded = true;
 }
 
@@ -210,7 +204,7 @@ void Game::CheckEvents(sf::Event &event)
 
 void Game::DoInput()
 {
-	character->Input(keysPressed);
+	mEntityManager->CheckInput(keysPressed);
 }
 
 void Game::Update(float time_passed)
@@ -219,15 +213,14 @@ void Game::Update(float time_passed)
 	{
 		DoInput();
 		TestCollision(time_passed);
-		character->Update(time_passed, *pManager, *groundMap);
-        enemy->Update(time_passed, *pManager, *groundMap);
+		mEntityManager->UpdateEntities(time_passed, *pManager, *groundMap);
 
 		groundMap->Update(*pManager);
 		pManager->UpdateParticles(time_passed);
 
         //we position the view around the character
 		sf::View view = window->getView();
-		sf::Vector2f pos = character->Location;
+		sf::Vector2f pos = mEntityManager->GetCharacterLocation();//character->Location;
 
 		if(pos.x - 512 < 0)
 			pos.x = 512;
@@ -241,25 +234,7 @@ void Game::Update(float time_passed)
 
 void Game::TestCollision(float time_passed)
 {
-	if (character->Location.x > enemy->Location.x - 90.0f &&
-    character->Location.x < enemy->Location.x + 90.0f &&
-    character->Location.y > enemy->Location.y - 120.0f &&
-    character->Location.y < enemy->Location.y + 10.0f)
-    {
-		float dif = (float)fabs(character->Location.x - enemy->Location.x);
-        dif = 180.0f - dif;
-        //dif *= 2.0f;
-        if (character->Location.x < enemy->Location.x)
-        {
-			character->colMove = -dif;
-            enemy->colMove = dif;
-        }
-        else
-        {
-            character->colMove = dif;
-            enemy->colMove = -dif;
-        }
-    }
+	mEntityManager->CheckMovementHit();
 }
 
 void Game::Draw()
@@ -274,9 +249,8 @@ void Game::Draw()
 	{
 		groundMap->Draw(*window, mapsTex, mapBackTex,0,3);
 		pManager->DrawParticle(*window, particleSpr, true);
-        enemy->Draw(*window);
-        //enemy2->Draw(window);
-		character->Draw(*window);
+		mEntityManager->Draw(*window);
+
 		pManager->DrawParticle(*window, particleSpr, false);
 		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);
 	}

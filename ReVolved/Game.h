@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cmath>
 #include <iostream>
+#include "EntityManager.h"
 #include "Character.h"
 #include "Enemy.h"
 #include "Map.h"
@@ -27,7 +28,7 @@ public:
 
 private:
 	std::unique_ptr<sf::RenderWindow> window;
-
+	std::unique_ptr<EntityManager> mEntityManager;
 	//Loading Thread
 	std::unique_ptr<sf::Thread> CharLoadThread;
 	
@@ -41,12 +42,6 @@ private:
 
 	//key input
 	bool keysPressed[KEY_COUNT];
-
-	//character Information
-	std::unique_ptr<Character> character;
-	std::unique_ptr<CharDef> charDef;
-
-    std::unique_ptr<Enemy> enemy;
 
 	//map information
 	std::shared_ptr<Map> groundMap;

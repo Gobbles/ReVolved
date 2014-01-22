@@ -4,19 +4,21 @@
 #include "Entity.h"
 #include "CharDef.h"
 #include "BodyParts.h"
+#include "ParticleManager.h"
 #include "Commands.h"
 #include "ScriptEnums.h"
-#include "Map.h"
 #include "TextureHolder.h"
 #include <iostream>
 
 //enum for the states the entities can enter
-enum CharState
+namespace CharacterStates
 {
-	Grounded = 0,	//character is currently on the ground
-	Air				//character is in the air either jumping or falling
-};
-
+	enum CharState
+	{
+		Grounded = 0,	//character is currently on the ground
+		Air				//character is in the air either jumping or falling
+	};
+}
 //enum for the direction the character is facing
 enum CharDir
 {
@@ -79,7 +81,7 @@ class SideScrollEnt : public Entity
 	virtual void Land();
 	virtual void CheckXCol(Map& map, sf::Vector2f& pLoc);
 	virtual void CheckTrig(ParticleManager& pMan);
-	virtual void FireTrig(int trig, sf::Vector2f& loc);
+	virtual void FireTrig(int trig, sf::Vector2f& loc, ParticleManager& pMan);
 
  public:
      //animation constants
@@ -95,18 +97,19 @@ class SideScrollEnt : public Entity
     std::string ANIMATION_HITLAND;	
 
 	//collision movement amount
-	float colMove;
+	//float colMove;
 
 	CharDir Face;
-	CharState State;
+	CharacterStates::CharState State;
 
 	Team team;
 
 	std::string animName;
 
+	sf::RectangleShape rectangle;
+
     //ctor
     SideScrollEnt(int id, CharDef& newCharDef);
-     
     //virtuals
 	virtual void Update(float time_passed, Map& currentMap);
 	virtual void SetNewJump(float jump);

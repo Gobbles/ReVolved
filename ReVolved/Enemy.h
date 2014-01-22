@@ -13,7 +13,7 @@ public:
 	//public function prototypes
 	Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId);
     ~Enemy();
-	void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
+	virtual void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
     int GetWorldState();
     void DoScript(int animIdx, int KeyFrameIdx);
     StateMachine<Enemy>*  GetFSM()const {return mStateMachine;}

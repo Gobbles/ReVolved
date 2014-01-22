@@ -3,6 +3,7 @@
 #include "Frame.h"
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 class CharDef
 {

@@ -92,9 +92,12 @@
     <ClCompile Include="BodyParts.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CharDef.cpp" />
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyStatesOwned.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="FireParticle.cpp" />
     <ClCompile Include="Frame.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -117,10 +120,12 @@
     <ClInclude Include="BodyParts.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="CharDef.h" />
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Commands.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyOwnedStates.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FireParticle.h" />
     <ClInclude Include="Frame.h" />
     <ClInclude Include="Game.h" />

@@ -36,7 +36,7 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 	jumpHeight = 750.f;
 
 	SetNewAnim(ANIMATION_IDLE);
-	State = Air;
+	State = CharacterStates::Air;
 }
 
 //================================================
@@ -105,6 +105,7 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
     PressedKey = Nokey;
     if (keyAttack)
     {
+		fire = true;
         PressedKey = Attack;
         if (keyUp) PressedKey = Lower;
         if (keyDown) PressedKey = Upper;
@@ -118,7 +119,7 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
     }
 	if(keyJump)
 	{
-		if(State == Grounded)
+		if(State == CharacterStates::Grounded)
 			SetNewJump(jumpHeight);
 	}
     if (PressedKey != Nokey)
@@ -158,7 +159,7 @@ void Character::Input(bool keysPressed[])
     keyUp = false;
     keyDown = false;
 	
-	keyLeft =keysPressed[KEY_LEFT];
+	keyLeft = keysPressed[KEY_LEFT];
 
 	keyRight = keysPressed[KEY_RIGHT];
 

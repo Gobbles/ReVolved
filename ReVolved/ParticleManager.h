@@ -6,6 +6,7 @@
 #include "Particle.h"
 #include "BloodParticle.h"
 #include "FireParticle.h"
+#include "HitParticle.h"
 
 class ParticleManager
 {
