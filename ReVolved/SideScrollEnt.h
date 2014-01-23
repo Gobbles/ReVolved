@@ -110,6 +110,7 @@ class SideScrollEnt : public Entity
 
     //ctor
     SideScrollEnt(int id, CharDef& newCharDef);
+	virtual ~SideScrollEnt(){}
     //virtuals
 	virtual void Update(float time_passed, Map& currentMap);
 	virtual void SetNewJump(float jump);

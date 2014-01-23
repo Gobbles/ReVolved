@@ -25,7 +25,7 @@ public:
     {
         SetId(id);
     }
-
+	virtual ~Entity(){}
 	virtual void Update(float time_passed, ParticleManager& pMan, Map& currentMap) = 0;
 	virtual void Draw(sf::RenderWindow& window) = 0;
 

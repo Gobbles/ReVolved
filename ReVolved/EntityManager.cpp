@@ -14,7 +14,10 @@ EntityManager::EntityManager()
 
 	enemy = std::unique_ptr<Enemy>(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
 	enemy->BodypartsInit();
-	//mEntities.push_back(std::move(enemy));
+	mEntities.emplace_back(new Enemy(sf::Vector2f(800.f, 100.f), *charDef, 1));
+
+	//mEntities.erase(mEntities.begin());
+	//mEntities.clear();
 	std::cout << "Enemy Loaded\n";
 }
 
@@ -90,4 +93,9 @@ void EntityManager::CheckInput(bool keysPressed[])
 sf::Vector2f EntityManager::GetCharacterLocation()
 {
 	return character->Location;
+}
+
+void EntityManager::Clear()
+{
+	
 }

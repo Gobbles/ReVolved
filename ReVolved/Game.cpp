@@ -112,6 +112,7 @@ void Game::Run()
 		}
 		Draw();
 	}
+	mEntityManager->Clear();
 }
 void Game::ProcessEvents()
 {

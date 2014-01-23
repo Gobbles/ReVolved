@@ -22,6 +22,7 @@ public:
 	void Draw(sf::RenderWindow& window);
 	void CheckMovementHit();
 	void CheckInput(bool keysPressed[]);
+	void Clear();
 	sf::Vector2f GetCharacterLocation();
 	
 private:
