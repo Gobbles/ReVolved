@@ -1,13 +1,11 @@
 #include "Game.h"
 
-Game::Game()
+Game::Game() : screenSize(1024,768),
+	window(sf::VideoMode(1024, 768), "Re:Volved ver 0.0.04a", sf::Style::Close)
 {
-	screenSize = sf::Vector2f(1024,768);
-	window = std::unique_ptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(static_cast<int>(screenSize.x), static_cast<int>(screenSize.y)), "Re:Volved ver 0.0.04a", sf::Style::Close));
-
-	window->setKeyRepeatEnabled(false);
+	window.setKeyRepeatEnabled(false);
 	MainCamera = std::make_shared<GameCamera>(sf::Vector2f(512,384),screenSize);
-	window->setView(MainCamera->GameView());
+	window.setView(MainCamera->GameView());
 
 	for(int i = 0; i < KEY_COUNT; i++)
 	{
@@ -19,7 +17,7 @@ Game::Game()
 		return;
 	}
 
-	window->setIcon(64,64,AppIcon.getPixelsPtr());
+	window.setIcon(64,64,AppIcon.getPixelsPtr());
 
 	LoadingTex = std::make_shared<sf::Texture>(sf::Texture());
 	if(!LoadingTex->loadFromFile("Art/Screen/Loading.png"))
@@ -91,7 +89,7 @@ void Game::Run()
 
 	fpsText.setFont(fpsFont);
 
-	while (window->isOpen())
+	while (window.isOpen())
     {
 		//ProcessEvents();
 		timeSinceLastUpdate += clock.restart();
@@ -117,7 +115,7 @@ void Game::Run()
 void Game::ProcessEvents()
 {
 	sf::Event event;
-	while (window->pollEvent(event))
+	while (window.pollEvent(event))
     {
 		CheckEvents(event);
     }
@@ -129,7 +127,7 @@ void Game::CheckEvents(sf::Event &event)
 	{
 		case sf::Event::Closed:
 		{
-			window->close();
+			window.close();
 		}
 		case sf::Event::KeyPressed:
 		{
@@ -220,7 +218,7 @@ void Game::Update(float time_passed)
 		pManager->UpdateParticles(time_passed);
 
         //we position the view around the character
-		sf::View view = window->getView();
+		sf::View view = window.getView();
 		sf::Vector2f pos = mEntityManager->GetCharacterLocation();//character->Location;
 
 		if(pos.x - 512 < 0)
@@ -229,7 +227,7 @@ void Game::Update(float time_passed)
 			pos.y = 384;
 
 		view.setCenter(pos);
-		window->setView(view);
+		window.setView(view);
 	}
 }
 
@@ -240,23 +238,23 @@ void Game::TestCollision(float time_passed)
 
 void Game::Draw()
 {
-	window->clear(sf::Color::Black);
+	window.clear(sf::Color::Black);
 
 	if(!Loaded)
 	{
-		window->draw(*LoadingSprite);
+		window.draw(*LoadingSprite);
 	}
 	else
 	{
-		groundMap->Draw(*window, mapsTex, mapBackTex,0,3);
-		pManager->DrawParticle(*window, particleSpr, true);
-		mEntityManager->Draw(*window);
+		groundMap->Draw(window, mapsTex, mapBackTex,0,3);
+		pManager->DrawParticle(window, particleSpr, true);
+		mEntityManager->Draw(window);
 
-		pManager->DrawParticle(*window, particleSpr, false);
-		fpsText.setPosition(window->getView().getCenter() - window->getView().getSize() / 2.f);
+		pManager->DrawParticle(window, particleSpr, false);
+		fpsText.setPosition(window.getView().getCenter() - window.getView().getSize() / 2.f);
 	}
-	window->draw(fpsText);
+	window.draw(fpsText);
 	//drawing code goes here
 	//window->draw(//sprite goes in here");
-    window->display();
+    window.display();
 }

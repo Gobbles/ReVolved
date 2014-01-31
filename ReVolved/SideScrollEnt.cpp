@@ -1,5 +1,5 @@
 #include "SideScrollEnt.h"
-#include "HitManager.h"
+#include "EntityManager.h"
 
 SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(newCharDef)
 {
@@ -15,7 +15,7 @@ SideScrollEnt::SideScrollEnt(int id, CharDef& newCharDef) : Entity(id), charDef(
 	rectangle.setFillColor(sf::Color::Red);
 }
 
-void SideScrollEnt::Update(float time_passed, Map& currentMap)
+void SideScrollEnt::Update(float time_passed, Map& currentMap, EntityManager& entityManager)
 {
 	//update the collision movement
 	if (colMove > 0.0f)
@@ -197,14 +197,11 @@ void SideScrollEnt::SetSlide(float distance)
 	Trajectory.x = (float)Face * 2.0f * distance - distance;
 }
 
-bool SideScrollEnt::InHitBounds(sf::Vector2f hitLoc)
+sf::IntRect SideScrollEnt::GetHitBounds()
 {
-    if (hitLoc.x > Location.x - 50.0f * Scale &&
-    hitLoc.x < Location.x + 50.0f * Scale &&
-    hitLoc.y > Location.y - 190.0f * Scale &&
-    hitLoc.y < Location.y + 10.0f * Scale)
-        return true;
-    return false;
+	sf::IntRect rect = sf::IntRect(Location.x - 50.0f * Scale, Location.y - 190.0f * Scale, 100 * Scale, 200 * Scale);
+
+	return rect;
 }
 
 //Draw the character
@@ -285,7 +282,7 @@ void SideScrollEnt::Draw(sf::RenderWindow& window)
 
 			window.draw(sprite);
 		}
-		window.draw(rectangle);
+		//window.draw(rectangle);
 	}
 }
 
@@ -379,7 +376,7 @@ void SideScrollEnt::CheckXCol(Map& map, sf::Vector2f& pLoc)
 }
 
 //check any triggers we may have activated
-void SideScrollEnt::CheckTrig(ParticleManager& pMan)
+void SideScrollEnt::CheckTrig(ParticleManager& pMan, EntityManager& entityManager)
 {
 	int frameIndex = charDef.animations[Anim].keyFrames[AnimFrame].FrameRef;
 
@@ -391,22 +388,24 @@ void SideScrollEnt::CheckTrig(ParticleManager& pMan)
 
         if (part.Index >= 1000)
         {
-            sf::Vector2f& location = part.Location;
-			location.x *=  Scale + location.x;
-			location.y *=  Scale + location.y;
+            sf::Vector2f location = part.Location;
+			location.x += Location.x;
+			location.y += Location.y;
+			//location.x *= Scale;
+			//location.y *= Scale;
             if (Face == Left)
             {
 				location.x -= part.Location.x * Scale * 2.0f;
             }
             if(fire)
 			{
-                FireTrig(part.Index - 1000, location, pMan);
+				FireTrig(part.Index - 1000, location, pMan, entityManager);
 			}
         }
     }
 }
 
-void SideScrollEnt::FireTrig(int trig, sf::Vector2f& loc, ParticleManager& pMan)
+void SideScrollEnt::FireTrig(int trig, sf::Vector2f loc, ParticleManager& pMan, EntityManager& entityManager)
 {
 	switch (trig)
     {                    
@@ -426,11 +425,7 @@ void SideScrollEnt::FireTrig(int trig, sf::Vector2f& loc, ParticleManager& pMan)
             break;
         default:
 			std::cout << "Potential Hit\n";
-			HitParticle tmpParticle(loc, sf::Vector2f(
-                200.0f * (float)Face - 100.0f, 0.0f),
-                team, trig);
-			pMan.AddParticle(tmpParticle);
-			HitManager::CheckHit(tmpParticle, *this, pMan);
+			entityManager.CheckHit(sf::IntRect(loc.x, loc.y, 20,20), team, Face);
             break;
     }
     fire = false;

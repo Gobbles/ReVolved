@@ -26,19 +26,23 @@ Enemy::Enemy(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : SideScrollEn
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
 
+	team = TEAM_BAD_GUYS;
+
 	SetNewAnim(ANIMATION_IDLE);
 	State = CharacterStates::Air;
 
     //this must be last because we need everything else initlized in the class first
     mStateMachine->SetCurrentState(EnemyAttack::Instance());
+
+	SideScrollEnt::BodypartsInit();
 }
 Enemy::~Enemy()
 {
     delete mStateMachine;
 }
-void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
+void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap, EntityManager& entityManager)
 {
-	SideScrollEnt::Update(time_passed, currentMap);
+	SideScrollEnt::Update(time_passed, currentMap, entityManager);
 	mStateMachine->Update();
     /*#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
@@ -143,7 +147,7 @@ void Enemy::Update(float time_passed, ParticleManager& pMan, Map& currentMap)
     }
 #pragma endregion*/
  
-    CheckTrig(pMan);
+	CheckTrig(pMan, entityManager);
 }
 
 int Enemy::GetWorldState()

@@ -67,12 +67,6 @@
     <Filter Include="Source Files\BaseAI\States\EnemyStates">
       <UniqueIdentifier>{74817023-390a-443e-a266-537bdc174652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Collision">
-      <UniqueIdentifier>{44c0084e-8e9a-44a1-8d1b-cb17c04b57f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Collision">
-      <UniqueIdentifier>{1bac0462-4d66-4159-b540-37afc772e1f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\TextureHolder">
       <UniqueIdentifier>{09334782-0a18-4497-93b7-a047d2000e5d}</UniqueIdentifier>
     </Filter>
@@ -155,9 +149,6 @@
     </ClCompile>
     <ClCompile Include="HitParticle.cpp">
       <Filter>Source Files\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Source Files\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files\Base Entities</Filter>
@@ -245,17 +236,11 @@
     <ClInclude Include="SideScrollEnt.h">
       <Filter>Header Files\Base Entities</Filter>
     </ClInclude>
-    <ClInclude Include="HitManager.h">
-      <Filter>Header Files\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="TextureHolder.h">
       <Filter>Header Files\TextureHolder</Filter>
     </ClInclude>
     <ClInclude Include="HitParticle.h">
       <Filter>Header Files\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h">
-      <Filter>Header Files\Collision</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
       <Filter>Header Files\Managers</Filter>

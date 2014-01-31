@@ -1,6 +1,9 @@
 #ifndef ENTITY_MANAGER
 #define ENTITY_MANAGER
 
+//temp
+#include <iostream>
+//endtemp
 #include <vector>
 #include <memory>
 #include <SFML\Graphics\RenderWindow.hpp>
@@ -23,6 +26,9 @@ public:
 	void CheckMovementHit();
 	void CheckInput(bool keysPressed[]);
 	void Clear();
+	void CheckHit(sf::IntRect hitRect, Team team, int face);
+	
+	CharDir GetFaceFromTraj(sf::Vector2f trajectory);
 	sf::Vector2f GetCharacterLocation();
 	
 private:
@@ -33,7 +39,8 @@ private:
 
 	//character Information
 	std::unique_ptr<Character> character;
-	std::unique_ptr<Enemy> enemy;
+
+	bool CheckHitBounds(sf::IntRect target, sf::IntRect source);
 };
 
 #endif

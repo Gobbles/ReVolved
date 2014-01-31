@@ -27,7 +27,7 @@ public:
 	void SetScreenSize(sf::Vector2f value) { screenSize = value; }
 
 private:
-	std::unique_ptr<sf::RenderWindow> window;
+	sf::RenderWindow window;
 	std::unique_ptr<EntityManager> mEntityManager;
 	//Loading Thread
 	std::unique_ptr<sf::Thread> CharLoadThread;

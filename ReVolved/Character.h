@@ -30,7 +30,7 @@ public:
 	Character();
 	Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId);
 
-	virtual void Update(float time_passed, ParticleManager& pManager, Map& currentMap);
+	virtual void Update(float time_passed, ParticleManager& pManager, Map& currentMap, EntityManager& entityManager);
 	void Input(bool keysPressed[]);
 	
 	virtual void DoScript(int animIdx, int KeyFrameIdx);

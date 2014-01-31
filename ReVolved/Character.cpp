@@ -35,16 +35,20 @@ Character::Character(sf::Vector2f newLoc, CharDef& newCharDef, int newId) : Side
 	ledgeAttach = -1;
 	jumpHeight = 750.f;
 
+	team = TEAM_GOOD_GUYS;
+
 	SetNewAnim(ANIMATION_IDLE);
 	State = CharacterStates::Air;
+
+	SideScrollEnt::BodypartsInit();
 }
 
 //================================================
 //Public functions
 //Update the character
-void Character::Update(float time_passed, ParticleManager& pManager, Map& currentMap)
+void Character::Update(float time_passed, ParticleManager& pManager, Map& currentMap, EntityManager& entityManager)
 {
-	SideScrollEnt::Update(time_passed, currentMap);
+	SideScrollEnt::Update(time_passed, currentMap, entityManager);
 	#pragma region Animate
     if (animName == ANIMATION_IDLE || animName == ANIMATION_RUN)
     {
@@ -144,7 +148,7 @@ void Character::Update(float time_passed, ParticleManager& pManager, Map& curren
     }
 #pragma endregion
  
-    CheckTrig(pManager);
+	CheckTrig(pManager, entityManager);
 }
 
 //Check our input and see if it affects our character

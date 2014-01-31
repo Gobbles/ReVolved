@@ -41,12 +41,7 @@ enum Triggers
     TRIG_KICK
 };
 
-enum Team
-{
-	TEAM_GOOD_GUYS = 0,
-	TEAM_BAD_GUYS,
-	TEAM_NEUTRAL
-};
+class EntityManager;
 
 class SideScrollEnt : public Entity
  {
@@ -80,8 +75,8 @@ class SideScrollEnt : public Entity
 	virtual void FallOff();
 	virtual void Land();
 	virtual void CheckXCol(Map& map, sf::Vector2f& pLoc);
-	virtual void CheckTrig(ParticleManager& pMan);
-	virtual void FireTrig(int trig, sf::Vector2f& loc, ParticleManager& pMan);
+	virtual void CheckTrig(ParticleManager& pMan, EntityManager& entityManager);
+	virtual void FireTrig(int trig, sf::Vector2f loc, ParticleManager& pMan, EntityManager& entityManager);
 
  public:
      //animation constants
@@ -102,8 +97,6 @@ class SideScrollEnt : public Entity
 	CharDir Face;
 	CharacterStates::CharState State;
 
-	Team team;
-
 	std::string animName;
 
 	sf::RectangleShape rectangle;
@@ -112,15 +105,15 @@ class SideScrollEnt : public Entity
     SideScrollEnt(int id, CharDef& newCharDef);
 	virtual ~SideScrollEnt(){}
     //virtuals
-	virtual void Update(float time_passed, Map& currentMap);
+	virtual void Update(float time_passed, Map& currentMap, EntityManager& entityManager);
 	virtual void SetNewJump(float jump);
 	virtual void SetSlide(float dinstance);
 	virtual void Draw(sf::RenderWindow& window);
 	virtual void BodypartsInit();
 	virtual void SetBodyPart(sf::IntRect rect, BodyPart::BodyPartTypes type);
 	virtual void SetNewAnim(std::string newAnim);
-	virtual bool InHitBounds(sf::Vector2f hitLoc);
 	virtual void DoScript(int animIdx, int KeyFrameIdx){}
+	virtual sf::IntRect GetHitBounds();
  };
 
 #endif
